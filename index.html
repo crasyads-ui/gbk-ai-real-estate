@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#07152f">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./assets/icon-192.png">
-<title>GBK AI Real Estate — V18 Live Global Property + Media</title>
+<title>GBK AI Real Estate — V20 Live Global Listings + Media</title>
 <style>
 *{box-sizing:border-box}
 :root{--navy:#07152f;--navy2:#0b2145;--gold:#f7c843;--violet:#7656ff;--ink:#101b2d;--muted:#6d7a90;--bg:#f5f7fb;--line:#e1e6ef;--white:#fff;--green:#178b5b}
@@ -262,7 +262,7 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
 </div></section>
 
 <section class="section" id="mediaTours"><div class="container"><div class="section-head"><div><h2>See it before you visit</h2><p>Real property photos and video tours appear here when the live listing source provides them.</p></div></div><div id="propertyMedia" class="media"><div class="tour"><div class="body" style="padding:24px;text-align:center"><b>Live property media</b><div class="stats" style="margin-top:6px">Search for a property to load real photos and available video tours.</div></div></div></div></div></section>
-<section class="section" id="sourceCompare"><div class="container"><div class="section-head"><div><h2>Latest listings & source comparison</h2><p>Compare the newest connected property feeds, source counts and freshness before choosing a listing.</p></div><button class="btn btn-outline" onclick="loadSourceComparison()">Compare sources →</button></div><div id="sourceComparison" class="grid"><article class="card"><div class="body" style="padding:20px"><b>Source comparison</b><div class="stats" style="margin-top:6px">Connect live provider feeds to compare current listings across approved sources.</div></div></article></div></div></section>
+<section class="section" id="sourceCompare"><div class="container"><div class="section-head"><div><h2>Latest listings & source comparison</h2><p>Compare the newest connected property feeds, source counts and freshness before choosing a listing.</p></div><button class="btn btn-outline" onclick="loadSourceComparison()">Compare live sources →</button></div><div id="sourceComparison" class="grid"><article class="card"><div class="body" style="padding:20px"><b>Source comparison</b><div class="stats" style="margin-top:6px">Connect live provider feeds to compare current listings across approved sources.</div></div></article></div></div></section>
 
 <section class="section" id="ai"><div class="container"><div class="section-head"><div><h2>GBK AI decision tools</h2><p>More useful than a listing directory: help people understand the choice.</p></div></div><div class="tools">
  <div class="tool"><div class="icon">🤖</div><b>AI Property Advisor</b><p>Describe your needs and build a shortlist from available property facts.</p></div>
@@ -349,7 +349,7 @@ function closeById(id){document.getElementById(id).classList.remove('show')}
 async function submitModal(){const done=document.getElementById('modalDone');const inputs=document.querySelectorAll('#modal input,#modal textarea');const name=inputs[0]?.value.trim()||'';const email=inputs[1]?.value.trim()||'';const phone=inputs[2]?.value.trim()||'';const message=inputs[3]?.value.trim()||'';done.textContent='Sending to the secure GBK Real Estate API…';try{const propertyId=String(gbkModalContext).startsWith('enquiry:')?String(gbkModalContext).slice(9):'';const r=await fetch(`${REAL_ESTATE_API}?action=enquiry`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,message,property_id:propertyId||null,country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Enquiry submission failed');done.textContent=`✅ Enquiry received. Reference: ${d.enquiry?.id||'submitted'}.`;inputs.forEach(x=>{if(x.tagName==='TEXTAREA'||x.tagName==='INPUT')x.value=''})}catch(e){done.textContent=e.message||'Unable to reach the Real Estate API.'}}
 
 const REAL_ESTATE_API='https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/real-estate-api';
-const GBK_REAL_ESTATE_VERSION='V19';
+const GBK_REAL_ESTATE_VERSION='V20';
 let gbkModalContext='';
 const apiEscape=(v)=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
 function formatListingPrice(p){const n=Number(p.price||0);const amount=Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:0}):String(p.price||'');return `${apiEscape(p.currency_symbol||'')}${amount}${p.price_period==='month'?' / month':p.price_period==='year'?' / year':''}`}
