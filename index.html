@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#07152f">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./assets/icon-192.png">
-<title>GBK AI Real Estate — V13 Voice Property Advisor</title>
+<title>GBK AI Real Estate — V16 Property Search Fallback</title>
 <style>
 *{box-sizing:border-box}
 :root{--navy:#07152f;--navy2:#0b2145;--gold:#f7c843;--violet:#7656ff;--ink:#101b2d;--muted:#6d7a90;--bg:#f5f7fb;--line:#e1e6ef;--white:#fff;--green:#178b5b}
@@ -257,7 +257,7 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
 </div></section>
 
 <section class="section" id="properties"><div class="container">
- <div class="section-head"><div><h2>Explore property</h2><p>Visual-first cards with source and trust signals.</p></div><button class="btn btn-outline" onclick="searchProperties()">Search all →</button></div>
+ <div class="section-head"><div><h2>Explore property</h2><p>Visual-first cards with source, trust and freshness signals.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><label for="freshnessFilter" style="font-size:11px;color:var(--muted);font-weight:800">Freshness</label><select id="freshnessFilter" class="btn btn-outline" style="padding:10px 12px;background:#fff" onchange="searchProperties()"><option value="30" selected>Relevant · 30 days</option><option value="7">Latest · 7 days</option><option value="all">All available</option></select><button class="btn btn-outline" onclick="searchProperties()">Search all →</button></div></div>
  <div id="propertyResults" class="property-grid property-grid-wide"><article class="card"><div class="body" style="padding:24px"><b>Loading live GBK property data…</b><div class="stats" style="margin-top:6px">Connecting to the Real Estate API.</div></div></article></div>
 </div></section>
 
@@ -356,17 +356,64 @@ let gbkModalContext='';
 const apiEscape=(v)=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
 function formatListingPrice(p){const n=Number(p.price||0);const amount=Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:0}):String(p.price||'');return `${apiEscape(p.currency_symbol||'')}${amount}${p.price_period==='month'?' / month':p.price_period==='year'?' / year':''}`}
 function listingVisual(i){return ['v1','v2','v3','v4'][i%4]}
-function renderPropertyResults(results){
+function propertySearchScore(p,q){
+ const text=[p.title,p.description,p.city,p.region,p.country_name,p.address_text,Array.isArray(p.features)?p.features.join(' '):''].filter(Boolean).join(' ').toLowerCase();
+ const terms=String(q||'').toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu,' ').split(/\s+/).filter(x=>x.length>2);
+ let score=0;terms.forEach(t=>{if(text.includes(t))score+=2});
+ const m=String(q||'').match(/(\d+)\s*(?:bed|beds|bedroom|bedrooms|bhk)/i);if(m&&Number(p.bedrooms)>=Number(m[1]))score+=5;
+ if(/school/i.test(q)&&/school/i.test(text))score+=5;
+ if(/furnished/i.test(q)&&p.furnished)score+=4;
+ return score;
+}
+function rankPropertyResults(results,q){return [...results].sort((a,b)=>propertySearchScore(b,q)-propertySearchScore(a,q));}
+function freshnessDays(p){
+ const d=new Date(p.updated_at||p.created_at||0);if(!Number.isFinite(d.getTime()))return null;
+ return Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));
+}
+function freshnessLabel(p){const days=freshnessDays(p);if(days===null)return 'DATE NOT SHOWN';if(days===0)return 'UPDATED TODAY';if(days===1)return 'UPDATED 1 DAY AGO';return `UPDATED ${days} DAYS AGO`}
+function filterFreshness(results,mode){
+ if(mode==='all')return [...results];
+ const days=Number(mode||30);return results.filter(p=>{const age=freshnessDays(p);return age!==null&&age<=days;});
+}
+function renderPropertyResults(results,meta={}){
  const root=document.getElementById('propertyResults');if(!root)return;
- if(!results.length){root.innerHTML='<article class="card"><div class="body" style="padding:24px"><b>No matching properties found.</b><div class="stats" style="margin-top:6px">Try another city, country, property type or budget.</div></div></article>';return}
- root.innerHTML=results.map((p,i)=>{const beds=p.bedrooms?`${p.bedrooms} beds · `:'';const baths=p.bathrooms?`${p.bathrooms} baths · `:'';const area=p.area_value?`${Number(p.area_value).toLocaleString()} ${apiEscape(p.area_unit||'')} · `:'';const furnished=p.furnished?'Furnished · ':'';const status=p.intent==='rent'?'FOR RENT':p.intent==='buy'?'FOR SALE':'LISTING';const verify=p.verification_status==='verified'?'VERIFIED':'SOURCE SHOWN';return `<article class="card" data-property-id="${apiEscape(p.id)}"><div class="visual ${listingVisual(i)}"><span class="badge">${status} · ${verify}</span><button class="fav" onclick="event.stopPropagation();favoriteProperty('${apiEscape(p.id)}')" aria-label="Favorite property">♡</button></div><div class="body"><h3>${apiEscape(p.title)}</h3><div class="stats">${apiEscape(p.city||'')} · ${apiEscape(p.country_name||'')}</div><div class="price">${formatListingPrice(p)}</div><div class="stats">${beds}${baths}${furnished}${area}${apiEscape(p.source_name||'GBK AI')}</div><button class="btn btn-outline" style="margin-top:10px;width:100%" onclick="openPropertyEnquiry('${apiEscape(p.id)}','${apiEscape(p.title)}')">Enquire</button></div></article>`}).join('');
+ if(!results.length){root.innerHTML='<article class="card"><div class="body" style="padding:24px"><b>No properties available in this freshness range.</b><div class="stats" style="margin-top:6px">Try <b>Relevant · 30 days</b>, <b>All available</b>, another city, country, property type or budget.</div></div></article>';return}
+ let note='';
+ if(meta.fallback==='freshness30')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No fresh listing matched the last 7 days. Showing relevant listings from the last 30 days.</div>';
+ else if(meta.fallback==='global')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No exact match in the selected country. Showing the closest global listings.</div>';
+ else if(meta.fallback==='countryfallback')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No listing matched that city. Showing the closest available listings in the selected country.</div>';
+ else if(meta.fallback==='fallback')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No exact text match. Showing the closest available listings.</div>';
+ root.innerHTML=note+results.map((p,i)=>{const beds=p.bedrooms?`${p.bedrooms} beds · `:'';const baths=p.bathrooms?`${p.bathrooms} baths · `:'';const area=p.area_value?`${Number(p.area_value).toLocaleString()} ${apiEscape(p.area_unit||'')} · `:'';const furnished=p.furnished?'Furnished · ':'';const status=p.intent==='rent'?'FOR RENT':p.intent==='buy'?'FOR SALE':'LISTING';const verify=p.verification_status==='verified'?'VERIFIED':'SOURCE SHOWN';const image=Array.isArray(p.image_urls)?p.image_urls.find(x=>/^https?:\/\//i.test(String(x))):'';const visualStyle=image?` style="background-image:url('${apiEscape(image)}');background-size:cover;background-position:center"`:'';const fresh=freshnessLabel(p);return `<article class="card" data-property-id="${apiEscape(p.id)}"><div class="visual ${listingVisual(i)}"${visualStyle}><span class="badge">${status} · ${verify}</span><span style="position:absolute;bottom:12px;left:12px;background:#07152fee;color:#fff;padding:6px 9px;border-radius:18px;font-size:10px;font-weight:900">${fresh}</span><button class="fav" onclick="event.stopPropagation();favoriteProperty('${apiEscape(p.id)}')" aria-label="Favorite property">♡</button></div><div class="body"><h3>${apiEscape(p.title)}</h3><div class="stats">${apiEscape(p.city||'')} · ${apiEscape(p.country_name||'')}</div><div class="price">${formatListingPrice(p)}</div><div class="stats">${beds}${baths}${furnished}${area}${apiEscape(p.source_name||'GBK AI')}</div><button class="btn btn-outline" style="margin-top:10px;width:100%" onclick="openPropertyEnquiry('${apiEscape(p.id)}','${apiEscape(p.title)}')">Enquire</button></div></article>`}).join('');
+}
+async function fetchPropertySearch(params){
+ const r=await fetch(`${REAL_ESTATE_API}?action=search&${params.toString()}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Property search failed');return d;
 }
 async function searchProperties(extra={}){
  const q=document.getElementById('need')?.value.trim()||'';const location=document.getElementById('location')?.value.trim()||'';
- const params=new URLSearchParams({q,...extra,country:selectedCountry,currency:selectedCurrency,language:localStorage.getItem('gbk_language')||'English',limit:'20'});
- if(location){params.set('city',location);}
+ const freshness=document.getElementById('freshnessFilter')?.value||'30';
+ const merged={q,...extra};const explicitCity=String(extra.city||location||'').trim();
+ const params=new URLSearchParams({...merged,country:selectedCountry,currency:selectedCurrency,language:localStorage.getItem('gbk_language')||'English',limit:'50'});
+ if(location&&!extra.city)params.set('city',location);
  const msg=document.getElementById('searchMsg');if(msg)msg.textContent='Connecting to live GBK property data…';
- try{const r=await fetch(`${REAL_ESTATE_API}?action=search&${params}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Property search failed');renderPropertyResults(d.results||[]);if(msg)msg.textContent=`${d.count||0} property result${d.count===1?'':'s'} from the GBK Real Estate API.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return d.results||[]}catch(e){if(msg)msg.textContent=e.message||'Unable to reach the Real Estate API.';return []}
+ try{
+   const attempts=[];
+   attempts.push({params,tag:'exact'});
+   if(q||extra.q){const p=new URLSearchParams(params);p.delete('q');attempts.push({params:p,tag:'fallback'});}
+   if(explicitCity){const p=new URLSearchParams(params);p.delete('city');p.delete('q');attempts.push({params:p,tag:'countryfallback'});}
+   if(!extra.intent&&!extra.property_type&&!extra.min_price&&!extra.max_price){const p=new URLSearchParams(params);p.delete('q');p.delete('city');p.delete('country');p.delete('currency');attempts.push({params:p,tag:'global'});}
+   let lastData={count:0,results:[]};
+   for(const attempt of attempts){
+     const d=await fetchPropertySearch(attempt.params);lastData=d;
+     let ranked=rankPropertyResults(d.results||[],q);
+     let fresh=filterFreshness(ranked,freshness);
+     if(fresh.length){renderPropertyResults(fresh,{fallback:attempt.tag!=='exact'?attempt.tag:null});if(msg)msg.textContent=`${fresh.length} ${fresh.length===1?'property':'properties'} · ${freshness==='7'?'latest 7 days':freshness==='30'?'relevant 30 days':'all available'}.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return fresh;}
+     if(freshness==='7'){
+       const fresh30=filterFreshness(ranked,'30');
+       if(fresh30.length){renderPropertyResults(fresh30,{fallback:'freshness30'});if(msg)msg.textContent=`${fresh30.length} relevant ${fresh30.length===1?'property':'properties'} from the last 30 days.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return fresh30;}
+     }
+   }
+   renderPropertyResults([]);if(msg)msg.textContent=`No properties found in the selected freshness range.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return [];
+ }catch(e){if(msg)msg.textContent=e.message||'Unable to reach the Real Estate API.';return []}
 }
 async function findRentals(){const city=document.getElementById('rentalLocation')?.value.trim()||'';const type=document.getElementById('rentalType')?.value||'';const range=document.getElementById('rentalBudget')?.value||'';const [min,max]=range.split(':');const extra={intent:'rent',city,property_type:type};if(min)extra.min_price=min;if(max)extra.max_price=max;await searchProperties(extra);}
 let gbkRecognition=null;
