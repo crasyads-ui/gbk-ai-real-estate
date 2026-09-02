@@ -1,4 +1,4 @@
-# GBK AI Real Estate — V11 API Integration
+# GBK AI Real Estate — V12 Voice + Listen + Explain
 
 Mobile-first GBK AI Real Estate PWA based on V10, with the existing responsive/global-language frontend preserved.
 
