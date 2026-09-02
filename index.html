@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#07152f">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./assets/icon-192.png">
-<title>GBK AI Real Estate — V7 Full Language Frontend PWA</title>
+<title>GBK AI Real Estate — V11 API Integrated PWA</title>
 <style>
 *{box-sizing:border-box}
 :root{--navy:#07152f;--navy2:#0b2145;--gold:#f7c843;--violet:#7656ff;--ink:#101b2d;--muted:#6d7a90;--bg:#f5f7fb;--line:#e1e6ef;--white:#fff;--green:#178b5b}
@@ -189,6 +189,8 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
 @media(max-width:1050px){.nav .head-country,.nav .head-language{width:92px!important;min-width:92px!important;height:46px!important;font-size:11px!important;padding:7px 6px!important}.nav .head-label{display:inline!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 @media(max-width:560px){.nav .head-country,.nav .head-language{width:72px!important;min-width:72px!important;height:48px!important;font-size:10px!important;padding:6px 4px!important}.nav .head-label{display:inline!important;max-width:58px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nav .install-btn{width:44px!important;min-width:44px!important}.nav .btn-dark{width:70px!important;min-width:70px!important}}
 @media(max-width:380px){.nav .head-country,.nav .head-language{width:66px!important;min-width:66px!important;font-size:9px!important}.nav .head-label{max-width:52px}.nav .install-btn{width:42px!important;min-width:42px!important}.nav .btn-dark{width:66px!important;min-width:66px!important;font-size:9.5px!important}}
+
+.gbk-voice-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.gbk-voice-btn{border:1px solid #5c7092;background:#10284c;color:#fff;border-radius:11px;padding:10px 13px;font-weight:900}.gbk-voice-btn.listen{background:#f7c843;color:#111;border-color:#f7c843}.gbk-voice-btn.stop{background:#8f2630;border-color:#8f2630}.gbk-voice-status{font-size:11px;color:#9fb0c9;min-height:16px;margin-top:6px}.voice-explain{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.voice-explain button{border:0;border-radius:9px;padding:8px 10px;font-weight:850;background:#eef1f7;color:#17233a}.voice-explain button.stop{background:#8f2630;color:#fff}.voice-listening{outline:3px solid #f7c843;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -221,6 +223,11 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
     <button onclick="askAI()">Ask GBK AI</button>
    </div>
    <div id="searchMsg" class="helper">Try natural language: “family home, safe area, under my budget”.</div>
+   <div class="gbk-voice-row" aria-label="GBK AI voice controls">
+    <button id="voiceAskBtn" class="gbk-voice-btn listen" onclick="startGbkVoiceAsk()">🎙️ Ask GBK AI · Listen</button>
+    <button id="voiceStopBtn" class="gbk-voice-btn stop" onclick="stopGbkVoice()" style="display:none">⏹ Stop</button>
+   </div>
+   <div id="voiceStatus" class="gbk-voice-status" aria-live="polite"></div>
   </div>
   <div class="hero-card">
     <div class="property-art"></div>
@@ -246,17 +253,12 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
   <section class="banner" id="sell"><div><h2>Have a property to sell or rent?</h2><p>Create a multilingual listing with photos, video and AI-assisted descriptions.</p></div><button class="btn btn-gold" onclick="openModal('List your property','Enter your property details and upload media in the production listing flow.')">List Property →</button></section>
   <section class="banner"><div><h2>🤖 GBK AI Customer Support</h2><p>24/7 help for buyers, renters, sellers, agents and developers — in the selected language.</p></div><button class="btn btn-gold" onclick="openModal('GBK AI Customer Support','Ask your question in your language. Connect the production AI support service here.')">Chat with GBK AI →</button></section>
  </div>
- <div class="rental-wrap"><aside class="rental" id="rent"><h3>📍 Rental Finder</h3><p>Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.</p><input placeholder="City / area"><select><option>Monthly budget</option><option>Under $500</option><option>$500–$1,000</option><option>$1,000–$2,500</option><option>$2,500+</option></select><select><option>Property type</option><option>Apartment</option><option>House</option><option>Room</option></select><button class="btn btn-gold" onclick="openModal('Rental Finder','Connect the live rental source for this country and location.')">Find rentals with GBK AI →</button><p>🎁 Eligible GBK promotional rewards can appear in the connected Wallet.</p></aside></div>
+ <div class="rental-wrap"><aside class="rental" id="rent"><h3>📍 Rental Finder</h3><p>Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.</p><input id="rentalLocation" placeholder="City / area"><select id="rentalBudget"><option value="">Monthly budget</option><option value="0:500">Under $500</option><option value="500:1000">$500–$1,000</option><option value="1000:2500">$1,000–$2,500</option><option value="2500:">$2,500+</option></select><select id="rentalType"><option value="">Property type</option><option>Apartment</option><option>House</option><option>Room</option></select><button class="btn btn-gold" onclick="findRentals()">Find rentals with GBK AI →</button><p>🎁 Eligible GBK promotional rewards can appear in the connected Wallet.</p></aside></div>
 </div></section>
 
 <section class="section" id="properties"><div class="container">
- <div class="section-head"><div><h2>Explore property</h2><p>Visual-first cards with source and trust signals.</p></div><button class="btn btn-outline" onclick="openModal('Global property search','Production mode can connect approved listing feeds by country and market.')">Search all →</button></div>
- <div class="property-grid property-grid-wide">
-   <article class="card"><div class="visual v1"><span class="badge">FOR SALE · SOURCE SHOWN</span><button class="fav">♡</button></div><div class="body"><h3>Modern Family Villa</h3><div class="stats">Hyderabad · India</div><div class="price">₹1.25 Cr</div><div class="stats">4 beds · 5 baths · 2,800 sq ft · Video ready</div></div></article>
-   <article class="card"><div class="visual v2"><span class="badge">FOR RENT</span><button class="fav">♡</button></div><div class="body"><h3>City Apartment</h3><div class="stats">Dubai · UAE</div><div class="price">AED 8,500 / month</div><div class="stats">2 beds · 2 baths · Furnished · Tour ready</div></div></article>
-   <article class="card"><div class="visual v3"><span class="badge">LAND</span><button class="fav">♡</button></div><div class="body"><h3>Residential Plot</h3><div class="stats">Bengaluru · India</div><div class="price">₹75 Lakh</div><div class="stats">2,400 sq ft · Location insights</div></div></article>
-   <article class="card"><div class="visual v4"><span class="badge">COMMERCIAL</span><button class="fav">♡</button></div><div class="body"><h3>Business Space</h3><div class="stats">London · UK</div><div class="price">£4,200 / month</div><div class="stats">Office · 3,100 sq ft · Tour ready</div></div></article>
-  </div>
+ <div class="section-head"><div><h2>Explore property</h2><p>Visual-first cards with source and trust signals.</p></div><button class="btn btn-outline" onclick="searchProperties()">Search all →</button></div>
+ <div id="propertyResults" class="property-grid property-grid-wide"><article class="card"><div class="body" style="padding:24px"><b>Loading live GBK property data…</b><div class="stats" style="margin-top:6px">Connecting to the Real Estate API.</div></div></article></div>
 </div></section>
 
 <section class="section"><div class="container"><div class="section-head"><div><h2>See it before you visit</h2><p>Designed for property photos, video tours and virtual walkthroughs.</p></div></div><div class="media">
@@ -343,12 +345,86 @@ function languageLabel(x){const m=languageMeta[x]||[x,x];return m[0]===m[1]?m[0]
 function updateTopSelectors(){const cb=document.getElementById('countryTopBtn'),lb=document.getElementById('languageTopBtn');const lang=localStorage.getItem('gbk_language')||'English';if(cb){cb.innerHTML=countryFlag(selectedCountry)+' <span class="head-label">'+selectedCountry+'</span>';cb.title='Country: '+selectedCountry;cb.setAttribute('aria-label','Country: '+selectedCountry)}if(lb){lb.innerHTML='🌐 <span class="head-label">'+languageLabel(lang)+'</span>';lb.title='Language: '+languageLabel(lang);lb.setAttribute('aria-label','Language: '+languageLabel(lang))}}
 
 function setIntent(b){document.querySelectorAll('.intent button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function askAI(){const n=document.getElementById('need').value.trim(),l=document.getElementById('location').value.trim();document.getElementById('searchMsg').textContent=(n||l)?`${gbkTx("GBK AI ready:")} ${[n,l].filter(Boolean).join(" · ")}`:gbkTx("Tell GBK AI what you need and where.")}
-function gbkTx(v){const lang=localStorage.getItem('gbk_language')||'English';const dict=T[lang]||{};return dict[v]||v} function openModal(t,d){document.getElementById('modalTitle').textContent=gbkTx(t);document.getElementById('modalDesc').textContent=gbkTx(d);document.getElementById('modalDone').textContent="";document.getElementById('modal').classList.add('show');document.querySelectorAll('#modal input,#modal textarea').forEach(el=>{const o=el.dataset.gbkOrig||(el.dataset.gbkOrig=el.getAttribute('placeholder')||'');if(o)el.placeholder=gbkTx(o)});const c=document.querySelector('#modal .btn-dark');if(c)c.textContent=gbkTx('Continue')}
+
+function gbkTx(v){const lang=localStorage.getItem('gbk_language')||'English';const dict=T[lang]||{};return dict[v]||v} function openModal(t,d){gbkModalContext=t;document.getElementById('modalTitle').textContent=gbkTx(t);document.getElementById('modalDesc').textContent=gbkTx(d);document.getElementById('modalDone').textContent="";document.getElementById('modal').classList.add('show');document.querySelectorAll('#modal input,#modal textarea').forEach(el=>{const o=el.dataset.gbkOrig||(el.dataset.gbkOrig=el.getAttribute('placeholder')||'');if(o)el.placeholder=gbkTx(o)});const c=document.querySelector('#modal .btn-dark');if(c)c.textContent=gbkTx('Continue')}
 function closeModal(){document.getElementById('modal').classList.remove('show')}
 function closeById(id){document.getElementById(id).classList.remove('show')}
-function submitModal(){document.getElementById('modalDone').textContent="Frontend request captured. Connect the secure GBK backend/CRM for production."}
+async function submitModal(){const done=document.getElementById('modalDone');const inputs=document.querySelectorAll('#modal input,#modal textarea');const name=inputs[0]?.value.trim()||'';const email=inputs[1]?.value.trim()||'';const phone=inputs[2]?.value.trim()||'';const message=inputs[3]?.value.trim()||'';done.textContent='Sending to the secure GBK Real Estate API…';try{const propertyId=String(gbkModalContext).startsWith('enquiry:')?String(gbkModalContext).slice(9):'';const r=await fetch(`${REAL_ESTATE_API}?action=enquiry`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,message,property_id:propertyId||null,country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Enquiry submission failed');done.textContent=`✅ Enquiry received. Reference: ${d.enquiry?.id||'submitted'}.`;inputs.forEach(x=>{if(x.tagName==='TEXTAREA'||x.tagName==='INPUT')x.value=''})}catch(e){done.textContent=e.message||'Unable to reach the Real Estate API.'}}
 
+const REAL_ESTATE_API='https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/real-estate-api';
+let gbkModalContext='';
+const apiEscape=(v)=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
+function formatListingPrice(p){const n=Number(p.price||0);const amount=Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:0}):String(p.price||'');return `${apiEscape(p.currency_symbol||'')}${amount}${p.price_period==='month'?' / month':p.price_period==='year'?' / year':''}`}
+function listingVisual(i){return ['v1','v2','v3','v4'][i%4]}
+function renderPropertyResults(results){
+ const root=document.getElementById('propertyResults');if(!root)return;
+ if(!results.length){root.innerHTML='<article class="card"><div class="body" style="padding:24px"><b>No matching properties found.</b><div class="stats" style="margin-top:6px">Try another city, country, property type or budget.</div></div></article>';return}
+ root.innerHTML=results.map((p,i)=>{const beds=p.bedrooms?`${p.bedrooms} beds · `:'';const baths=p.bathrooms?`${p.bathrooms} baths · `:'';const area=p.area_value?`${Number(p.area_value).toLocaleString()} ${apiEscape(p.area_unit||'')} · `:'';const furnished=p.furnished?'Furnished · ':'';const status=p.intent==='rent'?'FOR RENT':p.intent==='buy'?'FOR SALE':'LISTING';const verify=p.verification_status==='verified'?'VERIFIED':'SOURCE SHOWN';return `<article class="card" data-property-id="${apiEscape(p.id)}"><div class="visual ${listingVisual(i)}"><span class="badge">${status} · ${verify}</span><button class="fav" onclick="event.stopPropagation();favoriteProperty('${apiEscape(p.id)}')" aria-label="Favorite property">♡</button></div><div class="body"><h3>${apiEscape(p.title)}</h3><div class="stats">${apiEscape(p.city||'')} · ${apiEscape(p.country_name||'')}</div><div class="price">${formatListingPrice(p)}</div><div class="stats">${beds}${baths}${furnished}${area}${apiEscape(p.source_name||'GBK AI')}</div><button class="btn btn-outline" style="margin-top:10px;width:100%" onclick="openPropertyEnquiry('${apiEscape(p.id)}','${apiEscape(p.title)}')">Enquire</button></div></article>`}).join('');
+}
+async function searchProperties(extra={}){
+ const q=document.getElementById('need')?.value.trim()||'';const location=document.getElementById('location')?.value.trim()||'';
+ const params=new URLSearchParams({q,...extra,country:selectedCountry,currency:selectedCurrency,language:localStorage.getItem('gbk_language')||'English',limit:'20'});
+ if(location){params.set('city',location);}
+ const msg=document.getElementById('searchMsg');if(msg)msg.textContent='Connecting to live GBK property data…';
+ try{const r=await fetch(`${REAL_ESTATE_API}?action=search&${params}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Property search failed');renderPropertyResults(d.results||[]);if(msg)msg.textContent=`${d.count||0} property result${d.count===1?'':'s'} from the GBK Real Estate API.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return d.results||[]}catch(e){if(msg)msg.textContent=e.message||'Unable to reach the Real Estate API.';return []}
+}
+async function findRentals(){const city=document.getElementById('rentalLocation')?.value.trim()||'';const type=document.getElementById('rentalType')?.value||'';const range=document.getElementById('rentalBudget')?.value||'';const [min,max]=range.split(':');const extra={intent:'rent',city,property_type:type};if(min)extra.min_price=min;if(max)extra.max_price=max;await searchProperties(extra);}
+let gbkRecognition=null;
+let gbkSpeaking=false;
+let lastPropertyResults=[];
+const GBK_SPEECH_LANG={
+  English:'en-IN','తెలుగు':'te-IN','हिन्दी':'hi-IN','தமிழ்':'ta-IN','বাংলা':'bn-IN','मराठी':'mr-IN','ಕನ್ನಡ':'kn-IN','മലയാളം':'ml-IN','ગુજરાતી':'gu-IN','ਪੰਜਾਬੀ':'pa-IN','اردو':'ur-PK','العربية':'ar-SA','中文':'zh-CN','日本語':'ja-JP','한국어':'ko-KR','Español':'es-ES','Français':'fr-FR','Deutsch':'de-DE','Português':'pt-PT','Italiano':'it-IT','Русский':'ru-RU','Türkçe':'tr-TR','ไทย':'th-TH','Tiếng Việt':'vi-VN','Bahasa Indonesia':'id-ID','Nederlands':'nl-NL','Polski':'pl-PL'
+};
+function gbkVoiceLang(){return GBK_SPEECH_LANG[localStorage.getItem('gbk_language')||'English']||'en-US'}
+function setVoiceStatus(t){const el=document.getElementById('voiceStatus');if(el)el.textContent=t}
+function stopGbkVoice(){
+ try{if(gbkRecognition)gbkRecognition.stop()}catch(e){}
+ gbkRecognition=null;
+ if('speechSynthesis' in window) window.speechSynthesis.cancel();
+ gbkSpeaking=false;
+ const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none';
+ const ask=document.getElementById('voiceAskBtn');if(ask){ask.style.display='inline-flex';ask.classList.remove('voice-listening')}
+ document.querySelectorAll('.voice-explain').forEach(x=>{if(x.id==='voiceExplainControls')x.style.display=lastPropertyResults.length?'flex':'none'});
+ setVoiceStatus('Voice stopped. You can ask again anytime.');
+}
+function speakGbk(text,onEnd){
+ if(!('speechSynthesis' in window)){setVoiceStatus('Voice explanation is not supported in this browser.');return}
+ window.speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text);u.lang=gbkVoiceLang();u.rate=.96;u.pitch=1;
+ u.onstart=()=>{gbkSpeaking=true;const b=document.getElementById('voiceStopBtn');if(b)b.style.display='inline-flex'};
+ u.onend=()=>{gbkSpeaking=false;if(onEnd)onEnd();};u.onerror=()=>{gbkSpeaking=false;if(onEnd)onEnd()};
+ window.speechSynthesis.speak(u);
+}
+function propertySpeechText(p,i){
+ const title=p.title||'Property'; const place=[p.city,p.country_name].filter(Boolean).join(', '); const price=formatListingPrice(p).replace(/&amp;/g,'&');
+ const facts=[];if(p.bedrooms)facts.push(`${p.bedrooms} bedrooms`);if(p.bathrooms)facts.push(`${p.bathrooms} bathrooms`);if(p.area_value)facts.push(`${Number(p.area_value).toLocaleString()} ${p.area_unit||''}`);if(p.furnished)facts.push('furnished');
+ return `${i+1}. ${title}. ${place||'Location available on the listing'}. ${p.intent==='rent'?'For rent':'For sale'}. Price ${price}. ${facts.length?facts.join(', ')+'. ':''}Source ${p.source_name||'GBK AI'}. ${p.verification_status==='verified'?'This listing is verified.':'Source is shown; verify important details before making a decision.'}`;
+}
+function speakPropertyResults(){
+ if(!lastPropertyResults.length){setVoiceStatus('Ask GBK AI first to load properties.');return}
+ const lang=localStorage.getItem('gbk_language')||'English';
+ const intro=lang==='English'?'GBK AI property explanation. Here are the best matching properties.':`GBK AI property explanation in ${lang}. Here are the best matching properties.`;
+ const text=[intro,...lastPropertyResults.slice(0,8).map(propertySpeechText)].join(' ');
+ setVoiceStatus(`🔊 Explaining ${Math.min(lastPropertyResults.length,8)} properties in ${lang}…`);
+ speakGbk(text,()=>setVoiceStatus('Explanation complete. Press Stop or Ask again anytime.'));
+}
+function startGbkVoiceAsk(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){setVoiceStatus('Microphone listening is not supported here. You can type your request, then use Explain properties.');return}
+ stopGbkVoice();
+ const lang=gbkVoiceLang();
+ gbkRecognition=new SR();gbkRecognition.lang=lang;gbkRecognition.interimResults=false;gbkRecognition.maxAlternatives=1;gbkRecognition.continuous=false;
+ const ask=document.getElementById('voiceAskBtn'),stop=document.getElementById('voiceStopBtn');
+ ask.classList.add('voice-listening');ask.style.display='inline-flex';stop.style.display='inline-flex';
+ setVoiceStatus(`🎙️ Listening in ${localStorage.getItem('gbk_language')||'English'}… Speak your property request.`);
+ gbkRecognition.onresult=async e=>{const text=e.results?.[0]?.[0]?.transcript?.trim()||'';if(text){const need=document.getElementById('need');if(need)need.value=text;setVoiceStatus(`Heard: “${text}” · Finding matching properties…`);const results=await askAI();if(results?.length){speakPropertyResults()}else setVoiceStatus('No matching properties found. Try another request.')}};
+ gbkRecognition.onerror=e=>{setVoiceStatus(e.error==='not-allowed'?'Microphone permission is blocked. Allow microphone access and try again.':`Listening stopped: ${e.error||'unknown error'}.`);const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none';ask.classList.remove('voice-listening')};
+ gbkRecognition.onend=()=>{gbkRecognition=null;ask.classList.remove('voice-listening');if(!gbkSpeaking){const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none'}};
+ try{gbkRecognition.start()}catch(e){setVoiceStatus('Could not start the microphone. Please try again.');}
+}
+async function askAI(){const n=document.getElementById('need').value.trim(),l=document.getElementById('location').value.trim();const results=await searchProperties({q:n,city:l});lastPropertyResults=results||[];const controls=document.getElementById('voiceExplainControls');if(controls)controls.style.display=lastPropertyResults.length?'flex':'none';try{await fetch(`${REAL_ESTATE_API}?action=ai-request`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request_type:'advisor',prompt:n||'Help me find suitable properties.',property_ids:results.slice(0,10).map(x=>x.id),country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})})}catch(e){} return results;}
+async function openPropertyEnquiry(id,title){gbkModalContext=`enquiry:${id}`;openModal('Property enquiry',`Send an enquiry about ${title}. The secure GBK backend will record it for follow-up.`)}
+async function favoriteProperty(id){try{const r=await fetch(`${REAL_ESTATE_API}?action=favorite`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({property_id:id,wallet_address:localStorage.getItem('gbk_registered_wallet')||''})});const d=await r.json();document.getElementById('searchMsg').textContent=d.message||'Favorite request received.'}catch(e){}}
 const GBK_PLANS={agent_pro:{name:'Agent Pro',gbk:5000,usd:19},developer_pro:{name:'Developer Pro',gbk:25000,usd:49},enterprise:{name:'Enterprise',gbk:50000,usd:99}};
 const GBK_SUBSCRIPTION_API='https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/gbk-subscription';
 let selectedPaymentPlan='agent_pro';
@@ -519,7 +595,7 @@ function gbkTranslate(lang){
 }
 function openLanguage(){const el=document.getElementById('languageSelect');el.innerHTML=languages.map(x=>`<option value="${x.replace(/"/g,'&quot;')}">${languageLabel(x)}</option>`).join('');const saved=localStorage.getItem('gbk_language')||'English';el.value=saved;document.getElementById('language').classList.add('show')}
 function saveLanguage(){const x=document.getElementById('languageSelect').value;localStorage.setItem('gbk_language',x);gbkTranslate(x);updateTopSelectors();closeById('language')}
-window.addEventListener('load',()=>{const saved=localStorage.getItem('gbk_language');if(saved)gbkTranslate(saved);updateTopSelectors()})
+window.addEventListener('load',()=>{const saved=localStorage.getItem('gbk_language');if(saved)gbkTranslate(saved);updateTopSelectors();initCountryCurrency();searchProperties()})
 </script>
 
 </body></html>
