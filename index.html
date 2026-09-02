@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#07152f">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./assets/icon-192.png">
-<title>GBK AI Real Estate — V16 Property Search Fallback</title>
+<title>GBK AI Real Estate — V17 Relevant Global Search</title>
 <style>
 *{box-sizing:border-box}
 :root{--navy:#07152f;--navy2:#0b2145;--gold:#f7c843;--violet:#7656ff;--ink:#101b2d;--muted:#6d7a90;--bg:#f5f7fb;--line:#e1e6ef;--white:#fff;--green:#178b5b}
@@ -253,11 +253,11 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
   <section class="banner" id="sell"><div><h2>Have a property to sell or rent?</h2><p>Create a multilingual listing with photos, video and AI-assisted descriptions.</p></div><button class="btn btn-gold" onclick="openModal('List your property','Enter your property details and upload media in the production listing flow.')">List Property →</button></section>
   <section class="banner"><div><h2>🤖 GBK AI Customer Support</h2><p>24/7 help for buyers, renters, sellers, agents and developers — in the selected language.</p></div><button class="btn btn-gold" onclick="openModal('GBK AI Customer Support','Ask your question in your language. Connect the production AI support service here.')">Chat with GBK AI →</button></section>
  </div>
- <div class="rental-wrap"><aside class="rental" id="rent"><h3>📍 Rental Finder</h3><p>Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.</p><input id="rentalLocation" placeholder="City / area"><select id="rentalBudget"><option value="">Monthly budget</option><option value="0:500">Under $500</option><option value="500:1000">$500–$1,000</option><option value="1000:2500">$1,000–$2,500</option><option value="2500:">$2,500+</option></select><select id="rentalType"><option value="">Property type</option><option>Apartment</option><option>House</option><option>Room</option></select><button class="btn btn-gold" onclick="findRentals()">Find rentals with GBK AI →</button><p>🎁 Eligible GBK promotional rewards can appear in the connected Wallet.</p></aside></div>
+ <div class="rental-wrap"><aside class="rental" id="rent"><h3>📍 Rental Finder</h3><p>Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.</p><input id="rentalLocation" placeholder="City / area"><select id="rentalBudget" onchange="syncRentalBudgetCurrency()"><option value="">Monthly budget</option></select><select id="rentalType"><option value="">Property type</option><option>Apartment</option><option>House</option><option>Room</option></select><button class="btn btn-gold" onclick="findRentals()">Find rentals with GBK AI →</button><p>🎁 Eligible GBK promotional rewards can appear in the connected Wallet.</p></aside></div>
 </div></section>
 
 <section class="section" id="properties"><div class="container">
- <div class="section-head"><div><h2>Explore property</h2><p>Visual-first cards with source, trust and freshness signals.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><label for="freshnessFilter" style="font-size:11px;color:var(--muted);font-weight:800">Freshness</label><select id="freshnessFilter" class="btn btn-outline" style="padding:10px 12px;background:#fff" onchange="searchProperties()"><option value="30" selected>Relevant · 30 days</option><option value="7">Latest · 7 days</option><option value="all">All available</option></select><button class="btn btn-outline" onclick="searchProperties()">Search all →</button></div></div>
+ <div class="section-head"><div><h2>Explore property</h2><p>Relevant city-first results, countrywide fallback only when no city is entered, with source, trust and freshness signals.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><label for="freshnessFilter" style="font-size:11px;color:var(--muted);font-weight:800">Freshness</label><select id="freshnessFilter" class="btn btn-outline" style="padding:10px 12px;background:#fff" onchange="searchProperties()"><option value="30" selected>Relevant · 30 days</option><option value="7">Latest · 7 days</option><option value="all">All available</option></select><button class="btn btn-outline" onclick="searchProperties()">Search all →</button></div></div>
  <div id="propertyResults" class="property-grid property-grid-wide"><article class="card"><div class="body" style="padding:24px"><b>Loading live GBK property data…</b><div class="stats" style="margin-top:6px">Connecting to the Real Estate API.</div></div></article></div>
 </div></section>
 
@@ -399,12 +399,15 @@ async function searchProperties(extra={}){
    const attempts=[];
    attempts.push({params,tag:'exact'});
    if(q||extra.q){const p=new URLSearchParams(params);p.delete('q');attempts.push({params:p,tag:'fallback'});}
-   if(explicitCity){const p=new URLSearchParams(params);p.delete('city');p.delete('q');attempts.push({params:p,tag:'countryfallback'});}
-   if(!extra.intent&&!extra.property_type&&!extra.min_price&&!extra.max_price){const p=new URLSearchParams(params);p.delete('q');p.delete('city');p.delete('country');p.delete('currency');attempts.push({params:p,tag:'global'});}
+   // If the user entered a city/locality, never silently replace it with an unrelated city.
+   // We may broaden the text query, but the explicit location remains a hard relevance boundary.
+   if(!explicitCity && !extra.intent&&!extra.property_type&&!extra.min_price&&!extra.max_price){const p=new URLSearchParams(params);p.delete('q');p.delete('country');p.delete('currency');attempts.push({params:p,tag:'global'});}
    let lastData={count:0,results:[]};
    for(const attempt of attempts){
      const d=await fetchPropertySearch(attempt.params);lastData=d;
      let ranked=rankPropertyResults(d.results||[],q);
+     // Natural-language search must return relevant matches, not an arbitrary listing.
+     if(q){const scored=ranked.map(p=>({p,score:propertySearchScore(p,q)})).filter(x=>x.score>0);ranked=scored.map(x=>x.p);}
      let fresh=filterFreshness(ranked,freshness);
      if(fresh.length){renderPropertyResults(fresh,{fallback:attempt.tag!=='exact'?attempt.tag:null});if(msg)msg.textContent=`${fresh.length} ${fresh.length===1?'property':'properties'} · ${freshness==='7'?'latest 7 days':freshness==='30'?'relevant 30 days':'all available'}.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return fresh;}
      if(freshness==='7'){
@@ -412,8 +415,26 @@ async function searchProperties(extra={}){
        if(fresh30.length){renderPropertyResults(fresh30,{fallback:'freshness30'});if(msg)msg.textContent=`${fresh30.length} relevant ${fresh30.length===1?'property':'properties'} from the last 30 days.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return fresh30;}
      }
    }
-   renderPropertyResults([]);if(msg)msg.textContent=`No properties found in the selected freshness range.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return [];
+   renderPropertyResults([]);if(msg)msg.textContent=explicitCity?`No relevant properties found for ${explicitCity} in the selected freshness range.`:`No relevant properties found in the selected freshness range.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return [];
  }catch(e){if(msg)msg.textContent=e.message||'Unable to reach the Real Estate API.';return []}
+}
+function rentalBudgetPresets(currency){
+ const presets={
+  USD:[['','Monthly budget'],['0:500','Under $500'],['500:1000','$500–$1,000'],['1000:2500','$1,000–$2,500'],['2500:','$2,500+']],
+  INR:[['','Monthly budget'],['0:25000','Under ₹25,000'],['25000:50000','₹25,000–₹50,000'],['50000:100000','₹50,000–₹1,00,000'],['100000:','₹1,00,000+']],
+  AED:[['','Monthly budget'],['0:2000','Under د.إ2,000'],['2000:5000','د.إ2,000–د.إ5,000'],['5000:10000','د.إ5,000–د.إ10,000'],['10000:','د.إ10,000+']],
+  GBP:[['','Monthly budget'],['0:500','Under £500'],['500:1000','£500–£1,000'],['1000:2000','£1,000–£2,000'],['2000:','£2,000+']],
+  EUR:[['','Monthly budget'],['0:500','Under €500'],['500:1000','€500–€1,000'],['1000:2000','€1,000–€2,000'],['2000:','€2,000+']],
+  JPY:[['','Monthly budget'],['0:80000','Under ¥80,000'],['80000:150000','¥80,000–¥150,000'],['150000:300000','¥150,000–¥300,000'],['300000:','¥300,000+']],
+  SGD:[['','Monthly budget'],['0:1500','Under S$1,500'],['1500:3000','S$1,500–S$3,000'],['3000:6000','S$3,000–S$6,000'],['6000:','S$6,000+']],
+  SAR:[['','Monthly budget'],['0:2000','Under ﷼2,000'],['2000:5000','﷼2,000–﷼5,000'],['5000:10000','﷼5,000–﷼10,000'],['10000:','﷼10,000+']]
+ };
+ return presets[currency]||presets.USD;
+}
+function syncRentalBudgetCurrency(){
+ const el=document.getElementById('rentalBudget');if(!el)return;
+ const current=el.value;el.innerHTML=rentalBudgetPresets(selectedCurrency).map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
+ if([...el.options].some(o=>o.value===current))el.value=current;
 }
 async function findRentals(){const city=document.getElementById('rentalLocation')?.value.trim()||'';const type=document.getElementById('rentalType')?.value||'';const range=document.getElementById('rentalBudget')?.value||'';const [min,max]=range.split(':');const extra={intent:'rent',city,property_type:type};if(min)extra.min_price=min;if(max)extra.max_price=max;await searchProperties(extra);}
 let gbkRecognition=null;
@@ -518,10 +539,10 @@ function currencyFor(c){return currencyByCountry[c]||['USD','$']}
 function openCountry(){renderCountries(countries);document.getElementById('country').classList.add('show')}
 function renderCountries(list){document.getElementById('countries').innerHTML=list.map(c=>{const [code,sym]=currencyFor(c);return `<button onclick="chooseCountry('${c.replace(/'/g,"\'")}')">${countryFlag(c)} ${c}<small style="display:block;color:var(--muted);margin-top:3px;font-weight:800">${code} ${sym}</small></button>`}).join("")}
 function filterCountries(){const q=document.getElementById('countrySearch').value.toLowerCase();renderCountries(countries.filter(c=>c.toLowerCase().includes(q)))}
-function chooseCountry(c){selectedCountry=c;[selectedCurrency,selectedCurrencySymbol]=currencyFor(c);localStorage.setItem('gbk_country',c);localStorage.setItem('gbk_currency',selectedCurrency);localStorage.setItem('gbk_currency_symbol',selectedCurrencySymbol);document.querySelector('.topbar').textContent=`🌍 GBK AI Real Estate · ${c} · ${selectedCurrency} ${selectedCurrencySymbol} · Global property discovery`;document.getElementById('currencyBtn').textContent=`💱 ${selectedCurrency} ${selectedCurrencySymbol}`;closeById('country');showCurrency();updateTopSelectors()}
+function chooseCountry(c){selectedCountry=c;[selectedCurrency,selectedCurrencySymbol]=currencyFor(c);localStorage.setItem('gbk_country',c);localStorage.setItem('gbk_currency',selectedCurrency);localStorage.setItem('gbk_currency_symbol',selectedCurrencySymbol);document.querySelector('.topbar').textContent=`🌍 GBK AI Real Estate · ${c} · ${selectedCurrency} ${selectedCurrencySymbol} · Global property discovery`;document.getElementById('currencyBtn').textContent=`💱 ${selectedCurrency} ${selectedCurrencySymbol}`;closeById('country');showCurrency();updateTopSelectors();syncRentalBudgetCurrency()}
 function showCurrency(){const card=document.getElementById('currencyCard');if(card){card.textContent=`${selectedCurrencySymbol}  ${selectedCurrency} · ${selectedCountry}`;document.getElementById('currencyInfo').textContent=`Local currency selected automatically for ${selectedCountry}.`;}}
 function openCurrency(){showCurrency();document.getElementById('currency').classList.add('show')}
-function initCountryCurrency(){const [code,sym]=currencyFor(selectedCountry);selectedCurrency=code;selectedCurrencySymbol=sym;document.getElementById('currencyBtn').textContent=`💱 ${code} ${sym}`;document.querySelector('.topbar').textContent=`🌍 GBK AI Real Estate · ${selectedCountry} · ${code} ${sym} · Global property discovery`;showCurrency();updateTopSelectors()}
+function initCountryCurrency(){const [code,sym]=currencyFor(selectedCountry);selectedCurrency=code;selectedCurrencySymbol=sym;document.getElementById('currencyBtn').textContent=`💱 ${code} ${sym}`;document.querySelector('.topbar').textContent=`🌍 GBK AI Real Estate · ${selectedCountry} · ${code} ${sym} · Global property discovery`;showCurrency();updateTopSelectors();syncRentalBudgetCurrency()}
 function openLanguage(){const el=document.getElementById('languageSelect');el.innerHTML=languages.map(x=>`<option>${x}</option>`).join("");document.getElementById('language').classList.add('show')}
 function saveLanguage(){const x=document.getElementById('languageSelect').value;document.querySelector('.topbar').textContent=`🌐 ${x} · GBK AI Real Estate · Global property discovery · 195+ countries`;closeById('language')}
 
@@ -579,6 +600,7 @@ async function installApp(){
 }
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 initCountryCurrency();
+syncRentalBudgetCurrency();
 </script>
 
 <script>
