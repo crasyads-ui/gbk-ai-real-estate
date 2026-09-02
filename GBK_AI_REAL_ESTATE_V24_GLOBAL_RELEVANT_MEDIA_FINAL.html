@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07152f">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<title>GBK AI Real Estate — V24 Global Relevant Media Final</title>
+<style>
+*{box-sizing:border-box}
+:root{--navy:#07152f;--navy2:#0b2145;--gold:#f7c843;--violet:#7656ff;--ink:#101b2d;--muted:#6d7a90;--bg:#f5f7fb;--line:#e1e6ef;--white:#fff;--green:#178b5b}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;overflow-x:hidden}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{background:var(--navy);color:#dce7f7;padding:8px 5%;font-size:12px;text-align:center}
+.header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.nav{max-width:1280px;margin:auto;min-height:72px;padding:9px 4%;display:flex;align-items:center;gap:18px}
+.logo{font-weight:950;font-size:22px;line-height:.9;color:var(--navy);min-width:130px}.logo span{color:var(--gold);display:block;font-size:22px}.logo small{font-size:8px;letter-spacing:2.2px;display:block;margin-top:6px}
+.navlinks{display:flex;gap:16px;flex:1;justify-content:center}.navlinks a{text-decoration:none;color:#425069;font-size:12px;font-weight:800}.navlinks a:hover{color:var(--violet)}
+.header select{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 11px;color:#27344a;font-size:12px;max-width:145px}
+.btn{border:0;border-radius:11px;padding:11px 15px;font-weight:900}.btn-outline{background:#fff;border:1px solid #d6dce7}.btn-dark{background:var(--navy);color:#fff}.btn-gold{background:var(--gold);color:#111}.btn-violet{background:var(--violet);color:#fff}
+.container{max-width:1280px;margin:auto;padding:0 4%}
+.hero{background:var(--navy);color:#fff}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:34px;align-items:center;padding:56px 0}
+.eyebrow{color:var(--gold);font-size:12px;letter-spacing:2px;font-weight:950}.hero h1{font-size:clamp(40px,5vw,66px);line-height:.98;margin:12px 0 18px;max-width:760px}.hero p{color:#c0cee3;max-width:690px;font-size:17px;line-height:1.6;margin:0 0 20px}
+.intent{display:flex;gap:8px;margin:0 0 14px}.intent button{background:#10284c;border:1px solid #5c7092;color:#fff;border-radius:30px;padding:9px 17px}.intent .active{background:var(--gold);color:#111;border-color:var(--gold)}
+.search{background:#fff;border-radius:18px;padding:9px;display:grid;grid-template-columns:1.7fr .9fr .9fr auto;gap:8px;box-shadow:0 18px 45px #0004}.search input,.search select{min-width:0;border:1px solid var(--line);border-radius:11px;padding:13px;outline:0;background:#fff}.search button{border:0;border-radius:11px;background:var(--violet);color:#fff;font-weight:950;padding:0 19px}
+.helper{font-size:11px;color:#9fb0c9;margin-top:10px}
+.hero-card{border:1px solid #617393;border-radius:26px;min-height:410px;background:linear-gradient(145deg,#162f55,#24185f 65%,#09162d);position:relative;overflow:hidden;padding:20px;display:flex;align-items:flex-end}
+.property-art{position:absolute;inset:0;background:
+radial-gradient(circle at 72% 24%,#fff7 0 5%,transparent 6%),
+linear-gradient(160deg,transparent 0 45%,#1c3c5c 46% 62%,#0d203d 63%),
+linear-gradient(180deg,#7b9dc0 0 42%,#172d4c 43% 100%);opacity:.9}
+.property-art:before{content:"";position:absolute;left:9%;right:20%;bottom:19%;height:36%;background:linear-gradient(135deg,#e6e0d3,#a99b8a);clip-path:polygon(0 25%,38% 0,72% 17%,100% 0,100% 100%,0 100%);box-shadow:0 12px 30px #0007}
+.property-art:after{content:"";position:absolute;left:28%;bottom:19%;width:12%;height:19%;background:#233e55;box-shadow:95px 18px 0 #233e55,190px -8px 0 #233e55}
+.advisor{position:relative;margin-left:auto;width:min(310px,100%);background:#07152fee;border:1px solid #7182a1;border-radius:17px;padding:16px}.advisor b{display:block;margin-bottom:7px}.advisor p{font-size:12px;line-height:1.55;color:#c8d5e8;margin:0}.advisor button{margin-top:11px;width:100%;padding:10px;border:0;border-radius:10px;background:var(--gold);font-weight:950}
+.section{padding:38px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:17px}.section-head h2{margin:0;font-size:28px}.section-head p{margin:5px 0 0;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(6,1fr);gap:11px}.quick .q{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;min-height:130px;text-decoration:none;color:var(--ink);transition:.15s}.q:hover{transform:translateY(-2px);box-shadow:0 10px 25px #14244212}.q .icon{font-size:27px}.q b{display:block;margin-top:10px;font-size:15px}.q span{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:4px}
+.two{display:grid;grid-template-columns:1.5fr .75fr;gap:16px}.property-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.visual{height:205px;position:relative;overflow:hidden}.visual.v1{background:linear-gradient(180deg,#a8c6de 0 45%,#5c8060 46% 100%)}.visual.v2{background:linear-gradient(180deg,#9cb3cf 0 43%,#9b9a89 44% 100%)}.visual.v3{background:linear-gradient(180deg,#8bb0c5 0 47%,#6d8c55 48% 100%)}.visual.v4{background:linear-gradient(180deg,#7f91a8 0 46%,#4e5660 47% 100%)}.visual:before{content:"";position:absolute;left:12%;bottom:18%;width:64%;height:48%;background:linear-gradient(135deg,#eee5d5,#9e927e);clip-path:polygon(0 28%,50% 0,100% 28%,100% 100%,0 100%);box-shadow:0 10px 20px #0004}.visual:after{content:"";position:absolute;left:34%;bottom:18%;width:10%;height:25%;background:#25445a;box-shadow:60px 12px 0 #25445a}
+.badge{position:absolute;top:12px;left:12px;background:#fff;padding:6px 9px;border-radius:18px;font-size:10px;font-weight:950}.fav{position:absolute;right:12px;top:12px;border:0;background:#fff;border-radius:50%;width:34px;height:34px}.body{padding:14px}.body h3{margin:0 0 4px;font-size:17px}.price{font-size:20px;color:var(--green);font-weight:950;margin:8px 0}.stats{font-size:11px;color:var(--muted)}
+.rental{background:var(--navy);color:#fff;border-radius:19px;padding:21px}.rental h3{margin:0 0 7px;font-size:21px}.rental p{color:#c2d0e4;font-size:12px;line-height:1.5}.rental input,.rental select{width:100%;padding:12px;border:0;border-radius:10px;margin:5px 0}.rental .btn{width:100%;margin-top:7px}
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;min-height:145px}.tool .icon{font-size:25px}.tool b{display:block;margin:10px 0 5px}.tool p{color:var(--muted);font-size:12px;line-height:1.5;margin:0}
+.media{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tour{height:220px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(145deg,#1b3151,#5e7790)}.tour:nth-child(2){background:linear-gradient(145deg,#3b4a5b,#a0aaaf)}.tour:nth-child(3){background:linear-gradient(145deg,#304d39,#8a9b61)}.tour .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;border:0;background:#fff;color:var(--navy);font-size:20px}.tour label{position:absolute;left:12px;bottom:12px;background:#07152fe8;color:#fff;padding:8px 10px;border-radius:9px;font-size:11px;font-weight:850}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.plan{background:#fff;border:1px solid var(--line);border-radius:18px;padding:21px}.plan.best{border:2px solid var(--gold)}.plan h3{margin:0}.cost{font-size:30px;font-weight:950;margin:8px 0}.plan small{font-size:12px;font-weight:700}.plan ul{color:var(--muted);font-size:12px;line-height:1.9;padding-left:20px}.plan .btn{margin-top:4px} .usd-ref{font-size:11px;color:var(--muted);font-weight:800;margin:-3px 0 8px}
+.banner{background:linear-gradient(110deg,#07152f,#3c2494);color:#fff;border-radius:21px;padding:27px;display:flex;justify-content:space-between;align-items:center;gap:18px}.banner h2{margin:0 0 6px}.banner p{color:#c5d1e4;margin:0;font-size:13px}
+.footer{background:#061228;color:#9eb0c9;padding:32px 0;font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:20px}.footer strong{color:#fff}.legal{margin-top:14px;line-height:1.55}
+.bottom{display:none}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:50;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.modal-box{background:#fff;border-radius:18px;padding:22px;width:min(510px,100%)}.modal-box h2{margin:0 0 7px}.modal-box p{color:var(--muted);font-size:13px}.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;margin:5px 0}.close{float:right;border:0;background:none;font-size:24px}.country-list{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-height:260px;overflow:auto;margin:10px 0}.country-list button{background:#f7f8fb;border:1px solid var(--line);border-radius:8px;padding:8px;text-align:left;font-size:11px}
+@media(max-width:1050px){.navlinks{display:none}.quick{grid-template-columns:repeat(3,1fr)}.tools{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.nav{min-height:64px;gap:8px}.logo{min-width:100px;font-size:19px}.logo span{font-size:19px}.header select{display:none}.nav .btn{padding:9px 10px;font-size:11px;min-height:44px}.hero-grid{grid-template-columns:1fr;padding:40px 0}.hero-card{min-height:330px}.two{grid-template-columns:1fr}.media{grid-template-columns:1fr 1fr}.plans{grid-template-columns:1fr}.bottom{display:flex;position:fixed;bottom:0;left:0;right:0;height:65px;background:#07152ff7;backdrop-filter:blur(10px);z-index:25;justify-content:space-around}.bottom a{color:#d7e1f1;text-decoration:none;font-size:10px;font-weight:800;text-align:center;padding-top:10px}.bottom span{display:block;font-size:20px;margin-bottom:3px}}
+@media(max-width:380px){.nav{gap:5px}.logo{min-width:82px;font-size:18px}.logo span{font-size:18px}.nav .head-country,.nav .head-language{width:42px!important;min-width:42px!important;font-size:15px!important}.nav .install-btn{width:42px!important;min-width:42px!important;font-size:15px!important}.install-label{display:none!important}.nav > .btn.btn-dark{padding:8px 7px!important;font-size:10px!important}}
+@media(max-width:560px){.container{padding:0 4%}.hero h1{font-size:40px}.hero p{font-size:15px}.search{grid-template-columns:1fr;padding:8px}.search button{padding:13px}.quick{grid-template-columns:repeat(2,1fr)}.quick .q{min-height:118px;padding:14px}.property-grid{grid-template-columns:1fr}.tools{grid-template-columns:1fr 1fr}.media{grid-template-columns:1fr}.tour{height:200px}.section{padding:30px 0}.section-head{align-items:flex-start}.section-head h2{font-size:25px}.section-head .btn{display:none}.footer{padding-bottom:80px}.footer-inner{flex-direction:column}.country-list{grid-template-columns:1fr}}
+
+
+<style>
+.visual,.tour{background-color:#dbe6ef!important}
+.visual.v1,.tour:nth-child(1){background:linear-gradient(180deg,#b9d5ea 0 45%,#789b70 46% 100%)!important}
+.visual.v2,.tour:nth-child(2){background:linear-gradient(180deg,#b4c9dd 0 43%,#9e9b8b 44% 100%)!important}
+.visual.v3,.tour:nth-child(3){background:linear-gradient(180deg,#9bc3d5 0 48%,#78935f 49% 100%)!important}
+.visual.v4{background:linear-gradient(180deg,#91a2b8 0 46%,#59616c 47% 100%)!important}
+.visual:before,.tour:before{content:"";position:absolute;left:12%;bottom:18%;width:64%;height:48%;background:linear-gradient(135deg,#f0e8da,#a99b86);clip-path:polygon(0 28%,50% 0,100% 28%,100% 100%,0 100%);box-shadow:0 10px 20px #0004}
+.visual:after,.tour:after{content:"";position:absolute;left:34%;bottom:18%;width:10%;height:25%;background:#29465a;box-shadow:60px 12px 0 #29465a}
+.tour:after{content:"▶";left:50%;top:50%;bottom:auto;width:54px;height:54px;transform:translate(-50%,-50%);background:#fff;color:#07152f;border-radius:50%;box-shadow:none;display:grid;place-items:center;font-size:19px;font-weight:900}
+</style>
+<style>
+/* V4.1 responsive polish */
+.nav{overflow:hidden}
+.install-btn{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.install-btn[hidden]{display:inline-flex!important}
+.install-label{font-size:11px}
+.nav > *{flex-shrink:0}
+@media(max-width:820px){
+  .nav{padding:7px 2.5%;gap:5px;min-height:62px}
+  .logo{min-width:60px!important;width:60px;font-size:17px!important}.logo span{font-size:17px!important}.logo small{font-size:6.2px!important;letter-spacing:1.3px!important}
+  .nav > .btn.btn-outline:not(.install-btn){padding:8px 6px!important;font-size:10.5px!important;min-height:42px!important}
+  .install-btn{display:inline-flex!important;align-items:center;justify-content:center;gap:4px;width:auto!important;min-width:54px!important;padding:8px 9px!important;font-size:16px!important}
+  .nav .btn-dark{min-width:78px!important;padding:8px 7px!important;font-size:10.5px!important;min-height:42px!important}
+  .install-label{display:inline;font-size:9px;font-weight:900}
+  .nav{padding:7px 3%;gap:7px;min-height:62px}
+  .logo{min-width:88px;font-size:18px}.logo span{font-size:18px}.logo small{font-size:7px;letter-spacing:1.8px}
+  .navlinks{display:none}
+  .nav .btn{padding:9px 10px;font-size:11px;line-height:1.05;min-height:44px}
+  .nav .btn-dark{min-width:92px}
+  .currency-btn{display:none}
+  .section{overflow:hidden}
+  .plans{gap:14px}
+  .plan{padding:20px!important;border-radius:18px}
+  .plan .cost{font-size:36px!important}
+  .plan ul{padding-left:19px}
+}
+@media(max-width:560px){
+  .nav{justify-content:flex-start}
+  .nav > .btn[onclick*="openModal('List your property'"]{display:none}
+  .nav .btn-outline{min-width:76px}
+  .nav .btn-dark{min-width:92px}
+  .hero-grid{padding:30px 0}
+  .hero h1{font-size:clamp(34px,10vw,44px)}
+  .hero-card{min-height:290px}
+  .search{grid-template-columns:1fr!important}
+  .search button{min-height:48px}
+  .quick{grid-template-columns:1fr 1fr}
+  .quick .q{min-height:112px}
+  .plans{grid-template-columns:1fr!important}
+  .plan{min-width:0;overflow:hidden}
+  .plan .btn{width:100%;max-width:100%;font-size:14px}
+  .section-head{display:block}
+  .section-head h2{font-size:25px;line-height:1.12}
+  .section-head p{font-size:14px;line-height:1.45}
+  .banner{padding:22px!important}
+  .banner h2{font-size:25px!important}
+  .media{grid-template-columns:1fr!important}
+  .tour{height:190px!important}
+  .footer{padding-bottom:88px}
+  .bottom{height:70px}
+}
+@media(min-width:821px){.plans{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* V4.5 mobile header: compact, professional, all primary controls visible */
+@media(max-width:560px){
+  .nav{justify-content:space-between!important;padding:7px 8px!important;gap:4px!important;overflow:visible!important}
+  .logo{width:68px!important;min-width:68px!important;font-size:16px!important}
+  .logo span{font-size:16px!important}.logo small{font-size:5.5px!important;letter-spacing:1.1px!important}
+  .nav .head-country,.nav .head-language{width:52px!important;min-width:52px!important;padding:8px 2px!important;font-size:16px!important}
+  .nav .head-label{display:none!important}
+  .nav .install-btn{width:54px!important;min-width:54px!important;padding:8px 3px!important;font-size:16px!important;display:inline-flex!important}
+  .nav .btn-dark{width:76px!important;min-width:76px!important;padding:8px 4px!important;font-size:10px!important;line-height:1.05!important}
+}
+</style>
+
+<style>
+/* V4.7 mobile brand/header correction */
+@media(max-width:560px){
+  .nav{padding:7px 8px!important;gap:3px!important;justify-content:space-between!important;overflow:visible!important}
+  .logo{width:88px!important;min-width:88px!important;font-size:21px!important;line-height:.92!important}
+  .logo span{font-size:21px!important}.logo small{font-size:6.5px!important;letter-spacing:1.35px!important;margin-top:5px!important}
+  .nav .head-country,.nav .head-language{width:45px!important;min-width:45px!important;height:46px!important;padding:7px 1px!important;font-size:16px!important}
+  .nav .head-label{display:none!important}
+  .nav .install-btn{width:55px!important;min-width:55px!important;height:46px!important;padding:7px 3px!important;font-size:16px!important}
+  .nav .install-label{display:inline!important;font-size:8.5px!important}
+  .nav .btn-dark{width:85px!important;min-width:85px!important;height:46px!important;padding:7px 4px!important;font-size:10.5px!important;line-height:1.05!important}
+}
+@media(max-width:380px){
+  .nav{padding-left:6px!important;padding-right:6px!important;gap:2px!important}
+  .logo{width:82px!important;min-width:82px!important;font-size:20px!important}.logo span{font-size:20px!important}.logo small{font-size:6px!important}
+  .nav .head-country,.nav .head-language{width:42px!important;min-width:42px!important}
+  .nav .install-btn{width:52px!important;min-width:52px!important}.nav .btn-dark{width:80px!important;min-width:80px!important}
+}
+</style>
+
+<style>
+/* V4.8: restore a strong, readable GBK AI Real Estate mobile brand */
+@media(max-width:560px){
+  .header{min-height:74px!important}
+  .nav{min-height:74px!important;height:74px!important;padding:7px 7px!important;gap:4px!important;justify-content:space-between!important;overflow:visible!important}
+  .logo{width:116px!important;min-width:116px!important;font-size:27px!important;line-height:.9!important;letter-spacing:-.4px!important}
+  .logo span{font-size:27px!important;line-height:.9!important}
+  .logo small{font-size:8px!important;letter-spacing:1.5px!important;margin-top:6px!important;white-space:nowrap!important}
+  .nav .head-country,.nav .head-language{width:45px!important;min-width:45px!important;height:48px!important;padding:7px 1px!important;font-size:17px!important}
+  .nav .install-btn{width:48px!important;min-width:48px!important;height:48px!important;padding:7px 2px!important;font-size:17px!important}
+  .nav .install-label{display:none!important}
+  .nav .btn-dark{width:82px!important;min-width:82px!important;height:48px!important;padding:7px 4px!important;font-size:11px!important;line-height:1.05!important}
+}
+@media(max-width:380px){
+  .nav{padding-left:5px!important;padding-right:5px!important;gap:3px!important}
+  .logo{width:112px!important;min-width:112px!important;font-size:26px!important}
+  .logo span{font-size:26px!important}
+  .logo small{font-size:7.5px!important;letter-spacing:1.35px!important}
+  .nav .head-country,.nav .head-language{width:43px!important;min-width:43px!important}
+  .nav .install-btn{width:46px!important;min-width:46px!important}
+  .nav .btn-dark{width:79px!important;min-width:79px!important;font-size:10.5px!important}
+}
+</style>
+
+<style>
+/* V7 mobile-first hierarchy: listing + support in the middle, rental directly below */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.action-grid .banner{height:100%;min-height:170px}.rental-wrap{margin-top:14px}.rental-wrap .rental{width:100%}.property-grid-wide{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1050px){.property-grid-wide{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.action-grid{grid-template-columns:1fr}.action-grid .banner{min-height:155px;padding:22px!important}.action-grid .banner h2{font-size:24px!important;line-height:1.1}.action-grid .banner p{font-size:14px!important;line-height:1.45}.action-grid .banner .btn{width:auto;min-width:145px}.rental-wrap{margin-top:12px}.property-grid-wide{grid-template-columns:1fr!important}.rental{padding:20px!important;border-radius:20px!important}.rental h3{font-size:24px!important}.rental p{font-size:15px!important}.rental input,.rental select{font-size:16px!important;padding:14px!important}.rental .btn{font-size:16px!important;min-height:52px}}
+</style>
+<style>
+/* V7 selected-language readability */
+html[lang="te"] body{font-family:"Noto Sans Telugu","Nirmala UI",system-ui,sans-serif}html[lang="hi"] body{font-family:"Noto Sans Devanagari","Nirmala UI",system-ui,sans-serif}
+html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacing:0}html[lang="te"] .section-head h2,html[lang="hi"] .section-head h2{line-height:1.2}html[lang="te"] .q b,html[lang="hi"] .q b,html[lang="te"] .tool b,html[lang="hi"] .tool b{line-height:1.25}
+</style>
+
+<style>
+/* V10: clear country + language names in top controls */
+.head-country,.head-language{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:145px}
+.head-country .head-label,.head-language .head-label{font-weight:900}
+@media(max-width:1050px){.nav .head-country,.nav .head-language{width:92px!important;min-width:92px!important;height:46px!important;font-size:11px!important;padding:7px 6px!important}.nav .head-label{display:inline!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+@media(max-width:560px){.nav .head-country,.nav .head-language{width:72px!important;min-width:72px!important;height:48px!important;font-size:10px!important;padding:6px 4px!important}.nav .head-label{display:inline!important;max-width:58px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nav .install-btn{width:44px!important;min-width:44px!important}.nav .btn-dark{width:70px!important;min-width:70px!important}}
+@media(max-width:380px){.nav .head-country,.nav .head-language{width:66px!important;min-width:66px!important;font-size:9px!important}.nav .head-label{max-width:52px}.nav .install-btn{width:42px!important;min-width:42px!important}.nav .btn-dark{width:66px!important;min-width:66px!important;font-size:9.5px!important}}
+
+.gbk-voice-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.gbk-voice-btn{border:1px solid #5c7092;background:#10284c;color:#fff;border-radius:11px;padding:10px 13px;font-weight:900}.gbk-voice-btn.listen{background:#f7c843;color:#111;border-color:#f7c843}.gbk-voice-btn.stop{background:#8f2630;border-color:#8f2630}.gbk-voice-status{font-size:11px;color:#9fb0c9;min-height:16px;margin-top:6px}.voice-explain{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.voice-explain button{border:0;border-radius:9px;padding:8px 10px;font-weight:850;background:#eef1f7;color:#17233a}.voice-explain button.stop{background:#8f2630;color:#fff}.voice-listening{outline:3px solid #f7c843;outline-offset:2px}
+</style>
+
+<style>
+/* V21 FINAL MOBILE RESPONSIVE FIX */
+html,body{max-width:100%;overflow-x:hidden}
+@media(max-width:560px){
+  .topbar{padding:7px 10px;font-size:10px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .header{width:100%;overflow:visible}
+  .nav{width:100%;min-height:68px!important;height:auto!important;padding:7px 8px!important;gap:5px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;overflow:visible!important}
+  .logo{flex:1 1 auto!important;width:auto!important;min-width:0!important;max-width:none!important;font-size:22px!important;line-height:.9!important;letter-spacing:-.3px!important;overflow:visible!important}
+  .logo span{font-size:22px!important}.logo small{font-size:6.5px!important;letter-spacing:1.2px!important;margin-top:5px!important}
+  .nav .head-country,.nav .head-language{flex:0 0 42px!important;width:42px!important;min-width:42px!important;height:44px!important;padding:5px 1px!important;font-size:15px!important;border-radius:10px!important;overflow:hidden!important}
+  .nav .head-label{display:none!important}
+  .nav .install-btn{flex:0 0 42px!important;width:42px!important;min-width:42px!important;height:44px!important;padding:5px 1px!important;font-size:16px!important}
+  .nav .currency-btn,.nav > .btn[onclick*="openModal('List your property'"]{display:none!important}
+  .nav .btn-dark{flex:0 0 74px!important;width:74px!important;min-width:74px!important;height:44px!important;padding:5px 3px!important;font-size:10px!important;line-height:1.05!important;border-radius:10px!important}
+  .hero-grid{padding:26px 0 30px!important;gap:20px!important}
+  .hero h1{font-size:clamp(32px,9.8vw,42px)!important;line-height:1.02!important;overflow-wrap:anywhere}
+  .hero p{font-size:15px!important;line-height:1.5!important}
+  .intent{flex-wrap:wrap}
+  .intent button{padding:9px 15px!important}
+  .search{width:100%!important;grid-template-columns:1fr!important;padding:8px!important;gap:8px!important}
+  .search input,.search select{width:100%!important;min-width:0!important;font-size:16px!important}
+  .search button{width:100%!important;min-height:50px!important}
+  .hero-card{min-height:250px!important;width:100%!important}
+  .advisor{width:100%!important;max-width:310px!important}
+  .quick,.property-grid,.property-grid-wide,.media,.tools,.plans{width:100%!important;min-width:0!important}
+  .quick{grid-template-columns:1fr 1fr!important;gap:10px!important}
+  .quick .q{min-width:0!important;padding:14px!important;overflow:hidden}
+  .two{grid-template-columns:1fr!important}
+  .card,.tool,.plan,.rental,.banner{min-width:0!important;max-width:100%!important}
+  .body h3,.section-head h2{overflow-wrap:anywhere}
+  .media{grid-template-columns:1fr!important}
+  .tour,.visual{width:100%!important;max-width:100%!important}
+  .modal{padding:10px!important}
+  .modal-box{width:100%!important;max-height:90vh;overflow:auto;padding:18px!important}
+  .country-list{grid-template-columns:1fr!important}
+  .footer{padding-bottom:92px!important}
+  .bottom{height:70px!important;padding-bottom:env(safe-area-inset-bottom)!important}
+}
+@media(max-width:360px){
+  .nav{padding-left:5px!important;padding-right:5px!important;gap:3px!important}
+  .logo{font-size:20px!important}.logo span{font-size:20px!important}.logo small{font-size:6px!important}
+  .nav .head-country,.nav .head-language,.nav .install-btn{flex-basis:39px!important;width:39px!important;min-width:39px!important}
+  .nav .btn-dark{flex-basis:70px!important;width:70px!important;min-width:70px!important;font-size:9.5px!important}
+}
+</style>
+</head>
+<body>
+<div class="topbar">🌍 GBK AI Real Estate · Global property discovery · 195+ countries · Multilingual AI</div>
+<header class="header">
+<nav class="nav">
+  <div class="logo">⌂ GBK<span>AI</span><small>REAL ESTATE</small></div>
+  <div class="navlinks"><a href="#find">Find</a><a href="#rent">Rent</a><a href="#sell">Sell</a><a href="#ai">AI Tools</a><a href="#pro">Professionals</a><a href="#earn">Earn</a></div>
+  <button class="btn btn-outline head-country" id="countryTopBtn" onclick="openCountry()" aria-label="Choose country">🌍 <span class="head-label">Country</span></button>
+  <button class="btn btn-outline head-language" id="languageTopBtn" onclick="openLanguage()" aria-label="Choose language">🌐 <span class="head-label">Language</span></button>
+  <button class="btn btn-outline install-btn" id="installBtn" onclick="installApp()" title="Add to Home Screen" aria-label="Add GBK AI Real Estate to home screen">📲 <span class="install-label">Install</span></button>
+  <button class="btn btn-outline currency-btn" id="currencyBtn" onclick="openCurrency()">💱 USD $</button>
+  <button class="btn btn-outline" onclick="openModal('List your property','Create a property listing with photos, video and multilingual AI description.')">List Property</button>
+  <button class="btn btn-dark" onclick="openRegistration()">Login / Register</button>
+</nav>
+</header>
+
+<main>
+<section class="hero">
+ <div class="container hero-grid">
+  <div>
+   <div class="eyebrow">PROPERTY, REIMAGINED WITH AI</div>
+   <h1>Tell us what you need. GBK AI helps you decide.</h1>
+   <p>Buy, rent or sell homes, villas, land and commercial property across the world. Search in your language and compare what matters before you contact anyone.</p>
+   <div class="intent"><button class="active" onclick="setIntent(this)">Buy</button><button onclick="setIntent(this)">Rent</button><button onclick="setIntent(this)">Sell</button></div>
+   <div class="search">
+    <input id="need" placeholder="“3 bedroom near a school…”">
+    <select id="type"><option>Any property</option><option>House</option><option>Apartment</option><option>Villa</option><option>Land / Plot</option><option>Commercial</option><option>Farmland</option></select>
+    <input id="location" placeholder="City, region or country">
+    <button onclick="askAI()">Ask GBK AI</button>
+   </div>
+   <div id="searchMsg" class="helper">Search globally with relevance: exact location → nearby/local areas → region → country → global.</div>
+   <div class="gbk-voice-row" aria-label="GBK AI voice controls">
+    <button id="voiceAskBtn" class="gbk-voice-btn listen" onclick="startGbkVoiceAsk()">🎙️ Ask GBK AI · Listen</button>
+    <button id="voiceStopBtn" class="gbk-voice-btn stop" onclick="stopGbkVoice()" style="display:none">⏹ Stop</button>
+   </div>
+   <div id="voiceStatus" class="gbk-voice-status" aria-live="polite"></div>
+  </div>
+  <div class="hero-card">
+    <div class="property-art"></div>
+    <div class="advisor"><b>🤖 GBK AI Property Advisor</b><p>“Compare properties, understand costs, prepare questions and search in your preferred language.”</p><button onclick="openModal('Ask GBK AI','Describe your property need and connect this interface to the production GBK AI service.')">Ask GBK AI →</button></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="find"><div class="container">
+ <div class="section-head"><div><h2>Start with what you need</h2><p>Simple choices for every country and property type.</p></div></div>
+ <div class="quick">
+  <a class="q" href="#properties"><div class="icon">🏡</div><b>Buy a Home</b><span>Houses, apartments & villas</span></a>
+  <a class="q" href="#rent"><div class="icon">🔑</div><b>Find a Rental</b><span>Nearby rentals by budget</span></a>
+  <a class="q" href="#properties"><div class="icon">📐</div><b>Find Land</b><span>Plots, farmland & land</span></a>
+  <a class="q" href="#properties"><div class="icon">🏢</div><b>Commercial</b><span>Offices, shops & spaces</span></a>
+  <a class="q" href="#pro"><div class="icon">🏗️</div><b>New Projects</b><span>Developers & projects</span></a>
+  <a class="q" href="#sell"><div class="icon">💼</div><b>List Property</b><span>Owners & professionals</span></a>
+ </div>
+</div></section>
+
+<section class="section middle-actions"><div class="container">
+ <div class="action-grid">
+  <section class="banner" id="sell"><div><h2>Have a property to sell or rent?</h2><p>Create a multilingual listing with photos, video and AI-assisted descriptions.</p></div><button class="btn btn-gold" onclick="openModal('List your property','Enter your property details and upload media in the production listing flow.')">List Property →</button></section>
+  <section class="banner"><div><h2>🤖 GBK AI Customer Support</h2><p>24/7 help for buyers, renters, sellers, agents and developers — in the selected language.</p></div><button class="btn btn-gold" onclick="openModal('GBK AI Customer Support','Ask your question in your language. Connect the production AI support service here.')">Chat with GBK AI →</button></section>
+ </div>
+ <div class="rental-wrap"><aside class="rental" id="rent"><h3>📍 Rental Finder</h3><p>Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.</p><input id="rentalLocation" placeholder="City / area"><select id="rentalBudget" onchange="syncRentalBudgetCurrency()"><option value="">Monthly budget</option></select><select id="rentalType"><option value="">Property type</option><option>Apartment</option><option>House</option><option>Room</option></select><button class="btn btn-gold" onclick="findRentals()">Find rentals with GBK AI →</button><p>🎁 Eligible GBK promotional rewards can appear in the connected Wallet.</p></aside></div>
+</div></section>
+
+<section class="section" id="properties"><div class="container">
+ <div class="section-head"><div><h2>Explore property</h2><p>Global property discovery with exact-location relevance first, then nearby/local areas, regional matches and global results — with source, trust and freshness signals.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><label for="freshnessFilter" style="font-size:11px;color:var(--muted);font-weight:800">Freshness</label><select id="freshnessFilter" class="btn btn-outline" style="padding:10px 12px;background:#fff" onchange="searchProperties()"><option value="30" selected>Relevant · 30 days</option><option value="7">Latest · 7 days</option><option value="all">All available</option></select><button class="btn btn-outline" onclick="searchProperties()">Search all →</button></div></div>
+ <div id="propertyResults" class="property-grid property-grid-wide"><article class="card"><div class="body" style="padding:24px"><b>Loading live GBK property data…</b><div class="stats" style="margin-top:6px">Connecting to the Real Estate API.</div></div></article></div>
+</div></section>
+
+<section class="section" id="mediaTours"><div class="container"><div class="section-head"><div><h2>See it before you visit</h2><p>Real property photos and video tours appear here when the live listing source provides them.</p></div></div><div id="propertyMedia" class="media"><div class="tour"><div class="body" style="padding:24px;text-align:center"><b>Live property media</b><div class="stats" style="margin-top:6px">Search for a property to load real photos and available video tours.</div></div></div></div></div></section>
+<section class="section" id="sourceCompare"><div class="container"><div class="section-head"><div><h2>Latest listings & source comparison</h2><p>Compare the newest connected property feeds, source counts and freshness before choosing a listing.</p></div><button class="btn btn-outline" onclick="loadSourceComparison()">Compare live sources →</button></div><div id="sourceComparison" class="grid"><article class="card"><div class="body" style="padding:20px"><b>Source comparison</b><div class="stats" style="margin-top:6px">Connect live provider feeds to compare current listings across approved sources.</div></div></article></div></div></section>
+
+<section class="section" id="ai"><div class="container"><div class="section-head"><div><h2>GBK AI decision tools</h2><p>More useful than a listing directory: help people understand the choice.</p></div></div><div class="tools">
+ <div class="tool"><div class="icon">🤖</div><b>AI Property Advisor</b><p>Describe your needs and build a shortlist from available property facts.</p></div>
+ <div class="tool"><div class="icon">⚖️</div><b>Compare Properties</b><p>Compare price, size, location, features and available costs side by side.</p></div>
+ <div class="tool"><div class="icon">🧮</div><b>Total Cost Estimator</b><p>Estimate financing, fees and ongoing costs where reliable data is available.</p></div>
+ <div class="tool"><div class="icon">📄</div><b>Document Explainer</b><p>Explain uploaded property documents in plain language; not legal advice.</p></div>
+ <div class="tool"><div class="icon">📍</div><b>Location Intelligence</b><p>Explore nearby facilities and relevant location information.</p></div>
+ <div class="tool"><div class="icon">🛡️</div><b>Trust Signals</b><p>Show source, verification status and update date instead of hiding uncertainty.</p></div>
+ <div class="tool"><div class="icon">📸</div><b>AI Listing Builder</b><p>Create multilingual listing copy from property details and media.</p></div>
+ <div class="tool"><div class="icon">🌐</div><b>Global Language AI</b><p>Search, explain and support customers in their preferred language.</p></div>
+</div></div></section>
+
+
+</main>
+
+<section class="section" id="earn"><div class="container">
+ <div class="section-head"><div><h2>🎁 Share & Earn GBK</h2><p>Register first, then share your personal GBK AI link. Eligible shares can earn GBK tokens after backend verification.</p></div></div>
+ <div style="background:var(--navy);color:#fff;border-radius:20px;padding:20px;display:grid;gap:12px">
+  <div><b style="font-size:20px">Share your GBK AI link</b><p style="margin:6px 0;color:#cbd5e1">Registration is required before the earn button becomes available.</p></div>
+  <div id="earnStatus" style="background:rgba(255,255,255,.08);border-radius:12px;padding:12px">Not registered yet.</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-gold" id="shareEarnBtn" onclick="shareAndEarn()">🔗 Register to Share & Earn</button><button class="btn btn-outline" id="copyShareBtn" onclick="copyShareLink()" style="display:none">Copy share link</button></div>
+  <div id="shareResult" style="font-size:13px;color:#dbeafe"></div>
+ </div>
+</div></section>
+
+<section class="section" id="plans"><div class="container">
+ <div class="section-head"><div><h2>Professional plans</h2><p>USD protocol reference is shown for context. Subscription payment is collected in GBK tokens to support the GBK ecosystem.</p></div></div>
+ <div class="plans">
+  <div class="plan"><h3>Agent Pro</h3><div class="cost" id="agentPrice">5,000 <small>GBK / month</small></div><div class="usd-ref">USD protocol reference: $19</div>
+   <ul><li>Professional profile</li><li>Property listings</li><li>AI listing descriptions</li><li>Lead & enquiry tools</li></ul>
+   <button class="btn btn-dark" onclick="openPayment('agent_pro')">Pay 5,000 GBK</button>
+  </div>
+  <div class="plan best"><h3>Developer Pro</h3><div class="cost" id="developerPrice">25,000 <small>GBK / month</small></div><div class="usd-ref">USD protocol reference: $49</div>
+   <ul><li>Project pages</li><li>Multiple property listings</li><li>Featured campaigns</li><li>Lead analytics</li></ul>
+   <button class="btn btn-dark" onclick="openPayment('developer_pro')">Pay 25,000 GBK</button>
+  </div>
+  <div class="plan"><h3>Enterprise</h3><div class="cost" id="enterprisePrice">50,000 <small>GBK / month</small></div><div class="usd-ref">USD protocol reference: $99</div>
+   <ul><li>Large property portfolios</li><li>Team accounts</li><li>Rental management</li><li>Integration options</li></ul>
+   <button class="btn btn-dark" onclick="openPayment('enterprise')">Pay 50,000 GBK</button>
+  </div>
+ </div>
+ <div style="margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;font-size:12px;color:var(--muted)">
+  <b style="color:var(--ink)">🔐 GBK token payment</b> — enter the paying BNB wallet and transaction hash. The secure GBK backend records the payment as <b>pending</b> until the wallet transaction is verified.
+  <button class="btn btn-outline" style="float:right;padding:7px 10px;font-size:11px" onclick="openPaymentStatus()">Payment status</button>
+  <div style="clear:both"></div>
+ </div>
+</div></section>
+
+<footer class="footer"><div class="container footer-inner"><div><strong>GBK AI Real Estate</strong><br>Find · Compare · Calculate · Verify · Decide</div><div>🌍 195+ countries · 🌐 Multilingual · 🤖 AI Support · 🛡️ Trust Signals</div></div><div class="container legal">Prototype listings and prices are illustrative. Production listing data, verification, legal records, availability and pricing must come from appropriate live/licensed sources. Calculators are estimates and are not financial or legal advice.</div></footer>
+
+<nav class="bottom"><a href="#find"><span>⌂</span>Home</a><a href="#properties"><span>🔎</span>Find</a><a href="#rent"><span>🔑</span>Rent</a><a href="#ai"><span>🤖</span>AI</a><a href="#pro"><span>💼</span>Pro</a></nav>
+
+
+<div class="modal" id="installModal"><div class="modal-box"><button class="close" onclick="closeById('installModal')">×</button><h2>📲 Add GBK AI to Home Screen</h2><p id="installText">Install GBK AI Real Estate for a faster, app-like experience.</p><div id="installAction" style="display:none;margin:10px 0"></div><div style="background:#f7f8fb;border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.65;font-size:13px"><b>Android / Chrome</b><br>Tap the browser menu <b>⋮</b> and choose <b>Add to Home screen</b> or <b>Install app</b>.</div><button class="btn btn-dark" style="margin-top:12px;width:100%" onclick="closeById('installModal')">Done</button></div></div>
+<div class="modal" id="pricingModal"><div class="modal-box"><button class="close" onclick="closeById('pricingModal')">×</button>
+<h2>⚙️ Admin protocol pricing</h2><p>USD protocol reference only. GBK token subscription amounts are fixed for the ecosystem plans.</p>
+<label style="font-size:12px;font-weight:800">Agent Pro · USD reference</label><input id="priceAgent" type="number" min="0" step="1" value="19">
+<label style="font-size:12px;font-weight:800">Developer Pro · USD reference</label><input id="priceDeveloper" type="number" min="0" step="1" value="49">
+<label style="font-size:12px;font-weight:800">Enterprise · USD reference</label><input id="priceEnterprise" type="number" min="0" step="1" value="99">
+<button class="btn btn-dark" onclick="savePricing()">Save pricing preview</button><p id="pricingDone"></p>
+</div></div>
+<div class="modal" id="registrationModal"><div class="modal-box"><button class="close" onclick="closeById('registrationModal')">×</button><h2>🔐 GBK AI Registration</h2><p>Register with your BNB wallet to unlock Share & Earn GBK.</p><input id="regName" placeholder="Name"><input id="regEmail" type="email" placeholder="Email"><input id="regWallet" placeholder="BNB wallet address (0x…)"><button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="registerGbkUser()">Register & Continue</button><p id="regDone"></p></div></div>
+<div class="modal" id="shareModal"><div class="modal-box"><button class="close" onclick="closeById('shareModal')">×</button><h2>🔗 Share & Earn GBK</h2><p>Share your personal GBK AI link. Each eligible share reward is submitted to the backend as <b>50 GBK pending verification</b>.</p><input id="shareLink" readonly><button class="btn btn-gold" style="width:100%;margin-top:8px" onclick="nativeShareGbk()">Share link</button><button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="copyShareLink()">Copy link</button><p id="shareResult"></p></div></div>
+<div class="modal" id="modal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle">GBK AI</h2><p id="modalDesc"></p><input placeholder="Name"><input placeholder="Email"><input placeholder="Phone (optional)"><textarea rows="3" placeholder="Tell GBK AI what you need"></textarea><button class="btn btn-dark" onclick="submitModal()">Continue</button><p id="modalDone"></p></div></div>
+<div class="modal" id="paymentModal"><div class="modal-box"><button class="close" onclick="closeById('paymentModal')">×</button><h2 id="paymentTitle">💳 Pay with GBK</h2><p id="paymentDesc">Send the exact GBK amount for the selected plan from your BNB wallet, then submit the transaction hash.</p><div id="paymentAmount" style="background:#f7f8fb;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:20px;font-weight:950;margin:10px 0"></div><input id="paymentWallet" placeholder="BNB wallet address (0x…)"><input id="paymentTx" placeholder="Transaction hash (0x…)"><button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="submitGbkPayment()">Send payment confirmation</button><button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="openPaymentStatus()">Check payment status</button><p id="paymentDone"></p></div></div>
+<div class="modal" id="paymentStatusModal"><div class="modal-box"><button class="close" onclick="closeById('paymentStatusModal')">×</button><h2>🔐 GBK payment status</h2><p>Enter the BNB wallet used for payment.</p><input id="statusWallet" placeholder="BNB wallet address (0x…)"><button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="checkPaymentStatus()">Check status</button><div id="statusResult" style="margin-top:12px"></div></div></div>
+<div class="modal" id="country"><div class="modal-box"><button class="close" onclick="closeById('country')">×</button><h2>🌍 Choose country</h2><p>Select the market you want to explore. The local currency appears automatically.</p><input id="countrySearch" oninput="filterCountries()" placeholder="Search country"><div id="countries" class="country-list"></div></div></div>
+<div class="modal" id="currency"><div class="modal-box"><button class="close" onclick="closeById('currency')">×</button><h2>💱 Local currency</h2><p id="currencyInfo">Currency follows your selected country.</p><div id="currencyCard" style="border:1px solid var(--line);border-radius:14px;padding:18px;background:#f7f8fb;font-size:18px;font-weight:900"></div><button class="btn btn-dark" style="margin-top:12px" onclick="closeById('currency')">Done</button></div></div>
+<div class="modal" id="language"><div class="modal-box"><button class="close" onclick="closeById('language')">×</button><h2>🌐 Choose language</h2><p>GBK AI can present the experience in the user's preferred language.</p><select id="languageSelect" style="width:100%;padding:12px;border:1px solid #e1e6ef;border-radius:9px"></select><button class="btn btn-dark" style="margin-top:10px" onclick="saveLanguage()">Use this language</button></div></div>
+
+<script>
+const countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+const languages=["English","తెలుగు","हिन्दी","বাংলা","मराठी","தமிழ்","ಕನ್ನಡ","മലയാളം","ગુજરાતી","ਪੰਜਾਬੀ","اردو","العربية","中文","日本語","한국어","Español","Français","Português","Deutsch","Italiano","Русский","Türkçe","Bahasa Indonesia","Tiếng Việt","ไทย","Polski","Nederlands","Svenska","Ελληνικά","עברית"];
+const languageMeta={"English":["English","English"],"తెలుగు":["తెలుగు","Telugu"],"हिन्दी":["हिन्दी","Hindi"],"বাংলা":["বাংলা","Bengali"],"मराठी":["मराठी","Marathi"],"தமிழ்":["தமிழ்","Tamil"],"ಕನ್ನಡ":["ಕನ್ನಡ","Kannada"],"മലയാളം":["മലയാളം","Malayalam"],"ગુજરાતી":["ગુજરાતી","Gujarati"],"ਪੰਜਾਬੀ":["ਪੰਜਾਬੀ","Punjabi"],"اردو":["اردو","Urdu"],"العربية":["العربية","Arabic"],"中文":["中文","Chinese"],"日本語":["日本語","Japanese"],"한국어":["한국어","Korean"],"Español":["Español","Spanish"],"Français":["Français","French"],"Português":["Português","Portuguese"],"Deutsch":["Deutsch","German"],"Italiano":["Italiano","Italian"],"Русский":["Русский","Russian"],"Türkçe":["Türkçe","Turkish"],"Bahasa Indonesia":["Bahasa Indonesia","Indonesian"],"Tiếng Việt":["Tiếng Việt","Vietnamese"],"ไทย":["ไทย","Thai"],"Polski":["Polski","Polish"],"Nederlands":["Nederlands","Dutch"],"Svenska":["Svenska","Swedish"],"Ελληνικά":["Ελληνικά","Greek"],"עברית":["עברית","Hebrew"]};
+function countryFlag(c){const m={"India":"🇮🇳","United Arab Emirates":"🇦🇪","United Kingdom":"🇬🇧","United States":"🇺🇸","Canada":"🇨🇦","Australia":"🇦🇺","Japan":"🇯🇵","Singapore":"🇸🇬","Germany":"🇩🇪","France":"🇫🇷","China":"🇨🇳","South Korea":"🇰🇷","Saudi Arabia":"🇸🇦","Qatar":"🇶🇦","Nepal":"🇳🇵","Sri Lanka":"🇱🇰","Indonesia":"🇮🇩","Thailand":"🇹🇭","Italy":"🇮🇹","Spain":"🇪🇸","Portugal":"🇵🇹","Brazil":"🇧🇷","Mexico":"🇲🇽","South Africa":"🇿🇦","New Zealand":"🇳🇿","Ireland":"🇮🇪","Netherlands":"🇳🇱","Switzerland":"🇨🇭","Türkiye":"🇹🇷","Russia":"🇷🇺"};return m[c]||'🌍'}
+function languageLabel(x){const m=languageMeta[x]||[x,x];return m[0]===m[1]?m[0]:m[0]+' · '+m[1]}
+function updateTopSelectors(){const cb=document.getElementById('countryTopBtn'),lb=document.getElementById('languageTopBtn');const lang=localStorage.getItem('gbk_language')||'English';if(cb){cb.innerHTML=countryFlag(selectedCountry)+' <span class="head-label">'+selectedCountry+'</span>';cb.title='Country: '+selectedCountry;cb.setAttribute('aria-label','Country: '+selectedCountry)}if(lb){lb.innerHTML='🌐 <span class="head-label">'+languageLabel(lang)+'</span>';lb.title='Language: '+languageLabel(lang);lb.setAttribute('aria-label','Language: '+languageLabel(lang))}}
+
+function setIntent(b){document.querySelectorAll('.intent button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
+
+function gbkTx(v){const lang=localStorage.getItem('gbk_language')||'English';const dict=T[lang]||{};return dict[v]||v} function openModal(t,d){gbkModalContext=t;document.getElementById('modalTitle').textContent=gbkTx(t);document.getElementById('modalDesc').textContent=gbkTx(d);document.getElementById('modalDone').textContent="";document.getElementById('modal').classList.add('show');document.querySelectorAll('#modal input,#modal textarea').forEach(el=>{const o=el.dataset.gbkOrig||(el.dataset.gbkOrig=el.getAttribute('placeholder')||'');if(o)el.placeholder=gbkTx(o)});const c=document.querySelector('#modal .btn-dark');if(c)c.textContent=gbkTx('Continue')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function closeById(id){document.getElementById(id).classList.remove('show')}
+async function submitModal(){const done=document.getElementById('modalDone');const inputs=document.querySelectorAll('#modal input,#modal textarea');const name=inputs[0]?.value.trim()||'';const email=inputs[1]?.value.trim()||'';const phone=inputs[2]?.value.trim()||'';const message=inputs[3]?.value.trim()||'';done.textContent='Sending to the secure GBK Real Estate API…';try{const propertyId=String(gbkModalContext).startsWith('enquiry:')?String(gbkModalContext).slice(9):'';const r=await fetch(`${REAL_ESTATE_API}?action=enquiry`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,message,property_id:propertyId||null,country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Enquiry submission failed');done.textContent=`✅ Enquiry received. Reference: ${d.enquiry?.id||'submitted'}.`;inputs.forEach(x=>{if(x.tagName==='TEXTAREA'||x.tagName==='INPUT')x.value=''})}catch(e){done.textContent=e.message||'Unable to reach the Real Estate API.'}}
+
+const REAL_ESTATE_API='https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/real-estate-api';
+const GBK_REAL_ESTATE_VERSION='V24';
+let gbkModalContext='';
+const apiEscape=(v)=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
+function formatListingPrice(p){const n=Number(p.price||0);const amount=Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:0}):String(p.price||'');return `${apiEscape(p.currency_symbol||'')}${amount}${p.price_period==='month'?' / month':p.price_period==='year'?' / year':''}`}
+function listingVisual(i){return ['v1','v2','v3','v4'][i%4]}
+function propertySearchScore(p,q){
+ const text=[p.title,p.description,p.city,p.region,p.country_name,p.address_text,Array.isArray(p.features)?p.features.join(' '):''].filter(Boolean).join(' ').toLowerCase();
+ const terms=String(q||'').toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu,' ').split(/\s+/).filter(x=>x.length>2);
+ let score=0;terms.forEach(t=>{if(text.includes(t))score+=2});
+ const m=String(q||'').match(/(\d+)\s*(?:bed|beds|bedroom|bedrooms|bhk)/i);if(m&&Number(p.bedrooms)>=Number(m[1]))score+=5;
+ if(/school/i.test(q)&&/school/i.test(text))score+=5;
+ if(/furnished/i.test(q)&&p.furnished)score+=4;
+ return score;
+}
+function rankPropertyResults(results,q){return [...results].sort((a,b)=>propertySearchScore(b,q)-propertySearchScore(a,q));}
+function freshnessDays(p){
+ const d=new Date(p.updated_at||p.created_at||0);if(!Number.isFinite(d.getTime()))return null;
+ return Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));
+}
+function freshnessLabel(p){const days=freshnessDays(p);if(days===null)return 'DATE NOT SHOWN';if(days===0)return 'UPDATED TODAY';if(days===1)return 'UPDATED 1 DAY AGO';return `UPDATED ${days} DAYS AGO`}
+function filterFreshness(results,mode){
+ if(mode==='all')return [...results];
+ const days=Number(mode||30);return results.filter(p=>{const age=freshnessDays(p);return age!==null&&age<=days;});
+}
+function safeMediaUrl(v){
+ if(typeof v==='string'&&/^https?:\/\//i.test(v.trim()))return v.trim();
+ if(v&&typeof v==='object'){const u=v.url||v.src||v.href||v.image_url||v.imageUrl||v.video_url||v.videoUrl||v.original_url||v.originalUrl||v.contentUrl||v.content_url; if(typeof u==='string'&&/^https?:\/\//i.test(u.trim()))return u.trim();}
+ return '';
+}
+function mediaList(...vals){
+ const out=[];const visit=v=>{
+  if(v==null)return;
+  if(Array.isArray(v)){v.forEach(visit);return;}
+  const direct=safeMediaUrl(v);if(direct&&!out.includes(direct))out.push(direct);
+  if(v&&typeof v==='object'){['url','src','href','image_url','imageUrl','video_url','videoUrl','original_url','originalUrl','contentUrl','content_url'].forEach(k=>{const u=safeMediaUrl(v[k]);if(u&&!out.includes(u))out.push(u)});['media','gallery','assets','images','photos','videos','video','image','thumbnails'].forEach(k=>{if(k in v)visit(v[k])});}
+ };
+ vals.forEach(visit);return out;
+}
+function mediaUrls(p){
+ const imgs=mediaList(p.image_urls,p.images,p.photos,p.image_url,p.imageUrl,p.photo_urls,p.gallery,p.media?.images,p.media?.photos,p.media?.gallery,p.assets);
+ const vids=mediaList(p.video_urls,p.videos,p.video_url,p.videoUrl,p.virtual_tour_url,p.virtualTourUrl,p.virtual_tour,p.tour_url,p.tourUrl,p.media?.videos,p.media?.video,p.media?.virtual_tour,p.media?.tour,p.gallery);
+ return {imgs,vids};
+}
+function videoEmbedUrl(url){
+ try{const u=new URL(url);const h=u.hostname.toLowerCase();if(h.includes('youtube.com')){const id=u.searchParams.get('v');return id?`https://www.youtube.com/embed/${id}`:''}if(h==='youtu.be'){return `https://www.youtube.com/embed/${u.pathname.slice(1)}`}if(h.includes('vimeo.com')){const m=u.pathname.match(/\/(\d+)/);return m?`https://player.vimeo.com/video/${m[1]}`:''}}catch(_e){}return '';
+}
+async function getLiveListing(id){
+ const r=await fetch(`${REAL_ESTATE_API}?action=listing&id=${encodeURIComponent(id)}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Live listing unavailable');return d?.listing||null;
+}
+async function hydrateUnteraMedia(results){
+ const list=Array.isArray(results)?results:[];
+ const targets=list.filter(p=>String(p?.provider||'').toLowerCase()==='untera'&&String(p?.id||'').startsWith('untera:')&&!mediaUrls(p).imgs.length&&!mediaUrls(p).vids.length).slice(0,8);
+ if(!targets.length)return list;
+ const hydrated=await Promise.all(targets.map(async p=>{try{const x=await getLiveListing(p.id);return x?{...p,...x,id:p.id,provider:'untera'}:p}catch(_e){return p}}));
+ const byId=new Map(hydrated.map(x=>[String(x.id),x]));
+ return list.map(p=>byId.get(String(p.id))||p);
+}
+function renderPropertyMedia(results=[]){
+ const root=document.getElementById('propertyMedia');if(!root)return;
+ const items=[];
+ (results||[]).forEach((p,i)=>{const m=mediaUrls(p);if(m.imgs.length||m.vids.length)items.push({p,m,i});});
+ if(!items.length){root.innerHTML='<div class="tour"><div class="body" style="padding:24px;text-align:center"><b>Live property media</b><div class="stats" style="margin-top:6px">Connected listings will show their actual photos and video tours here. No placeholder property media is used.</div></div></div>';return;}
+ root.innerHTML=items.slice(0,6).map(({p,m,i})=>{
+   const poster=m.imgs[0]||''; const title=apiEscape(p.title||'Property media'); const place=apiEscape([p.city,p.country_name].filter(Boolean).join(' · '));
+   if(m.vids[0]) {const emb=videoEmbedUrl(m.vids[0]);if(emb)return `<div class="tour" style="overflow:hidden;position:relative"><iframe src="${apiEscape(emb)}" title="${title}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe><label>🎥 ${title}${place?' · '+place:''}</label></div>`;return `<div class="tour" style="overflow:hidden;position:relative;background-image:url('${apiEscape(poster)}');background-size:cover;background-position:center"><button class="play" onclick="window.open('${apiEscape(m.vids[0])}','_blank','noopener,noreferrer')" aria-label="Open property video">▶</button><label>🎥 ${title}${place?' · '+place:''}</label></div>`;}
+   return `<div class="tour" style="overflow:hidden;position:relative;background-image:url('${apiEscape(poster)}');background-size:cover;background-position:center"><button class="play" onclick="openMediaImage('${apiEscape(poster)}','${title}')" aria-label="View property photo">▶</button><label>🏠 ${title}${place?' · '+place:''}</label></div>`;
+ }).join('');
+}
+function openMediaImage(url,title){if(!url)return;window.open(url,'_blank','noopener,noreferrer');}
+function openMediaGallery(urls,title){const list=Array.isArray(urls)?urls.filter(Boolean):[];if(!list.length)return;const w=window.open('','_blank','noopener,noreferrer');if(!w)return;w.document.write('<!doctype html><title>'+String(title||'Property photos').replace(/</g,'&lt;')+'</title><meta name=viewport content=width=device-width,initial-scale=1><style>body{margin:0;background:#07152f;font-family:Arial;color:#fff}header{padding:14px;font-weight:800;position:sticky;top:0;background:#07152fee}main{display:grid;gap:12px;padding:12px}img{width:100%;height:auto;display:block;border-radius:14px}</style><header>'+String(title||'Property photos').replace(/</g,'&lt;')+'</header><main>'+list.map(u=>'<img src=\"'+String(u).replace(/\"/g,'&quot;')+'\" loading=lazy>').join('')+'</main>');w.document.close();}
+function renderPropertyResults(results,meta={},skipHydrate=false){
+ const root=document.getElementById('propertyResults');if(!root)return;
+ if(!results.length){root.innerHTML='<article class="card"><div class="body" style="padding:24px"><b>No properties available in this freshness range.</b><div class="stats" style="margin-top:6px">Try <b>Relevant · 30 days</b>, <b>All available</b>, another city, country, property type or budget.</div></div></article>';renderPropertyMedia([]);return}
+ let note='';
+ if(meta.fallback==='freshness30')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No fresh listing matched the last 7 days. Showing relevant listings from the last 30 days.</div>';
+ else if(meta.fallback==='global')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No exact match in the selected country. Showing the closest global listings.</div>';
+ else if(meta.fallback==='countryfallback')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No listing matched that city. The location remains a hard boundary; no unrelated city results are shown.</div>';
+ else if(meta.fallback==='fallback')note='<div style="grid-column:1/-1;background:#fff7dc;border:1px solid #f0d37a;border-radius:14px;padding:12px;font-size:12px;color:#5b4a17">ℹ️ No exact text match. Showing the closest relevant listings.</div>';
+ if(meta.provider==='untera')note+='<div style="grid-column:1/-1;background:#eef7ff;border:1px solid #b8d9f5;border-radius:14px;padding:10px 12px;font-size:11px;color:#24435c">🌍 Live global inventory · Powered by Untera · Real source photos/video shown when supplied</div>';
+ root.innerHTML=note+results.map((p,i)=>{const beds=p.bedrooms?`${p.bedrooms} beds · `:'';const baths=p.bathrooms?`${p.bathrooms} baths · `:'';const area=p.area_value?`${Number(p.area_value).toLocaleString()} ${apiEscape(p.area_unit||'')} · `:'';const furnished=p.furnished?'Furnished · ':'';const status=p.intent==='rent'?'FOR RENT':p.intent==='buy'?'FOR SALE':'LISTING';const verify=p.verification_status==='verified'?'VERIFIED':'SOURCE SHOWN';const mm=mediaUrls(p);const image=mm.imgs[0]||'';const vids=mm.vids;const visualStyle=image?` style="background-image:url('${apiEscape(image)}');background-size:cover;background-position:center"`:'';const fresh=freshnessLabel(p);const imageList=mediaList(p.image_urls,p.images,p.photos,p.image_url,p.media?.images,p.media?.photos);const mediaBtn=(vids[0]?`<button class="btn btn-gold" style="margin-top:10px;width:100%" onclick="window.open('${apiEscape(vids[0])}','_blank','noopener,noreferrer')">▶ Video tour</button>`:'')+(imageList.length?`<button class="btn btn-outline" style="margin-top:10px;width:100%" onclick="openMediaGallery(${JSON.stringify(imageList).replace(/</g,'\u003c')},'${apiEscape(p.title)}')">📷 ${imageList.length} photo${imageList.length===1?'':'s'}</button>`:'');return `<article class="card" data-property-id="${apiEscape(p.id)}"><div class="visual ${listingVisual(i)}"${visualStyle}><span class="badge">${status} · ${verify}</span><span style="position:absolute;bottom:12px;left:12px;background:#07152fee;color:#fff;padding:6px 9px;border-radius:18px;font-size:10px;font-weight:900">${fresh}</span><button class="fav" onclick="event.stopPropagation();favoriteProperty('${apiEscape(p.id)}')" aria-label="Favorite property">♡</button></div><div class="body"><h3>${apiEscape(p.title)}</h3><div class="stats">${apiEscape(p.city||'')} · ${apiEscape(p.country_name||'')}</div><div class="price">${formatListingPrice(p)}</div><div class="stats">${beds}${baths}${furnished}${area}${apiEscape(p.source_name||'GBK AI')}</div>${mediaBtn}<button class="btn btn-outline" style="margin-top:10px;width:100%" onclick="openPropertyEnquiry('${apiEscape(p.id)}','${apiEscape(p.title)}')">Enquire</button></div></article>`}).join('');
+ renderPropertyMedia(results);
+ if(!skipHydrate){hydrateUnteraMedia(results).then(hydrated=>{if(hydrated.some((x,i)=>JSON.stringify(mediaUrls(x))!==JSON.stringify(mediaUrls(results[i]||{}))))renderPropertyResults(hydrated,meta,true)}).catch(()=>{});}
+}
+async function loadSourceComparison(){
+ const root=document.getElementById('sourceComparison');if(!root)return;
+ root.innerHTML='<article class="card"><div class="body" style="padding:20px"><b>Loading latest source comparison…</b></div></article>';
+ try{
+  const p=new URLSearchParams({action:'sources',country:selectedCountry});
+  const r=await fetch(`${REAL_ESTATE_API}?${p.toString()}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Source comparison failed');
+  const rows=Array.isArray(d.sources)?d.sources:[];
+  if(!rows.length){root.innerHTML='<article class="card"><div class="body" style="padding:20px"><b>No live provider source is connected yet.</b><div class="stats" style="margin-top:6px">The GBK database remains available. Add the approved provider API key to enable live global comparison.</div></div></article>';return;}
+  root.innerHTML=rows.map(x=>`<article class="card"><div class="body" style="padding:20px"><h3>${apiEscape(x.name||x.source||'Source')}</h3><div class="stats">${apiEscape(x.country||selectedCountry||'Global')} · ${Number(x.listings||0).toLocaleString()} listings</div><div class="stats" style="margin-top:8px">${apiEscape(x.freshness||'Live feed')}</div></div></article>`).join('');
+ }catch(e){root.innerHTML=`<article class="card"><div class="body" style="padding:20px"><b>Source comparison unavailable</b><div class="stats" style="margin-top:6px">${apiEscape(e.message||'Live source unavailable')}</div></div></article>`;}
+}
+async function fetchPropertySearch(params){
+ const r=await fetch(`${REAL_ESTATE_API}?action=search&${params.toString()}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Property search failed');return d;
+}
+async function searchProperties(extra={}){
+ const q=document.getElementById('need')?.value.trim()||'';const location=document.getElementById('location')?.value.trim()||'';
+ const freshness=document.getElementById('freshnessFilter')?.value||'30';
+ const explicitLocation=String(extra.city||location||'').trim();
+ const base={...extra,country:selectedCountry,currency:selectedCurrency,language:localStorage.getItem('gbk_language')||'English',limit:'50',sort:'latest'};
+ const msg=document.getElementById('searchMsg');if(msg)msg.textContent='Searching live global property data for the most relevant locations…';
+ try{
+  const attempts=[];
+  if(explicitLocation){const p=new URLSearchParams({...base,city:explicitLocation});if(q)p.set('q',q);attempts.push({params:p,tag:'exact'});}
+  if(explicitLocation){const p=new URLSearchParams({...base,q:[q,explicitLocation,'nearby','local areas'].filter(Boolean).join(' ')});p.delete('city');attempts.push({params:p,tag:'nearby'});}
+  if(explicitLocation){const p=new URLSearchParams({...base,q:[q,explicitLocation].filter(Boolean).join(' ')});p.delete('city');attempts.push({params:p,tag:'regional'});}
+  const gp=new URLSearchParams({...base});gp.delete('city');if(q)gp.set('q',q);attempts.push({params:gp,tag:'global'});
+  let lastData={count:0,results:[]};
+  for(const attempt of attempts){
+   const d=await fetchPropertySearch(attempt.params);lastData=d;
+   let ranked=rankPropertyResults(d.results||[],q||explicitLocation);
+   const scoreQuery=q||explicitLocation;
+   if(scoreQuery){ranked=ranked.map(p=>({p,score:propertySearchScore(p,scoreQuery)})).filter(x=>x.score>0).map(x=>x.p);}
+   let fresh=filterFreshness(ranked,freshness);
+   if(fresh.length){renderPropertyResults(fresh,{fallback:attempt.tag==='exact'?null:attempt.tag,provider:d.provider});if(msg){const scope=attempt.tag==='exact'?'exact location':attempt.tag==='nearby'?'nearby/local areas':attempt.tag==='regional'?'regional matches':'global matches';msg.textContent=`${fresh.length} ${fresh.length===1?'property':'properties'} · ${scope} · ${freshness==='7'?'latest 7 days':freshness==='30'?'relevant 30 days':'all available'}.`;}document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return fresh;}
+   if(freshness==='7'){const fresh30=filterFreshness(ranked,'30');if(fresh30.length){renderPropertyResults(fresh30,{fallback:attempt.tag==='exact'?null:'freshness30',provider:lastData.provider});if(msg)msg.textContent=`${fresh30.length} relevant properties from the last 30 days · ${attempt.tag==='exact'?'exact location':attempt.tag==='nearby'?'nearby/local areas':attempt.tag==='regional'?'regional matches':'global matches'}.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return fresh30;}}
+  }
+  renderPropertyResults([]);if(msg)msg.textContent=explicitLocation?`No relevant properties found for ${explicitLocation} or nearby/local areas in the selected freshness range.`:`No relevant properties found in the selected freshness range.`;document.getElementById('properties')?.scrollIntoView({behavior:'smooth',block:'start'});return [];
+ }catch(e){if(msg)msg.textContent=e.message||'Unable to reach the Real Estate API.';return []}
+}
+
+function rentalBudgetPresets(currency){
+ const presets={
+  USD:[['','Monthly budget'],['0:500','Under $500'],['500:1000','$500–$1,000'],['1000:2500','$1,000–$2,500'],['2500:','$2,500+']],
+  INR:[['','Monthly budget'],['0:25000','Under ₹25,000'],['25000:50000','₹25,000–₹50,000'],['50000:100000','₹50,000–₹1,00,000'],['100000:','₹1,00,000+']],
+  AED:[['','Monthly budget'],['0:2000','Under د.إ2,000'],['2000:5000','د.إ2,000–د.إ5,000'],['5000:10000','د.إ5,000–د.إ10,000'],['10000:','د.إ10,000+']],
+  GBP:[['','Monthly budget'],['0:500','Under £500'],['500:1000','£500–£1,000'],['1000:2000','£1,000–£2,000'],['2000:','£2,000+']],
+  EUR:[['','Monthly budget'],['0:500','Under €500'],['500:1000','€500–€1,000'],['1000:2000','€1,000–€2,000'],['2000:','€2,000+']],
+  JPY:[['','Monthly budget'],['0:80000','Under ¥80,000'],['80000:150000','¥80,000–¥150,000'],['150000:300000','¥150,000–¥300,000'],['300000:','¥300,000+']],
+  SGD:[['','Monthly budget'],['0:1500','Under S$1,500'],['1500:3000','S$1,500–S$3,000'],['3000:6000','S$3,000–S$6,000'],['6000:','S$6,000+']],
+  SAR:[['','Monthly budget'],['0:2000','Under ﷼2,000'],['2000:5000','﷼2,000–﷼5,000'],['5000:10000','﷼5,000–﷼10,000'],['10000:','﷼10,000+']]
+ };
+ return presets[currency]||presets.USD;
+}
+function syncRentalBudgetCurrency(){
+ const el=document.getElementById('rentalBudget');if(!el)return;
+ const current=el.value;el.innerHTML=rentalBudgetPresets(selectedCurrency).map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
+ if([...el.options].some(o=>o.value===current))el.value=current;
+}
+async function findRentals(){const city=document.getElementById('rentalLocation')?.value.trim()||'';const type=document.getElementById('rentalType')?.value||'';const range=document.getElementById('rentalBudget')?.value||'';const [min,max]=range.split(':');const extra={intent:'rent',city,property_type:type};if(min)extra.min_price=min;if(max)extra.max_price=max;await searchProperties(extra);}
+let gbkRecognition=null;
+let gbkSpeaking=false;
+let lastPropertyResults=[];
+const GBK_SPEECH_LANG={
+  English:'en-IN','తెలుగు':'te-IN','हिन्दी':'hi-IN','தமிழ்':'ta-IN','বাংলা':'bn-IN','मराठी':'mr-IN','ಕನ್ನಡ':'kn-IN','മലയാളം':'ml-IN','ગુજરાતી':'gu-IN','ਪੰਜਾਬੀ':'pa-IN','اردو':'ur-PK','العربية':'ar-SA','中文':'zh-CN','日本語':'ja-JP','한국어':'ko-KR','Español':'es-ES','Français':'fr-FR','Deutsch':'de-DE','Português':'pt-PT','Italiano':'it-IT','Русский':'ru-RU','Türkçe':'tr-TR','ไทย':'th-TH','Tiếng Việt':'vi-VN','Bahasa Indonesia':'id-ID','Nederlands':'nl-NL','Polski':'pl-PL'
+};
+function gbkVoiceLang(){return GBK_SPEECH_LANG[localStorage.getItem('gbk_language')||'English']||'en-US'}
+function setVoiceStatus(t){const el=document.getElementById('voiceStatus');if(el)el.textContent=t}
+function stopGbkVoice(){
+ try{if(gbkRecognition)gbkRecognition.stop()}catch(e){}
+ gbkRecognition=null;
+ if('speechSynthesis' in window) window.speechSynthesis.cancel();
+ gbkSpeaking=false;
+ const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='inline-flex';
+ const ask=document.getElementById('voiceAskBtn');if(ask){ask.style.display='inline-flex';ask.classList.remove('voice-listening')}
+ document.querySelectorAll('.voice-explain').forEach(x=>{if(x.id==='voiceExplainControls')x.style.display=lastPropertyResults.length?'flex':'none'});
+ setVoiceStatus('Voice stopped. You can ask again anytime.');
+}
+function speakGbk(text,onEnd){
+ if(!('speechSynthesis' in window)){setVoiceStatus('Voice explanation is not supported in this browser.');return}
+ window.speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text);u.lang=gbkVoiceLang();u.rate=.96;u.pitch=1;
+ u.onstart=()=>{gbkSpeaking=true;const b=document.getElementById('voiceStopBtn');if(b)b.style.display='inline-flex'};
+ u.onend=()=>{gbkSpeaking=false;if(onEnd)onEnd();};u.onerror=()=>{gbkSpeaking=false;if(onEnd)onEnd()};
+ window.speechSynthesis.speak(u);
+}
+function propertySpeechText(p,i){
+ const title=p.title||'Property'; const place=[p.city,p.country_name].filter(Boolean).join(', '); const price=formatListingPrice(p).replace(/&amp;/g,'&');
+ const facts=[];if(p.bedrooms)facts.push(`${p.bedrooms} bedrooms`);if(p.bathrooms)facts.push(`${p.bathrooms} bathrooms`);if(p.area_value)facts.push(`${Number(p.area_value).toLocaleString()} ${p.area_unit||''}`);if(p.furnished)facts.push('furnished');
+ const verified=p.verification_status==='verified'; const complete=facts.length>=2; const assessment=verified&&complete?'This looks like a strong listing match based on the available details.':complete?'This looks like a good match based on the available details, but verify the listing before deciding.':'The listing has limited details, so verify price, condition, ownership and other important information before deciding.';
+ return `${i+1}. ${title}. ${place||'Location available on the listing'}. ${p.intent==='rent'?'For rent':'For sale'}. Price ${price}. ${facts.length?facts.join(', ')+'. ':''}${assessment} ${verified?'The listing is verified.':'The listing source is shown but is not marked verified.'}`;
+}
+function speakPropertyResults(){
+ if(!lastPropertyResults.length){setVoiceStatus('Ask GBK AI first to load properties.');return}
+ const lang=localStorage.getItem('gbk_language')||'English';
+ const intro=lang==='English'?'GBK AI property explanation. Here are the best matching properties and my assessment of whether each looks good based on the available listing details.':`GBK AI property explanation in ${lang}. Here are the best matching properties and an assessment based on the available listing details.`;
+ const text=[intro,...lastPropertyResults.slice(0,8).map(propertySpeechText)].join(' ');
+ setVoiceStatus(`🔊 Explaining ${Math.min(lastPropertyResults.length,8)} properties in ${lang}…`);
+ speakGbk(text,()=>setVoiceStatus('Explanation complete. Press Stop or Ask again anytime.'));
+}
+function startGbkVoiceAsk(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){setVoiceStatus('Microphone listening is not supported here. You can type your request, then use Explain properties.');return}
+ stopGbkVoice();
+ const lang=gbkVoiceLang();
+ gbkRecognition=new SR();gbkRecognition.lang=lang;gbkRecognition.interimResults=false;gbkRecognition.maxAlternatives=1;gbkRecognition.continuous=false;
+ const ask=document.getElementById('voiceAskBtn'),stop=document.getElementById('voiceStopBtn');
+ ask.classList.add('voice-listening');ask.style.display='inline-flex';stop.style.display='inline-flex';
+ setVoiceStatus(`🎙️ Listening in ${localStorage.getItem('gbk_language')||'English'}… Speak your property request.`);
+ gbkRecognition.onresult=async e=>{const text=e.results?.[0]?.[0]?.transcript?.trim()||'';if(text){const need=document.getElementById('need');if(need)need.value=text;setVoiceStatus(`Heard: “${text}” · Finding matching properties…`);const results=await askAI();if(results?.length){speakPropertyResults()}else setVoiceStatus('No matching properties found. Try another request.')}};
+ gbkRecognition.onerror=e=>{setVoiceStatus(e.error==='not-allowed'?'Microphone permission is blocked. Allow microphone access and try again.':`Listening stopped: ${e.error||'unknown error'}.`);const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none';ask.classList.remove('voice-listening')};
+ gbkRecognition.onend=()=>{gbkRecognition=null;ask.classList.remove('voice-listening');if(!gbkSpeaking){const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='inline-flex'}};
+ try{gbkRecognition.start()}catch(e){setVoiceStatus('Could not start the microphone. Please try again.');}
+}
+async function askAI(){const n=document.getElementById('need').value.trim(),l=document.getElementById('location').value.trim();const results=await searchProperties({q:n,city:l});lastPropertyResults=results||[];const controls=document.getElementById('voiceExplainControls');if(controls)controls.style.display=lastPropertyResults.length?'flex':'none';try{await fetch(`${REAL_ESTATE_API}?action=ai-request`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request_type:'advisor',prompt:n||'Help me find suitable properties.',property_ids:results.slice(0,10).map(x=>x.id),country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})})}catch(e){} return results;}
+async function openPropertyEnquiry(id,title){gbkModalContext=`enquiry:${id}`;openModal('Property enquiry',`Send an enquiry about ${title}. The secure GBK backend will record it for follow-up.`)}
+async function favoriteProperty(id){try{const r=await fetch(`${REAL_ESTATE_API}?action=favorite`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({property_id:id,wallet_address:localStorage.getItem('gbk_registered_wallet')||''})});const d=await r.json();document.getElementById('searchMsg').textContent=d.message||'Favorite request received.'}catch(e){}}
+const GBK_PLANS={agent_pro:{name:'Agent Pro',gbk:5000,usd:19},developer_pro:{name:'Developer Pro',gbk:25000,usd:49},enterprise:{name:'Enterprise',gbk:50000,usd:99}};
+const GBK_SUBSCRIPTION_API='https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/gbk-subscription';
+let selectedPaymentPlan='agent_pro';
+function openPayment(plan){selectedPaymentPlan=GBK_PLANS[plan]?plan:'agent_pro';const p=GBK_PLANS[selectedPaymentPlan];document.getElementById('paymentTitle').textContent=gbkTx('Pay with GBK');document.getElementById('paymentDesc').textContent=gbkTx('Send the exact GBK amount for the selected plan from your BNB wallet, then submit the transaction hash.');document.getElementById('paymentAmount').textContent=`${p.gbk.toLocaleString()} GBK / ${gbkTx('month')} · ${gbkTx('USD protocol reference')}: $${p.usd}`;document.getElementById('paymentDone').textContent='';document.getElementById('paymentModal').classList.add('show');}
+async function submitGbkPayment(){const wallet=document.getElementById('paymentWallet').value.trim();const txHash=document.getElementById('paymentTx').value.trim();const done=document.getElementById('paymentDone');if(!/^0x[a-fA-F0-9]{40}$/.test(wallet)){done.textContent=gbkTx('Enter a valid BNB wallet address.');return}if(!/^0x[a-fA-F0-9]{64}$/.test(txHash)){done.textContent=gbkTx('Enter a valid transaction hash.');return}done.textContent=gbkTx('Sending payment confirmation to GBK backend…');try{const r=await fetch(GBK_SUBSCRIPTION_API+'?action=submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet,plan:selectedPaymentPlan,txHash})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Payment submission failed');localStorage.setItem('gbk_payment_wallet',wallet);done.textContent=gbkTx('Payment received by GBK backend. Status: pending verification.');}catch(e){done.textContent=(e&&e.message)||'Unable to reach GBK payment backend.'}}
+function openPaymentStatus(){const w=document.getElementById('paymentWallet')?.value?.trim()||localStorage.getItem('gbk_payment_wallet')||'';const input=document.getElementById('statusWallet');if(input)input.value=w;document.getElementById('paymentStatusModal').classList.add('show');if(w)checkPaymentStatus()}
+async function checkPaymentStatus(){const wallet=document.getElementById('statusWallet').value.trim();const out=document.getElementById('statusResult');if(!/^0x[a-fA-F0-9]{40}$/.test(wallet)){out.textContent=gbkTx('Enter a valid BNB wallet address.');return}out.textContent=gbkTx('Checking GBK backend…');try{const r=await fetch(GBK_SUBSCRIPTION_API+'?action=status&wallet='+encodeURIComponent(wallet));const d=await r.json();if(!r.ok)throw new Error(d.error||'Status check failed');if(!d.payments?.length){out.textContent=gbkTx('No GBK subscription payment found for this wallet.');return}out.innerHTML=d.payments.map(p=>`<div style="border:1px solid var(--line);border-radius:12px;padding:10px;margin:7px 0;background:#f7f8fb"><b>${GBK_PLANS[p.plan_code]?.name||p.plan_code}</b><br>${Number(p.gbk_amount).toLocaleString()} GBK · <b>${p.status}</b><br><small>${p.tx_hash}</small></div>`).join('')}catch(e){out.textContent=(e&&e.message)||'Unable to reach GBK payment backend.'}}
+function isGbkRegistered(){return /^0x[a-fA-F0-9]{40}$/.test(localStorage.getItem('gbk_registered_wallet')||'')}
+function openRegistration(){if(isGbkRegistered()){updateEarnUI();document.getElementById('earn').scrollIntoView({behavior:'smooth'});return;}document.getElementById('regDone').textContent='';document.getElementById('registrationModal').classList.add('show')}
+async function registerGbkUser(){const wallet=document.getElementById('regWallet').value.trim().toLowerCase();const done=document.getElementById('regDone');if(!/^0x[a-fA-F0-9]{40}$/.test(wallet)){done.textContent='Enter a valid BNB wallet address.';return}done.textContent='Registering with GBK backend…';try{const ref=new URLSearchParams(location.search).get('ref')||'';const r=await fetch('https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/v7-api?action=register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet,countryName:localStorage.getItem('gbk_country')||selectedCountry,referrer:ref})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Registration failed');localStorage.setItem('gbk_registered_wallet',wallet);localStorage.setItem('gbk_registered_name',document.getElementById('regName').value.trim());localStorage.setItem('gbk_registered_email',document.getElementById('regEmail').value.trim());done.textContent='Registration complete. Share & Earn is now unlocked.';updateEarnUI();setTimeout(()=>closeById('registrationModal'),700)}catch(e){done.textContent=e.message||'Unable to reach GBK registration backend.'}}
+function getShareLink(){const w=localStorage.getItem('gbk_registered_wallet')||'';return location.origin+location.pathname+'?ref='+encodeURIComponent(w)}
+function updateEarnUI(){const status=document.getElementById('earnStatus'),btn=document.getElementById('shareEarnBtn'),copy=document.getElementById('copyShareBtn');if(!status)return;if(isGbkRegistered()){status.innerHTML='✅ Registered · Share & Earn unlocked · Wallet: '+(localStorage.getItem('gbk_registered_wallet')||'').slice(0,8)+'…'+(localStorage.getItem('gbk_registered_wallet')||'').slice(-6);btn.textContent='🔗 Share & Earn 50 GBK';copy.style.display='inline-flex'}else{status.textContent='Not registered yet.';btn.textContent='🔐 Register to Share & Earn';copy.style.display='none'}}
+function openShareModal(){if(!isGbkRegistered()){openRegistration();return}const link=getShareLink();document.getElementById('shareLink').value=link;document.getElementById('shareModal').classList.add('show')}
+async function shareAndEarn(){if(!isGbkRegistered()){openRegistration();return}openShareModal();}
+async function nativeShareGbk(){const link=getShareLink();try{if(navigator.share)await navigator.share({title:'GBK AI Real Estate',text:'Explore GBK AI Real Estate',url:link});else await navigator.clipboard.writeText(link);document.getElementById('shareResult').textContent='Share action completed. Submitting eligible share reward…';const wallet=localStorage.getItem('gbk_registered_wallet');const r=await fetch('https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/v7-api?action=share',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet,platform:navigator.share?'native-share':'copy-link'})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Reward submission failed');document.getElementById('shareResult').textContent='✅ Share recorded. 50 GBK is pending verification.'}catch(e){if(e.name!=='AbortError')document.getElementById('shareResult').textContent=e.message||'Share was not completed.'}}
+async function copyShareLink(){if(!isGbkRegistered()){openRegistration();return}const link=getShareLink();try{await navigator.clipboard.writeText(link);document.getElementById('shareResult').textContent='✅ Link copied. Use Share link to submit the 50 GBK reward.';const c=document.getElementById('copyShareBtn');if(c)c.textContent='Copied ✓';}catch(e){document.getElementById('shareResult').textContent=e.message||'Could not copy link.'}}
+window.addEventListener('load',updateEarnUI);
+
+function openPricing(){document.getElementById('priceAgent').value=localStorage.getItem('gbk_agent_price')||19;document.getElementById('priceDeveloper').value=localStorage.getItem('gbk_developer_price')||49;document.getElementById('priceEnterprise').value=localStorage.getItem('gbk_enterprise_price')||99;document.getElementById('pricingModal').classList.add('show')}
+function savePricing(){const a=Math.max(0,Number(document.getElementById('priceAgent').value)||0),d=Math.max(0,Number(document.getElementById('priceDeveloper').value)||0),e=Math.max(0,Number(document.getElementById('priceEnterprise').value)||0);localStorage.setItem('gbk_agent_price',a);localStorage.setItem('gbk_developer_price',d);localStorage.setItem('gbk_enterprise_price',e);document.querySelector('#plans .usd-ref:nth-of-type(1)');document.getElementById('pricingDone').textContent='USD protocol references saved. GBK token amounts remain 5,000 / 25,000 / 50,000.';}
+const currencyByCountry = {
+  Afghanistan:['AFN','؋'], Albania:['ALL','L'], Algeria:['DZD','دج'], Andorra:['EUR','€'], Angola:['AOA','Kz'],
+  'Antigua and Barbuda':['XCD','$'], Argentina:['ARS','$'], Armenia:['AMD','֏'], Australia:['AUD','$'], Austria:['EUR','€'], Azerbaijan:['AZN','₼'],
+  Bahamas:['BSD','$'], Bahrain:['BHD','د.ب'], Bangladesh:['BDT','৳'], Barbados:['BBD','$'], Belarus:['BYN','Br'], Belgium:['EUR','€'], Belize:['BZD','$'], Benin:['XOF','CFA'], Bhutan:['BTN','Nu.'],
+  Bolivia:['BOB','Bs.'], 'Bosnia and Herzegovina':['BAM','KM'], Botswana:['BWP','P'], Brazil:['BRL','R$'], Brunei:['BND','$'], Bulgaria:['BGN','лв'], 'Burkina Faso':['XOF','CFA'], Burundi:['BIF','FBu'],
+  'Cabo Verde':['CVE','$'], Cambodia:['KHR','៛'], Cameroon:['XAF','FCFA'], Canada:['CAD','$'], 'Central African Republic':['XAF','FCFA'], Chad:['XAF','FCFA'], Chile:['CLP','$'], China:['CNY','¥'], Colombia:['COP','$'],
+  Comoros:['KMF','CF'], Congo:['XAF','FCFA'], 'Costa Rica':['CRC','₡'], Croatia:['EUR','€'], Cuba:['CUP','$'], Cyprus:['EUR','€'], Czechia:['CZK','Kč'], Denmark:['DKK','kr'], Djibouti:['DJF','Fdj'], Dominica:['XCD','$'],
+  'Dominican Republic':['DOP','$'], Ecuador:['USD','$'], Egypt:['EGP','£'], 'El Salvador':['USD','$'], 'Equatorial Guinea':['XAF','FCFA'], Eritrea:['ERN','Nfk'], Estonia:['EUR','€'], Eswatini:['SZL','E'], Ethiopia:['ETB','Br'],
+  Fiji:['FJD','$'], Finland:['EUR','€'], France:['EUR','€'], Gabon:['XOF','CFA'], Gambia:['GMD','D'], Georgia:['GEL','₾'], Germany:['EUR','€'], Ghana:['GHS','₵'], Greece:['EUR','€'], Grenada:['XCD','$'], Guatemala:['GTQ','Q'],
+  Guinea:['GNF','FG'], Guyana:['GYD','$'], Haiti:['HTG','G'], Honduras:['HNL','L'], Hungary:['HUF','Ft'], Iceland:['ISK','kr'], India:['INR','₹'], Indonesia:['IDR','Rp'], Iran:['IRR','﷼'], Iraq:['IQD','ع.د'],
+  Ireland:['EUR','€'], Israel:['ILS','₪'], Italy:['EUR','€'], Jamaica:['JMD','$'], Japan:['JPY','¥'], Jordan:['JOD','د.ا'], Kazakhstan:['KZT','₸'], Kenya:['KES','KSh'], Kiribati:['AUD','$'], Kuwait:['KWD','د.ك'], Kyrgyzstan:['KGS','с'],
+  Laos:['LAK','₭'], Latvia:['EUR','€'], Lebanon:['LBP','ل.ل'], Lesotho:['LSL','L'], Liberia:['LRD','$'], Libya:['LYD','ل.د'], Liechtenstein:['CHF','CHF'], Lithuania:['EUR','€'], Luxembourg:['EUR','€'], Madagascar:['MGA','Ar'], Malawi:['MWK','MK'], Malaysia:['MYR','RM'],
+  Maldives:['MVR','Rf'], Mali:['XOF','CFA'], Malta:['EUR','€'], 'Marshall Islands':['USD','$'], Mauritania:['MRU','UM'], Mauritius:['MUR','₨'], Mexico:['MXN','$'], Micronesia:['USD','$'], Moldova:['MDL','L'], Monaco:['EUR','€'], Mongolia:['MNT','₮'], Montenegro:['EUR','€'], Morocco:['MAD','د.م.'],
+  Mozambique:['MZN','MT'], Myanmar:['MMK','K'], Namibia:['NAD','$'], Nauru:['AUD','$'], Nepal:['NPR','₨'], Netherlands:['EUR','€'], 'New Zealand':['NZD','$'], Nicaragua:['NIO','C$'], Niger:['XOF','CFA'], Nigeria:['NGN','₦'], 'North Korea':['KPW','₩'], 'North Macedonia':['MKD','ден'], Norway:['NOK','kr'], Oman:['OMR','ر.ع.'],
+  Pakistan:['PKR','₨'], Palau:['USD','$'], Palestine:['ILS','₪'], Panama:['PAB','B/.'], 'Papua New Guinea':['PGK','K'], Paraguay:['PYG','₲'], Peru:['PEN','S/'], Philippines:['PHP','₱'], Poland:['PLN','zł'], Portugal:['EUR','€'], Qatar:['QAR','ر.ق'], Romania:['RON','lei'], Russia:['RUB','₽'], Rwanda:['RWF','FRw'],
+  'Saint Kitts and Nevis':['XCD','$'], 'Saint Lucia':['XCD','$'], 'Saint Vincent and the Grenadines':['XCD','$'], Samoa:['WST','T'], 'San Marino':['EUR','€'], 'Sao Tome and Principe':['STN','Db'], 'Saudi Arabia':['SAR','﷼'], Senegal:['XOF','CFA'], Serbia:['RSD','дин.'], Seychelles:['SCR','₨'], 'Sierra Leone':['SLE','Le'], Singapore:['SGD','$'], Slovakia:['EUR','€'], Slovenia:['EUR','€'],
+  'Solomon Islands':['SBD','$'], Somalia:['SOS','Sh'], 'South Africa':['ZAR','R'], 'South Korea':['KRW','₩'], 'South Sudan':['SSP','£'], Spain:['EUR','€'], 'Sri Lanka':['LKR','₨'], Sudan:['SDG','ج.س.'], Suriname:['SRD','$'], Sweden:['SEK','kr'], Switzerland:['CHF','CHF'], Syria:['SYP','£'], Taiwan:['TWD','NT$'], Tajikistan:['TJS','SM'], Tanzania:['TZS','TSh'], Thailand:['THB','฿'], 'Timor-Leste':['USD','$'], Togo:['XOF','CFA'], Tonga:['TOP','T$'], 'Trinidad and Tobago':['TTD','$'], Tunisia:['TND','د.ت'], 'Türkiye':['TRY','₺'], Turkmenistan:['TMT','m'], Tuvalu:['AUD','$'], Uganda:['UGX','USh'], Ukraine:['UAH','₴'], 'United Arab Emirates':['AED','د.إ'], 'United Kingdom':['GBP','£'], 'United States':['USD','$'], Uruguay:['UYU','$U'], Uzbekistan:['UZS','soʻm'], Vanuatu:['VUV','VT'], 'Vatican City':['EUR','€'], Venezuela:['VES','Bs.S'], Vietnam:['VND','₫'], Yemen:['YER','﷼'], Zambia:['ZMW','ZK'], Zimbabwe:['ZWL','$']
+};
+let selectedCountry=localStorage.getItem('gbk_country')||'United States';
+let selectedCurrency=localStorage.getItem('gbk_currency')||'USD';
+let selectedCurrencySymbol=localStorage.getItem('gbk_currency_symbol')||'$';
+function currencyFor(c){return currencyByCountry[c]||['USD','$']}
+function openCountry(){renderCountries(countries);document.getElementById('country').classList.add('show')}
+function renderCountries(list){document.getElementById('countries').innerHTML=list.map(c=>{const [code,sym]=currencyFor(c);return `<button onclick="chooseCountry('${c.replace(/'/g,"\'")}')">${countryFlag(c)} ${c}<small style="display:block;color:var(--muted);margin-top:3px;font-weight:800">${code} ${sym}</small></button>`}).join("")}
+function filterCountries(){const q=document.getElementById('countrySearch').value.toLowerCase();renderCountries(countries.filter(c=>c.toLowerCase().includes(q)))}
+function chooseCountry(c){selectedCountry=c;[selectedCurrency,selectedCurrencySymbol]=currencyFor(c);localStorage.setItem('gbk_country',c);localStorage.setItem('gbk_currency',selectedCurrency);localStorage.setItem('gbk_currency_symbol',selectedCurrencySymbol);document.querySelector('.topbar').textContent=`🌍 GBK AI Real Estate · ${c} · ${selectedCurrency} ${selectedCurrencySymbol} · Global property discovery`;document.getElementById('currencyBtn').textContent=`💱 ${selectedCurrency} ${selectedCurrencySymbol}`;closeById('country');showCurrency();updateTopSelectors();syncRentalBudgetCurrency()}
+function showCurrency(){const card=document.getElementById('currencyCard');if(card){card.textContent=`${selectedCurrencySymbol}  ${selectedCurrency} · ${selectedCountry}`;document.getElementById('currencyInfo').textContent=`Local currency selected automatically for ${selectedCountry}.`;}}
+function openCurrency(){showCurrency();document.getElementById('currency').classList.add('show')}
+function initCountryCurrency(){const [code,sym]=currencyFor(selectedCountry);selectedCurrency=code;selectedCurrencySymbol=sym;document.getElementById('currencyBtn').textContent=`💱 ${code} ${sym}`;document.querySelector('.topbar').textContent=`🌍 GBK AI Real Estate · ${selectedCountry} · ${code} ${sym} · Global property discovery`;showCurrency();updateTopSelectors();syncRentalBudgetCurrency()}
+function openLanguage(){const el=document.getElementById('languageSelect');el.innerHTML=languages.map(x=>`<option>${x}</option>`).join("");document.getElementById('language').classList.add('show')}
+function saveLanguage(){const x=document.getElementById('languageSelect').value;document.querySelector('.topbar').textContent=`🌐 ${x} · GBK AI Real Estate · Global property discovery · 195+ countries`;closeById('language')}
+
+function openPricing(){
+ document.getElementById('priceAgent').value=localStorage.getItem('gbk_agent_price')||19;
+ document.getElementById('priceDeveloper').value=localStorage.getItem('gbk_developer_price')||49;
+ document.getElementById('priceEnterprise').value=localStorage.getItem('gbk_enterprise_price')||99;
+ document.getElementById('pricingDone').textContent='';
+ document.getElementById('pricingModal').classList.add('show');
+}
+function savePricing(){
+ const a=Math.max(0,Number(document.getElementById('priceAgent').value)||0);
+ const d=Math.max(0,Number(document.getElementById('priceDeveloper').value)||0);
+ const e=Math.max(0,Number(document.getElementById('priceEnterprise').value)||0);
+ localStorage.setItem('gbk_agent_price',a); localStorage.setItem('gbk_developer_price',d); localStorage.setItem('gbk_enterprise_price',e);
+ document.getElementById('agentPrice').innerHTML=`$${a} <small>/month</small>`;
+ document.getElementById('developerPrice').innerHTML=`$${d} <small>/month</small>`;
+ document.getElementById('enterprisePrice').innerHTML=`$${e} <small>/month</small>`;
+ document.getElementById('pricingDone').textContent='Pricing updated in this browser preview. Connect the admin/backend API for production.';
+}
+(function restorePricing(){
+ const a=localStorage.getItem('gbk_agent_price'),d=localStorage.getItem('gbk_developer_price'),e=localStorage.getItem('gbk_enterprise_price');
+ if(a) document.getElementById('agentPrice').innerHTML=`$${a} <small>/month</small>`;
+ if(d) document.getElementById('developerPrice').innerHTML=`$${d} <small>/month</small>`;
+ if(e) document.getElementById('enterprisePrice').innerHTML=`$${e} <small>/month</small>`;
+})();
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;const b=document.getElementById('installBtn');if(b)b.style.display='inline-flex';});
+window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;const b=document.getElementById('installBtn');if(b)b.style.display='none';});
+async function installApp(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    try{await deferredInstallPrompt.userChoice;}catch(e){}
+    deferredInstallPrompt=null;
+    return;
+  }
+  const modal=document.getElementById('installModal');
+  const text=document.getElementById('installText');
+  const action=document.getElementById('installAction');
+  const standalone=window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+  if(standalone){
+    text.textContent='GBK AI Real Estate is already installed on this device.';
+    action.innerHTML='';
+  }else if(/Android/i.test(navigator.userAgent)){
+    text.textContent='If the install prompt is not shown automatically, use your browser menu to add GBK AI to your home screen.';
+    action.innerHTML='<div style=\"background:#f7f8fb;border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.65;font-size:13px\"><b>Android / Chrome</b><br>Tap <b>⋮</b> → <b>Add to Home screen</b> or <b>Install app</b>.</div>';
+  }else if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    text.textContent='Use Safari to add GBK AI Real Estate to your home screen.';
+    action.innerHTML='<div style=\"background:#f7f8fb;border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.65;font-size:13px\"><b>iPhone / iPad</b><br>Tap <b>Share</b> → <b>Add to Home Screen</b>.</div>';
+  }else{
+    text.textContent='Use your browser’s install option to add GBK AI Real Estate as an app.';
+    action.innerHTML='<div style=\"background:#f7f8fb;border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.65;font-size:13px\"><b>Desktop</b><br>Look for <b>Install</b> or <b>Add to Home screen</b> in your browser menu.</div>';
+  }
+  modal.classList.add('show');
+}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+initCountryCurrency();
+syncRentalBudgetCurrency();
+</script>
+
+<script>
+document.addEventListener('error',function(e){
+  const el=e.target;
+  if(el && el.tagName==='IMG'){
+    el.style.display='none';
+    if(el.parentElement) el.parentElement.classList.add('media-fallback');
+  }
+},true);
+</script>
+
+<script>
+/* V6: real full-frontend language switcher. Static UI dictionary first,
+   with safe fragment replacement and persistent selection. */
+const GBK_LANG_CODES={"English":"en","తెలుగు":"te","हिन्दी":"hi","বাংলা":"bn","मराठी":"mr","தமிழ்":"ta","ಕನ್ನಡ":"kn","മലയാളം":"ml","ગુજરાતી":"gu","ਪੰਜਾਬੀ":"pa","اردو":"ur","العربية":"ar","中文":"zh","日本語":"ja","한국어":"ko","Español":"es","Français":"fr","Português":"pt","Deutsch":"de","Italiano":"it","Русский":"ru","Türkçe":"tr","Bahasa Indonesia":"id","Tiếng Việt":"vi","ไทย":"th","Polski":"pl","Nederlands":"nl","Svenska":"sv","Ελληνικά":"el","עברית":"he"};
+const T={
+"हिन्दी":{"Find":"खोजें","Rent":"किराया","Sell":"बेचें","AI Tools":"AI टूल्स","Professionals":"प्रोफेशनल्स","Country":"देश","Language":"भाषा","Install":"इंस्टॉल","List Property":"प्रॉपर्टी सूचीबद्ध करें","Login / Register":"लॉगिन / रजिस्टर","PROPERTY, REIMAGINED WITH AI":"AI के साथ प्रॉपर्टी का नया अनुभव","Tell us what you need. GBK AI helps you decide.":"हमें बताएं आपको क्या चाहिए। GBK AI निर्णय लेने में मदद करता है।","Buy, rent or sell homes, villas, land and commercial property across the world. Search in your language and compare what matters before you contact anyone.":"दुनिया भर में घर, विला, जमीन और कमर्शियल प्रॉपर्टी खरीदें, किराए पर लें या बेचें। अपनी भाषा में खोजें और संपर्क करने से पहले जरूरी बातों की तुलना करें।","Buy":"खरीदें","Any property":"कोई भी प्रॉपर्टी","House":"घर","Apartment":"अपार्टमेंट","Villa":"विला","Land / Plot":"जमीन / प्लॉट","Commercial":"कमर्शियल","Farmland":"कृषि भूमि","Ask GBK AI":"GBK AI से पूछें","Search globally with relevance: exact location → nearby/local areas → region → country → global.":"प्राकृतिक भाषा में लिखें: “परिवार का घर, सुरक्षित क्षेत्र, मेरे बजट में”।","GBK AI Property Advisor":"GBK AI प्रॉपर्टी सलाहकार","Compare properties, understand costs, prepare questions and search in your preferred language.":"प्रॉपर्टी की तुलना करें, लागत समझें, सवाल तैयार करें और अपनी पसंदीदा भाषा में खोजें।","Ask GBK AI →":"GBK AI से पूछें →","Start with what you need":"अपनी जरूरत से शुरू करें","Simple choices for every country and property type.":"हर देश और प्रॉपर्टी प्रकार के लिए आसान विकल्प।","Buy a Home":"घर खरीदें","Houses, apartments & villas":"घर, अपार्टमेंट और विला","Find a Rental":"किराया खोजें","Nearby rentals by budget":"बजट के अनुसार आसपास के किराए","Find Land":"जमीन खोजें","Plots, farmland & land":"प्लॉट, कृषि भूमि और जमीन","Offices, shops & spaces":"ऑफिस, दुकानें और व्यावसायिक जगहें","New Projects":"नए प्रोजेक्ट","Developers & projects":"डेवलपर और प्रोजेक्ट","Owners & professionals":"मालिक और प्रोफेशनल्स","Explore property":"प्रॉपर्टी देखें","Visual-first cards with source and trust signals.":"स्रोत और भरोसे के संकेतों के साथ प्रॉपर्टी कार्ड।","Search all →":"सभी खोजें →","FOR SALE · SOURCE SHOWN":"बिक्री के लिए · स्रोत दिखाया गया","Modern Family Villa":"आधुनिक फैमिली विला","4 beds · 5 baths · 2,800 sq ft · Video ready":"4 बेड · 5 बाथ · 2,800 वर्ग फुट · वीडियो तैयार","FOR RENT":"किराए के लिए","City Apartment":"सिटी अपार्टमेंट","2 beds · 2 baths · Furnished · Tour ready":"2 बेड · 2 बाथ · फर्निश्ड · टूर तैयार","LAND":"जमीन","Residential Plot":"रेजिडेंशियल प्लॉट","2,400 sq ft · Location insights":"2,400 वर्ग फुट · लोकेशन जानकारी","Business Space":"बिजनेस स्पेस","Office · 3,100 sq ft · Tour ready":"ऑफिस · 3,100 वर्ग फुट · टूर तैयार","Rental Finder":"रेंटल फाइंडर","Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.":"स्थान, बजट और प्रॉपर्टी प्रकार दर्ज करें। GBK AI आसपास के किराए की खोज तैयार कर सकता है।","Monthly budget":"मासिक बजट","Under $500":"$500 से कम","Property type":"प्रॉपर्टी प्रकार","Room":"कमरा","Find rentals with GBK AI →":"GBK AI से किराए खोजें →","See it before you visit":"जाने से पहले देखें","Designed for property photos, video tours and virtual walkthroughs.":"प्रॉपर्टी फोटो, वीडियो टूर और वर्चुअल वॉकथ्रू के लिए बनाया गया।","GBK AI decision tools":"GBK AI निर्णय टूल्स","More useful than a listing directory: help people understand the choice.":"लिस्टिंग डायरेक्टरी से अधिक उपयोगी: लोगों को सही विकल्प समझने में मदद।","AI Property Advisor":"AI प्रॉपर्टी सलाहकार","Describe your needs and build a shortlist from available property facts.":"अपनी जरूरत बताएं और उपलब्ध प्रॉपर्टी जानकारी से शॉर्टलिस्ट बनाएं।","Compare Properties":"प्रॉपर्टी की तुलना करें","Compare price, size, location, features and available costs side by side.":"कीमत, आकार, स्थान, सुविधाओं और उपलब्ध लागतों की साथ-साथ तुलना करें।","Total Cost Estimator":"कुल लागत अनुमानक","Estimate financing, fees and ongoing costs where reliable data is available.":"जहां विश्वसनीय डेटा उपलब्ध हो, वहां वित्तपोषण, फीस और चल रही लागत का अनुमान लगाएं।","Document Explainer":"दस्तावेज़ समझाने वाला","Explain uploaded property documents in plain language; not legal advice.":"अपलोड किए गए प्रॉपर्टी दस्तावेज़ों को आसान भाषा में समझें; यह कानूनी सलाह नहीं है।","Location Intelligence":"लोकेशन इंटेलिजेंस","Explore nearby facilities and relevant location information.":"आसपास की सुविधाओं और संबंधित लोकेशन जानकारी को देखें।","Trust Signals":"विश्वास संकेत","Show source, verification status and update date instead of hiding uncertainty.":"स्रोत, सत्यापन स्थिति और अपडेट तारीख दिखाएं।","AI Listing Builder":"AI लिस्टिंग बिल्डर","Create multilingual listing copy from property details and media.":"प्रॉपर्टी विवरण और मीडिया से बहुभाषी लिस्टिंग तैयार करें।","Global Language AI":"ग्लोबल लैंग्वेज AI","Search, explain and support customers in their preferred language.":"ग्राहकों की पसंदीदा भाषा में खोज, जानकारी और सहायता दें।","Have a property to sell or rent?":"क्या आपके पास बेचने या किराए पर देने के लिए प्रॉपर्टी है?","Create a multilingual listing with photos, video and AI-assisted descriptions.":"फोटो, वीडियो और AI-सहायता प्राप्त विवरण के साथ बहुभाषी लिस्टिंग बनाएं।","List Property →":"प्रॉपर्टी सूचीबद्ध करें →","GBK AI Customer Support":"GBK AI ग्राहक सहायता","24/7 help for buyers, renters, sellers, agents and developers — in the selected language.":"खरीदारों, किरायेदारों, विक्रेताओं, एजेंटों और डेवलपर्स के लिए चुनी गई भाषा में 24/7 सहायता।","Chat with GBK AI →":"GBK AI से चैट करें →","Professional plans":"प्रोफेशनल प्लान","Professional subscription pricing in USD. GBK token rewards stay separate from subscriptions.":"प्रोफेशनल सब्सक्रिप्शन की कीमत USD में है। GBK टोकन रिवॉर्ड सब्सक्रिप्शन से अलग हैं।","Professional profile":"प्रोफेशनल प्रोफाइल","Property listings":"प्रॉपर्टी लिस्टिंग","AI listing descriptions":"AI लिस्टिंग विवरण","Lead & enquiry tools":"लीड और पूछताछ टूल्स","Choose Agent Pro":"एजेंट प्रो चुनें","Project pages":"प्रोजेक्ट पेज","Multiple property listings":"कई प्रॉपर्टी लिस्टिंग","Featured campaigns":"विशेष कैंपेन","Lead analytics":"लीड एनालिटिक्स","Choose Developer Pro":"डेवलपर प्रो चुनें","Large property portfolios":"बड़े प्रॉपर्टी पोर्टफोलियो","Team accounts":"टीम अकाउंट","Rental management":"रेंटल मैनेजमेंट","Integration options":"इंटीग्रेशन विकल्प","Contact GBK":"GBK से संपर्क करें","Home":"होम","Pro":"प्रो","Add GBK AI to Home Screen":"GBK AI को होम स्क्रीन पर जोड़ें","Install GBK AI Real Estate for a faster, app-like experience.":"तेज ऐप-जैसे अनुभव के लिए GBK AI Real Estate इंस्टॉल करें।","Done":"हो गया","Choose country":"देश चुनें","Select the market you want to explore. The local currency appears automatically.":"जिस मार्केट को देखना चाहते हैं उसे चुनें। स्थानीय मुद्रा अपने आप दिखाई देगी।","Local currency":"स्थानीय मुद्रा","Currency follows your selected country.":"मुद्रा आपके चुने हुए देश के अनुसार होगी।","Choose language":"भाषा चुनें","GBK AI can present the experience in the user's preferred language.":"GBK AI अनुभव को उपयोगकर्ता की पसंदीदा भाषा में प्रस्तुत कर सकता है।","Use this language":"इस भाषा का उपयोग करें","Hyderabad · India":"हैदराबाद · भारत","Dubai · UAE":"दुबई · यूएई","Bengaluru · India":"बेंगलुरु · भारत","London · UK":"लंदन · यूके","City / area":"शहर / क्षेत्र","$500–$1,000":"$500–$1,000","$1,000–$2,500":"$1,000–$2,500","$2,500+":"$2,500+","Eligible GBK promotional rewards can appear in the connected Wallet.":"पात्र GBK प्रमोशनल रिवॉर्ड जुड़े वॉलेट में दिखाई दे सकते हैं।","Villa · Video / 3D Tour":"विला · वीडियो / 3D टूर","Apartment · Walkthrough":"अपार्टमेंट · वॉकथ्रू","Land · Location Overview":"जमीन · लोकेशन अवलोकन","Search country":"देश खोजें","Tell GBK AI what you need and where.":"GBK AI को बताएं कि आपको क्या चाहिए और कहां चाहिए।","Developer Pro":"डेवलपर प्रो","Enterprise":"एंटरप्राइज़","Agent Pro":"एजेंट प्रो","List your property":"अपनी प्रॉपर्टी सूचीबद्ध करें","Welcome to GBK AI":"GBK AI में आपका स्वागत है","/month":"/माह","Global property discovery":"वैश्विक प्रॉपर्टी खोज","Multilingual AI":"बहुभाषी AI","Admin pricing":"एडमिन मूल्य","Admin pricing ready":"एडमिन मूल्य तैयार","professional subscription prices remain in USD; property markets can show their local currency after country selection.":"प्रोफेशनल सब्सक्रिप्शन की कीमतें USD में रहेंगी; देश चुनने के बाद प्रॉपर्टी मार्केट स्थानीय मुद्रा दिखा सकते हैं।","Set the displayed monthly USD amount for each professional plan.":"हर प्रोफेशनल प्लान के लिए दिखने वाली मासिक USD राशि सेट करें।","Save pricing preview":"मूल्य प्रीव्यू सेव करें","Tap the browser menu":"ब्राउज़र मेनू दबाएं","and choose":"और चुनें"},
+"తెలుగు":{"Find":"వెతకండి","Rent":"అద్దె","Sell":"అమ్మండి","AI Tools":"AI టూల్స్","Professionals":"ప్రొఫెషనల్స్","Country":"దేశం","Language":"భాష","Install":"ఇన్‌స్టాల్","List Property":"ఆస్తిని లిస్ట్ చేయండి","Login / Register":"లాగిన్ / రిజిస్టర్","PROPERTY, REIMAGINED WITH AI":"AIతో ఆస్తి అనుభవానికి కొత్త రూపం","Tell us what you need. GBK AI helps you decide.":"మీకు ఏమి కావాలో చెప్పండి. GBK AI నిర్ణయం తీసుకోవడంలో సహాయపడుతుంది.","Buy, rent or sell homes, villas, land and commercial property across the world. Search in your language and compare what matters before you contact anyone.":"ప్రపంచవ్యాప్తంగా ఇళ్లు, విల్లాలు, భూమి మరియు కమర్షియల్ ఆస్తులను కొనండి, అద్దెకు తీసుకోండి లేదా అమ్మండి. మీ భాషలో శోధించి ముఖ్యమైన అంశాలను పోల్చండి.","Buy":"కొనండి","Any property":"ఏ ఆస్తైనా","House":"ఇల్లు","Apartment":"అపార్ట్‌మెంట్","Villa":"విల్లా","Land / Plot":"భూమి / ప్లాట్","Commercial":"కమర్షియల్","Farmland":"వ్యవసాయ భూమి","Ask GBK AI":"GBK AIని అడగండి","Start with what you need":"మీ అవసరంతో ప్రారంభించండి","Simple choices for every country and property type.":"ప్రతి దేశం మరియు ఆస్తి రకానికి సులభమైన ఎంపికలు.","Buy a Home":"ఇల్లు కొనండి","Houses, apartments & villas":"ఇళ్లు, అపార్ట్‌మెంట్లు & విల్లాలు","Find a Rental":"అద్దెను కనుగొనండి","Nearby rentals by budget":"బడ్జెట్ ప్రకారం సమీప అద్దెలు","Find Land":"భూమిని కనుగొనండి","Plots, farmland & land":"ప్లాట్లు, వ్యవసాయ భూమి & భూమి","New Projects":"కొత్త ప్రాజెక్టులు","Developers & projects":"డెవలపర్లు & ప్రాజెక్టులు","Owners & professionals":"యజమానులు & ప్రొఫెషనల్స్","Explore property":"ఆస్తిని చూడండి","Search all →":"అన్నింటినీ వెతకండి →","Rental Finder":"రెంటల్ ఫైండర్","Enter a location, budget and property type. GBK AI can prepare a nearby-rental search.":"ప్రాంతం, బడ్జెట్ మరియు ఆస్తి రకాన్ని నమోదు చేయండి. GBK AI సమీప అద్దె శోధనను సిద్ధం చేస్తుంది.","Monthly budget":"నెలవారీ బడ్జెట్","Under $500":"$500 లోపు","Property type":"ఆస్తి రకం","Room":"గది","Find rentals with GBK AI →":"GBK AIతో అద్దెలను కనుగొనండి →","GBK AI decision tools":"GBK AI నిర్ణయ టూల్స్","Compare Properties":"ఆస్తులను పోల్చండి","Total Cost Estimator":"మొత్తం ఖర్చు అంచనా","Document Explainer":"డాక్యుమెంట్ వివరణ","Location Intelligence":"ప్రాంత సమాచారం","Trust Signals":"నమ్మక సూచనలు","AI Listing Builder":"AI లిస్టింగ్ బిల్డర్","Global Language AI":"గ్లోబల్ లాంగ్వేజ్ AI","Have a property to sell or rent?":"అమ్మడానికి లేదా అద్దెకు ఇవ్వడానికి ఆస్తి ఉందా?","Create a multilingual listing with photos, video and AI-assisted descriptions.":"ఫోటోలు, వీడియో మరియు AI సహాయంతో బహుభాషా లిస్టింగ్‌ను రూపొందించండి.","List Property →":"ఆస్తిని లిస్ట్ చేయండి →","GBK AI Customer Support":"GBK AI కస్టమర్ సపోర్ట్","Chat with GBK AI →":"GBK AIతో చాట్ చేయండి →","Professional plans":"ప్రొఫెషనల్ ప్లాన్లు","Professional profile":"ప్రొఫెషనల్ ప్రొఫైల్","Property listings":"ఆస్తి లిస్టింగ్స్","Choose Agent Pro":"ఏజెంట్ ప్రోను ఎంచుకోండి","Choose Developer Pro":"డెవలపర్ ప్రోను ఎంచుకోండి","Contact GBK":"GBKని సంప్రదించండి","Home":"హోమ్","Pro":"ప్రో","Add GBK AI to Home Screen":"GBK AIని హోమ్ స్క్రీన్‌కు జోడించండి","Done":"పూర్తయింది","Choose country":"దేశాన్ని ఎంచుకోండి","Select the market you want to explore. The local currency appears automatically.":"మీరు చూడాలనుకునే మార్కెట్‌ను ఎంచుకోండి. స్థానిక కరెన్సీ ఆటోమేటిక్‌గా కనిపిస్తుంది.","Local currency":"స్థానిక కరెన్సీ","Currency follows your selected country.":"మీరు ఎంచుకున్న దేశాన్ని బట్టి కరెన్సీ ఉంటుంది.","Choose language":"భాషను ఎంచుకోండి","GBK AI can present the experience in the user's preferred language.":"GBK AI అనుభవాన్ని వినియోగదారు ఇష్టపడే భాషలో అందిస్తుంది.","Use this language":"ఈ భాషను ఉపయోగించండి","Visual-first cards with source and trust signals.":"మూలం మరియు నమ్మక సూచనలతో ఆస్తి కార్డులు.","FOR SALE · SOURCE SHOWN":"అమ్మకానికి · మూలం చూపబడింది","Modern Family Villa":"ఆధునిక కుటుంబ విల్లా","Hyderabad · India":"హైదరాబాద్ · భారతదేశం","4 beds · 5 baths · 2,800 sq ft · Video ready":"4 బెడ్లు · 5 బాత్‌రూమ్‌లు · 2,800 చ.అ. · వీడియో సిద్ధం","FOR RENT":"అద్దెకు","City Apartment":"సిటీ అపార్ట్‌మెంట్","Dubai · UAE":"దుబాయ్ · యూఏఈ","2 beds · 2 baths · Furnished · Tour ready":"2 బెడ్లు · 2 బాత్‌రూమ్‌లు · ఫర్నిష్డ్ · టూర్ సిద్ధం","LAND":"భూమి","Residential Plot":"రెసిడెన్షియల్ ప్లాట్","Bengaluru · India":"బెంగళూరు · భారతదేశం","2,400 sq ft · Location insights":"2,400 చ.అ. · ప్రాంత సమాచారం","COMMERCIAL":"కమర్షియల్","Business Space":"బిజినెస్ స్పేస్","London · UK":"లండన్ · యూకే","Office · 3,100 sq ft · Tour ready":"ఆఫీస్ · 3,100 చ.అ. · టూర్ సిద్ధం","City / area":"నగరం / ప్రాంతం","$500–$1,000":"$500–$1,000","$1,000–$2,500":"$1,000–$2,500","$2,500+":"$2,500+","Eligible GBK promotional rewards can appear in the connected Wallet.":"అర్హత ఉన్న GBK ప్రమోషనల్ రివార్డులు కనెక్ట్ చేసిన వాలెట్‌లో కనిపించవచ్చు.","See it before you visit":"వెళ్లే ముందు చూడండి","Designed for property photos, video tours and virtual walkthroughs.":"ఆస్తి ఫోటోలు, వీడియో టూర్‌లు మరియు వర్చువల్ వాక్‌థ్రూల కోసం రూపొందించబడింది.","Villa · Video / 3D Tour":"విల్లా · వీడియో / 3D టూర్","Apartment · Walkthrough":"అపార్ట్‌మెంట్ · వాక్‌థ్రూ","Land · Location Overview":"భూమి · ప్రాంత అవలోకనం","More useful than a listing directory: help people understand the choice.":"లిస్టింగ్ డైరెక్టరీ కంటే మరింత ఉపయోగకరం: సరైన ఎంపికను అర్థం చేసుకోవడంలో సహాయపడుతుంది.","Describe your needs and build a shortlist from available property facts.":"మీ అవసరాలను వివరించి అందుబాటులో ఉన్న ఆస్తి వివరాలతో షార్ట్‌లిస్ట్ రూపొందించండి.","Compare price, size, location, features and available costs side by side.":"ధర, పరిమాణం, ప్రాంతం, సౌకర్యాలు మరియు అందుబాటులో ఉన్న ఖర్చులను పక్కపక్కనే పోల్చండి.","Estimate financing, fees and ongoing costs where reliable data is available.":"నమ్మదగిన సమాచారం ఉన్న చోట ఫైనాన్సింగ్, ఫీజులు మరియు కొనసాగుతున్న ఖర్చులను అంచనా వేయండి.","Explain uploaded property documents in plain language; not legal advice.":"అప్‌లోడ్ చేసిన ఆస్తి పత్రాలను సులభమైన భాషలో వివరించండి; ఇది న్యాయ సలహా కాదు.","Explore nearby facilities and relevant location information.":"సమీప సౌకర్యాలు మరియు సంబంధిత ప్రాంత సమాచారాన్ని చూడండి.","Show source, verification status and update date instead of hiding uncertainty.":"అనిశ్చితిని దాచకుండా మూలం, ధృవీకరణ స్థితి మరియు నవీకరణ తేదీని చూపండి.","Create multilingual listing copy from property details and media.":"ఆస్తి వివరాలు మరియు మీడియా నుండి బహుభాషా లిస్టింగ్ కంటెంట్‌ను రూపొందించండి.","Search, explain and support customers in their preferred language.":"వినియోగదారుల ఇష్టమైన భాషలో శోధన, వివరణ మరియు సహాయం అందించండి.","24/7 help for buyers, renters, sellers, agents and developers — in the selected language.":"కొనుగోలుదారులు, అద్దెదారులు, విక్రేతలు, ఏజెంట్లు మరియు డెవలపర్లకు ఎంచుకున్న భాషలో 24/7 సహాయం.","Professional subscription pricing in USD. GBK token rewards stay separate from subscriptions.":"ప్రొఫెషనల్ సబ్‌స్క్రిప్షన్ ధరలు USDలో ఉంటాయి. GBK టోకెన్ రివార్డులు సబ్‌స్క్రిప్షన్‌లకు వేరుగా ఉంటాయి.","Search country":"దేశాన్ని వెతకండి","Tell GBK AI what you need and where.":"మీకు ఏమి కావాలో, ఎక్కడ కావాలో GBK AIకి చెప్పండి.","GBK AI ready:":"GBK AI సిద్ధంగా ఉంది:","Connect the live rental source for this country and location.":"ఈ దేశం మరియు ప్రాంతానికి లైవ్ అద్దె మూలాన్ని కనెక్ట్ చేయండి.","Production mode can connect approved listing feeds by country and market.":"ప్రొడక్షన్ మోడ్ దేశం మరియు మార్కెట్ ఆధారంగా ఆమోదించిన లిస్టింగ్ ఫీడ్‌లను కనెక్ట్ చేయగలదు.","Enter your property details and upload media in the production listing flow.":"మీ ఆస్తి వివరాలను నమోదు చేసి ప్రొడక్షన్ లిస్టింగ్ ప్రక్రియలో మీడియాను అప్‌లోడ్ చేయండి.","Ask your question in your language. Connect the production AI support service here.":"మీ భాషలో ప్రశ్న అడగండి. ప్రొడక్షన్ AI సపోర్ట్ సేవను ఇక్కడ కనెక్ట్ చేయండి.","Continue":"కొనసాగించండి","GBK AI Property Advisor":"GBK AI ఆస్తి సలహాదారు","Compare properties, understand costs, prepare questions and search in your preferred language.":"ఆస్తులను పోల్చండి, ఖర్చులను అర్థం చేసుకోండి, ప్రశ్నలను సిద్ధం చేసుకోండి మరియు మీకు ఇష్టమైన భాషలో శోధించండి.","Search globally with relevance: exact location → nearby/local areas → region → country → global.":"సహజ భాషలో రాయండి: “కుటుంబానికి ఇల్లు, సురక్షిత ప్రాంతం, నా బడ్జెట్‌లో”.","Developer Pro":"డెవలపర్ ప్రో","Project pages":"ప్రాజెక్ట్ పేజీలు","Multiple property listings":"బహుళ ఆస్తి లిస్టింగ్స్","Featured campaigns":"ప్రత్యేక ప్రచారాలు","Lead analytics":"లీడ్ విశ్లేషణ","Enterprise":"ఎంటర్‌ప్రైజ్","Large property portfolios":"పెద్ద ఆస్తి పోర్ట్‌ఫోలియోలు","Team accounts":"టీమ్ ఖాతాలు","Rental management":"అద్దె నిర్వహణ","Integration options":"ఇంటిగ్రేషన్ ఎంపికలు","Agent Pro":"ఏజెంట్ ప్రో","AI listing descriptions":"AI లిస్టింగ్ వివరణలు","Lead & enquiry tools":"లీడ్ & విచారణ టూల్స్","AI Property Advisor":"AI ఆస్తి సలహాదారు","List your property":"మీ ఆస్తిని లిస్ట్ చేయండి","Create a property listing with photos, video and multilingual AI description.":"ఫోటోలు, వీడియో మరియు బహుభాషా AI వివరణతో ఆస్తి లిస్టింగ్‌ను రూపొందించండి.","Welcome to GBK AI":"GBK AIకి స్వాగతం","Register or log in to save properties, receive matches and manage enquiries.":"ఆస్తులను సేవ్ చేయడానికి, సరిపోలే ఫలితాలను పొందడానికి మరియు విచారణలను నిర్వహించడానికి రిజిస్టర్ లేదా లాగిన్ చేయండి.","Offices, shops & spaces":"ఆఫీసులు, దుకాణాలు & వాణిజ్య స్థలాలు","/month":"/నెల","Global property discovery":"ప్రపంచ ఆస్తుల శోధన","Multilingual AI":"బహుభాషా AI","USD":"USD","Admin pricing":"అడ్మిన్ ధరలు","Admin pricing ready":"అడ్మిన్ ధరలు సిద్ధంగా ఉన్నాయి","professional subscription prices remain in USD; property markets can show their local currency after country selection.":"ప్రొఫెషనల్ సబ్‌స్క్రిప్షన్ ధరలు USDలోనే ఉంటాయి; దేశాన్ని ఎంచుకున్న తర్వాత ఆస్తి మార్కెట్ స్థానిక కరెన్సీని చూపవచ్చు.","Set the displayed monthly USD amount for each professional plan.":"ప్రతి ప్రొఫెషనల్ ప్లాన్‌కు చూపించే నెలవారీ USD మొత్తాన్ని సెట్ చేయండి.","Save pricing preview":"ధరల ప్రివ్యూను సేవ్ చేయండి","Android / Chrome":"Android / Chrome","Tap the browser menu":"బ్రౌజర్ మెనూను నొక్కండి","and choose":"మరియు ఎంచుకోండి"},
+"தமிழ்":{"Find":"தேடல்","Rent":"வாடகை","Sell":"விற்க","AI Tools":"AI கருவிகள்","Professionals":"தொழில்முறை","Country":"நாடு","Language":"மொழி","Install":"நிறுவு","List Property":"சொத்தை பட்டியலிடு","Login / Register":"உள்நுழை / பதிவு செய்","PROPERTY, REIMAGINED WITH AI":"AI உடன் மறுபரிசீலிக்கப்பட்ட சொத்து அனுபவம்","Tell us what you need. GBK AI helps you decide.":"உங்களுக்கு என்ன வேண்டும் என்று சொல்லுங்கள். GBK AI முடிவு எடுக்க உதவும்.","Buy":"வாங்கு","Rent":"வாடகை","Sell":"விற்க","Any property":"எந்த சொத்தும்","House":"வீடு","Apartment":"அபார்ட்மென்ட்","Villa":"வில்லா","Land / Plot":"நிலம் / மனை","Commercial":"வணிகம்","Farmland":"விவசாய நிலம்","Ask GBK AI":"GBK AIயிடம் கேள்","Start with what you need":"உங்கள் தேவையுடன் தொடங்குங்கள்","Buy a Home":"வீடு வாங்கு","Find a Rental":"வாடகை தேடு","Find Land":"நிலம் தேடு","New Projects":"புதிய திட்டங்கள்","List Property":"சொத்தை பட்டியலிடு","Rental Finder":"வாடகை தேடல்","Monthly budget":"மாதாந்திர பட்ஜெட்","Under $500":"$500 க்குள்","Property type":"சொத்து வகை","Room":"அறை","GBK AI decision tools":"GBK AI முடிவு கருவிகள்","Compare Properties":"சொத்துகளை ஒப்பிடு","Total Cost Estimator":"மொத்த செலவு மதிப்பீடு","Document Explainer":"ஆவண விளக்கி","Location Intelligence":"இட தகவல்","Trust Signals":"நம்பிக்கை குறியீடுகள்","AI Listing Builder":"AI பட்டியல் உருவாக்கி","Global Language AI":"உலக மொழி AI","Have a property to sell or rent?":"விற்க அல்லது வாடகைக்கு விட சொத்து உள்ளதா?","List Property →":"சொத்தை பட்டியலிடு →","GBK AI Customer Support":"GBK AI வாடிக்கையாளர் ஆதரவு","Chat with GBK AI →":"GBK AI உடன் உரையாடு →","Professional plans":"தொழில்முறை திட்டங்கள்","Home":"முகப்பு","Pro":"ப்ரோ","Choose country":"நாட்டை தேர்வு செய்","Choose language":"மொழியை தேர்வு செய்","Use this language":"இந்த மொழியை பயன்படுத்து","Local currency":"உள்ளூர் நாணயம்","Done":"முடிந்தது"},
+"বাংলা":{"Find":"খুঁজুন","Rent":"ভাড়া","Sell":"বিক্রি করুন","AI Tools":"AI টুলস","Professionals":"পেশাদার","Country":"দেশ","Language":"ভাষা","Install":"ইনস্টল","List Property":"সম্পত্তি তালিকাভুক্ত করুন","Login / Register":"লগইন / রেজিস্টার","PROPERTY, REIMAGINED WITH AI":"AI দিয়ে সম্পত্তির নতুন অভিজ্ঞতা","Tell us what you need. GBK AI helps you decide.":"আপনার কী দরকার বলুন। GBK AI সিদ্ধান্ত নিতে সাহায্য করে।","Buy":"কিনুন","Any property":"যেকোনো সম্পত্তি","House":"বাড়ি","Apartment":"অ্যাপার্টমেন্ট","Villa":"ভিলা","Land / Plot":"জমি / প্লট","Commercial":"বাণিজ্যিক","Farmland":"কৃষিজমি","Ask GBK AI":"GBK AI-কে জিজ্ঞাসা করুন","Start with what you need":"আপনার প্রয়োজন দিয়ে শুরু করুন","Buy a Home":"বাড়ি কিনুন","Find a Rental":"ভাড়া খুঁজুন","Find Land":"জমি খুঁজুন","New Projects":"নতুন প্রকল্প","List Property":"সম্পত্তি তালিকাভুক্ত করুন","Rental Finder":"ভাড়া অনুসন্ধান","Monthly budget":"মাসিক বাজেট","Under $500":"$500-এর নিচে","Property type":"সম্পত্তির ধরন","Room":"রুম","GBK AI decision tools":"GBK AI সিদ্ধান্তের টুল","Compare Properties":"সম্পত্তি তুলনা করুন","Total Cost Estimator":"মোট খরচ অনুমান","Document Explainer":"নথি ব্যাখ্যাকারী","Location Intelligence":"লোকেশন তথ্য","Trust Signals":"বিশ্বাসের সংকেত","AI Listing Builder":"AI লিস্টিং বিল্ডার","Global Language AI":"গ্লোবাল ল্যাঙ্গুয়েজ AI","Have a property to sell or rent?":"বিক্রি বা ভাড়া দেওয়ার সম্পত্তি আছে?","List Property →":"সম্পত্তি তালিকাভুক্ত করুন →","GBK AI Customer Support":"GBK AI কাস্টমার সাপোর্ট","Chat with GBK AI →":"GBK AI-এর সাথে চ্যাট করুন →","Professional plans":"পেশাদার প্ল্যান","Home":"হোম","Pro":"প্রো","Choose country":"দেশ বেছে নিন","Choose language":"ভাষা বেছে নিন","Use this language":"এই ভাষা ব্যবহার করুন","Local currency":"স্থানীয় মুদ্রা","Done":"সম্পন্ন"},
+"मराठी":{"Find":"शोधा","Rent":"भाडे","Sell":"विका","AI Tools":"AI साधने","Professionals":"व्यावसायिक","Country":"देश","Language":"भाषा","Install":"इन्स्टॉल","List Property":"मालमत्ता सूचीबद्ध करा","Login / Register":"लॉगिन / नोंदणी","PROPERTY, REIMAGINED WITH AI":"AI सह मालमत्तेचा नवा अनुभव","Tell us what you need. GBK AI helps you decide.":"तुम्हाला काय हवे ते सांगा. GBK AI निर्णय घेण्यास मदत करते.","Buy":"खरेदी","Any property":"कोणतीही मालमत्ता","House":"घर","Apartment":"अपार्टमेंट","Villa":"व्हिला","Land / Plot":"जमीन / प्लॉट","Commercial":"व्यावसायिक","Farmland":"शेती जमीन","Ask GBK AI":"GBK AI ला विचारा","Start with what you need":"तुमच्या गरजेपासून सुरुवात करा","Buy a Home":"घर खरेदी करा","Find a Rental":"भाडे शोधा","Find Land":"जमीन शोधा","New Projects":"नवीन प्रकल्प","List Property":"मालमत्ता सूचीबद्ध करा","Rental Finder":"भाडे शोधक","Monthly budget":"मासिक बजेट","Under $500":"$500 पेक्षा कमी","Property type":"मालमत्तेचा प्रकार","Room":"खोली","GBK AI decision tools":"GBK AI निर्णय साधने","Compare Properties":"मालमत्तांची तुलना करा","Total Cost Estimator":"एकूण खर्च अंदाज","Document Explainer":"दस्तऐवज स्पष्टीकरण","Location Intelligence":"स्थान माहिती","Trust Signals":"विश्वास संकेत","AI Listing Builder":"AI लिस्टिंग बिल्डर","Global Language AI":"ग्लोबल लँग्वेज AI","Have a property to sell or rent?":"विकण्यासाठी किंवा भाड्याने देण्यासाठी मालमत्ता आहे का?","List Property →":"मालमत्ता सूचीबद्ध करा →","GBK AI Customer Support":"GBK AI ग्राहक सहाय्य","Chat with GBK AI →":"GBK AI शी चॅट करा →","Professional plans":"व्यावसायिक योजना","Home":"मुख्यपृष्ठ","Pro":"प्रो","Choose country":"देश निवडा","Choose language":"भाषा निवडा","Use this language":"ही भाषा वापरा","Local currency":"स्थानिक चलन","Done":"पूर्ण"},
+"ಕನ್ನಡ":{"Find":"ಹುಡುಕಿ","Rent":"ಬಾಡಿಗೆ","Sell":"ಮಾರಾಟ","AI Tools":"AI ಸಾಧನಗಳು","Professionals":"ವೃತ್ತಿಪರರು","Country":"ದೇಶ","Language":"ಭಾಷೆ","Install":"ಇನ್‌ಸ್ಟಾಲ್","List Property":"ಆಸ್ತಿಯನ್ನು ಪಟ್ಟಿ ಮಾಡಿ","Login / Register":"ಲಾಗಿನ್ / ನೋಂದಣಿ","PROPERTY, REIMAGINED WITH AI":"AI ಜೊತೆಗೆ ಆಸ್ತಿಯ ಹೊಸ ಅನುಭವ","Tell us what you need. GBK AI helps you decide.":"ನಿಮಗೆ ಏನು ಬೇಕು ಎಂದು ಹೇಳಿ. GBK AI ನಿರ್ಧಾರಕ್ಕೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ.","Buy":"ಖರೀದಿ","Any property":"ಯಾವುದೇ ಆಸ್ತಿ","House":"ಮನೆ","Apartment":"ಅಪಾರ್ಟ್‌ಮೆಂಟ್","Villa":"ವಿಲ್ಲಾ","Land / Plot":"ಜಮೀನು / ಪ್ಲಾಟ್","Commercial":"ವಾಣಿಜ್ಯ","Farmland":"ಕೃಷಿ ಜಮೀನು","Ask GBK AI":"GBK AIಗೆ ಕೇಳಿ","Start with what you need":"ನಿಮ್ಮ ಅಗತ್ಯದಿಂದ ಪ್ರಾರಂಭಿಸಿ","Buy a Home":"ಮನೆ ಖರೀದಿಸಿ","Find a Rental":"ಬಾಡಿಗೆ ಹುಡುಕಿ","Find Land":"ಜಮೀನು ಹುಡುಕಿ","New Projects":"ಹೊಸ ಯೋಜನೆಗಳು","Rental Finder":"ಬಾಡಿಗೆ ಹುಡುಕಾಟ","Monthly budget":"ಮಾಸಿಕ ಬಜೆಟ್","Under $500":"$500 ಕ್ಕಿಂತ ಕಡಿಮೆ","Property type":"ಆಸ್ತಿ ಪ್ರಕಾರ","Room":"ಕೊಠಡಿ","Compare Properties":"ಆಸ್ತಿಗಳನ್ನು ಹೋಲಿಸಿ","Total Cost Estimator":"ಒಟ್ಟು ವೆಚ್ಚ ಅಂದಾಜು","Document Explainer":"ದಾಖಲೆ ವಿವರಣೆ","Location Intelligence":"ಸ್ಥಳ ಮಾಹಿತಿ","Trust Signals":"ವಿಶ್ವಾಸ ಸೂಚನೆಗಳು","AI Listing Builder":"AI ಪಟ್ಟಿ ನಿರ್ಮಾಪಕ","Global Language AI":"ಗ್ಲೋಬಲ್ ಲ್ಯಾಂಗ್ವೇಜ್ AI","Have a property to sell or rent?":"ಮಾರಾಟ ಅಥವಾ ಬಾಡಿಗೆಗೆ ಆಸ್ತಿ ಇದೆಯೇ?","List Property →":"ಆಸ್ತಿಯನ್ನು ಪಟ್ಟಿ ಮಾಡಿ →","GBK AI Customer Support":"GBK AI ಗ್ರಾಹಕ ಬೆಂಬಲ","Chat with GBK AI →":"GBK AI ಜೊತೆ ಚಾಟ್ ಮಾಡಿ →","Professional plans":"ವೃತ್ತಿಪರ ಯೋಜನೆಗಳು","Home":"ಮುಖಪುಟ","Pro":"ಪ್ರೋ","Choose country":"ದೇಶ ಆಯ್ಕೆಮಾಡಿ","Choose language":"ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ","Use this language":"ಈ ಭಾಷೆಯನ್ನು ಬಳಸಿ","Local currency":"ಸ್ಥಳೀಯ ಕರೆನ್ಸಿ","Done":"ಮುಗಿದಿದೆ"},
+"മലയാളം":{"Find":"തിരയുക","Rent":"വാടക","Sell":"വിൽക്കുക","AI Tools":"AI ടൂളുകൾ","Professionals":"പ്രൊഫഷണലുകൾ","Country":"രാജ്യം","Language":"ഭാഷ","Install":"ഇൻസ്റ്റാൾ","List Property":"പ്രോപ്പർട്ടി ലിസ്റ്റ് ചെയ്യുക","Login / Register":"ലോഗിൻ / രജിസ്റ്റർ","PROPERTY, REIMAGINED WITH AI":"AI ഉപയോഗിച്ച് പ്രോപ്പർട്ടിക്ക് പുതിയ അനുഭവം","Tell us what you need. GBK AI helps you decide.":"നിങ്ങൾക്ക് എന്താണ് വേണ്ടത് പറയൂ. GBK AI തീരുമാനിക്കാൻ സഹായിക്കും.","Buy":"വാങ്ങുക","Any property":"ഏത് പ്രോപ്പർട്ടിയും","House":"വീട്","Apartment":"അപ്പാർട്ട്മെന്റ്","Villa":"വില്ല","Land / Plot":"ഭൂമി / പ്ലോട്ട്","Commercial":"വാണിജ്യം","Farmland":"കൃഷിഭൂമി","Ask GBK AI":"GBK AIയോട് ചോദിക്കുക","Start with what you need":"നിങ്ങളുടെ ആവശ്യത്തിൽ നിന്ന് തുടങ്ങുക","Buy a Home":"വീട് വാങ്ങുക","Find a Rental":"വാടക കണ്ടെത്തുക","Find Land":"ഭൂമി കണ്ടെത്തുക","New Projects":"പുതിയ പദ്ധതികൾ","Rental Finder":"വാടക തിരയൽ","Monthly budget":"മാസ ബജറ്റ്","Under $500":"$500ൽ താഴെ","Property type":"പ്രോപ്പർട്ടി തരം","Room":"മുറി","Compare Properties":"പ്രോപ്പർട്ടികൾ താരതമ്യം ചെയ്യുക","Total Cost Estimator":"മൊത്തം ചെലവ് കണക്കാക്കൽ","Document Explainer":"ഡോക്യുമെന്റ് വിശദീകരണം","Location Intelligence":"സ്ഥല വിവരം","Trust Signals":"വിശ്വാസ സൂചനകൾ","AI Listing Builder":"AI ലിസ്റ്റിംഗ് ബിൽഡർ","Global Language AI":"ഗ്ലോബൽ ലാംഗ്വേജ് AI","Have a property to sell or rent?":"വിൽക്കാനോ വാടകയ്ക്കോ പ്രോപ്പർട്ടി ഉണ്ടോ?","List Property →":"പ്രോപ്പർട്ടി ലിസ്റ്റ് ചെയ്യുക →","GBK AI Customer Support":"GBK AI ഉപഭോക്തൃ പിന്തുണ","Chat with GBK AI →":"GBK AIയുമായി ചാറ്റ് ചെയ്യുക →","Professional plans":"പ്രൊഫഷണൽ പ്ലാനുകൾ","Home":"ഹോം","Pro":"പ്രോ","Choose country":"രാജ്യം തിരഞ്ഞെടുക്കുക","Choose language":"ഭാഷ തിരഞ്ഞെടുക്കുക","Use this language":"ഈ ഭാഷ ഉപയോഗിക്കുക","Local currency":"പ്രാദേശിക കറൻസി","Done":"പൂർത്തിയായി"},
+"ગુજરાતી":{"Find":"શોધો","Rent":"ભાડે","Sell":"વેચો","AI Tools":"AI સાધનો","Professionals":"પ્રોફેશનલ્સ","Country":"દેશ","Language":"ભાષા","Install":"ઇન્સ્ટોલ","List Property":"પ્રોપર્ટી લિસ્ટ કરો","Login / Register":"લૉગિન / રજિસ્ટર","PROPERTY, REIMAGINED WITH AI":"AI સાથે પ્રોપર્ટીનો નવો અનુભવ","Tell us what you need. GBK AI helps you decide.":"તમને શું જોઈએ તે જણાવો. GBK AI નિર્ણય લેવામાં મદદ કરે છે.","Buy":"ખરીદો","Any property":"કોઈપણ પ્રોપર્ટી","House":"ઘર","Apartment":"એપાર્ટમેન્ટ","Villa":"વિલા","Land / Plot":"જમીન / પ્લોટ","Commercial":"કોમર્શિયલ","Farmland":"ખેતીની જમીન","Ask GBK AI":"GBK AIને પૂછો","Start with what you need":"તમારી જરૂરિયાતથી શરૂ કરો","Buy a Home":"ઘર ખરીદો","Find a Rental":"ભાડું શોધો","Find Land":"જમીન શોધો","New Projects":"નવા પ્રોજેક્ટ્સ","Rental Finder":"ભાડું શોધક","Monthly budget":"માસિક બજેટ","Under $500":"$500થી ઓછું","Property type":"પ્રોપર્ટી પ્રકાર","Room":"રૂમ","Compare Properties":"પ્રોપર્ટીની તુલના કરો","Total Cost Estimator":"કુલ ખર્ચ અંદાજ","Document Explainer":"દસ્તાવેજ સમજાવનાર","Location Intelligence":"સ્થાન માહિતી","Trust Signals":"વિશ્વાસ સંકેતો","AI Listing Builder":"AI લિસ્ટિંગ બિલ્ડર","Global Language AI":"ગ્લોબલ લેંગ્વેજ AI","Have a property to sell or rent?":"વેચવા અથવા ભાડે આપવા પ્રોપર્ટી છે?","List Property →":"પ્રોપર્ટી લિસ્ટ કરો →","GBK AI Customer Support":"GBK AI ગ્રાહક સહાય","Chat with GBK AI →":"GBK AI સાથે ચેટ કરો →","Professional plans":"પ્રોફેશનલ પ્લાન","Home":"હોમ","Pro":"પ્રો","Choose country":"દેશ પસંદ કરો","Choose language":"ભાષા પસંદ કરો","Use this language":"આ ભાષાનો ઉપયોગ કરો","Local currency":"સ્થાનિક ચલણ","Done":"પૂર્ણ"},
+"ਪੰਜਾਬੀ":{"Find":"ਖੋਜੋ","Rent":"ਕਿਰਾਇਆ","Sell":"ਵੇਚੋ","AI Tools":"AI ਟੂਲ","Professionals":"ਪੇਸ਼ੇਵਰ","Country":"ਦੇਸ਼","Language":"ਭਾਸ਼ਾ","Install":"ਇੰਸਟਾਲ","List Property":"ਪ੍ਰਾਪਰਟੀ ਸੂਚੀਬੱਧ ਕਰੋ","Login / Register":"ਲੌਗਇਨ / ਰਜਿਸਟਰ","PROPERTY, REIMAGINED WITH AI":"AI ਨਾਲ ਪ੍ਰਾਪਰਟੀ ਦਾ ਨਵਾਂ ਅਨੁਭਵ","Tell us what you need. GBK AI helps you decide.":"ਤੁਹਾਨੂੰ ਕੀ ਚਾਹੀਦਾ ਹੈ ਦੱਸੋ। GBK AI ਫੈਸਲਾ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ।","Buy":"ਖਰੀਦੋ","Any property":"ਕੋਈ ਵੀ ਪ੍ਰਾਪਰਟੀ","House":"ਘਰ","Apartment":"ਅਪਾਰਟਮੈਂਟ","Villa":"ਵਿਲਾ","Land / Plot":"ਜ਼ਮੀਨ / ਪਲਾਟ","Commercial":"ਕਮਰਸ਼ੀਅਲ","Farmland":"ਖੇਤੀਬਾੜੀ ਜ਼ਮੀਨ","Ask GBK AI":"GBK AI ਨੂੰ ਪੁੱਛੋ","Start with what you need":"ਆਪਣੀ ਲੋੜ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ","Buy a Home":"ਘਰ ਖਰੀਦੋ","Find a Rental":"ਕਿਰਾਇਆ ਲੱਭੋ","Find Land":"ਜ਼ਮੀਨ ਲੱਭੋ","New Projects":"ਨਵੇਂ ਪ੍ਰੋਜੈਕਟ","Rental Finder":"ਕਿਰਾਇਆ ਖੋਜਕ","Monthly budget":"ਮਹੀਨਾਵਾਰ ਬਜਟ","Under $500":"$500 ਤੋਂ ਘੱਟ","Property type":"ਪ੍ਰਾਪਰਟੀ ਕਿਸਮ","Room":"ਕਮਰਾ","Compare Properties":"ਪ੍ਰਾਪਰਟੀ ਦੀ ਤੁਲਨਾ ਕਰੋ","Total Cost Estimator":"ਕੁੱਲ ਲਾਗਤ ਅੰਦਾਜ਼ਾ","Document Explainer":"ਦਸਤਾਵੇਜ਼ ਸਮਝਾਉਣ ਵਾਲਾ","Location Intelligence":"ਸਥਾਨ ਜਾਣਕਾਰੀ","Trust Signals":"ਭਰੋਸੇ ਦੇ ਸੰਕੇਤ","AI Listing Builder":"AI ਲਿਸਟਿੰਗ ਬਿਲਡਰ","Global Language AI":"ਗਲੋਬਲ ਲੈਂਗਵੇਜ AI","Have a property to sell or rent?":"ਵੇਚਣ ਜਾਂ ਕਿਰਾਏ ਲਈ ਪ੍ਰਾਪਰਟੀ ਹੈ?","List Property →":"ਪ੍ਰਾਪਰਟੀ ਸੂਚੀਬੱਧ ਕਰੋ →","GBK AI Customer Support":"GBK AI ਗਾਹਕ ਸਹਾਇਤਾ","Chat with GBK AI →":"GBK AI ਨਾਲ ਚੈਟ ਕਰੋ →","Professional plans":"ਪੇਸ਼ੇਵਰ ਯੋਜਨਾਵਾਂ","Home":"ਹੋਮ","Pro":"ਪ੍ਰੋ","Choose country":"ਦੇਸ਼ ਚੁਣੋ","Choose language":"ਭਾਸ਼ਾ ਚੁਣੋ","Use this language":"ਇਹ ਭਾਸ਼ਾ ਵਰਤੋ","Local currency":"ਸਥਾਨਕ ਮੁਦਰਾ","Done":"ਹੋ ਗਿਆ"},
+"اردو":{"Find":"تلاش","Rent":"کرایہ","Sell":"فروخت کریں","AI Tools":"AI ٹولز","Professionals":"پروفیشنلز","Country":"ملک","Language":"زبان","Install":"انسٹال","List Property":"پراپرٹی لسٹ کریں","Login / Register":"لاگ اِن / رجسٹر","PROPERTY, REIMAGINED WITH AI":"AI کے ساتھ پراپرٹی کا نیا تجربہ","Tell us what you need. GBK AI helps you decide.":"بتائیں آپ کو کیا چاہیے۔ GBK AI فیصلہ کرنے میں مدد کرتا ہے۔","Buy":"خریدیں","Any property":"کوئی بھی پراپرٹی","House":"گھر","Apartment":"اپارٹمنٹ","Villa":"ولا","Land / Plot":"زمین / پلاٹ","Commercial":"کمرشل","Farmland":"زرعی زمین","Ask GBK AI":"GBK AI سے پوچھیں","Start with what you need":"اپنی ضرورت سے شروع کریں","Buy a Home":"گھر خریدیں","Find a Rental":"کرایہ تلاش کریں","Find Land":"زمین تلاش کریں","New Projects":"نئے منصوبے","Rental Finder":"رینٹل فائنڈر","Monthly budget":"ماہانہ بجٹ","Under $500":"$500 سے کم","Property type":"پراپرٹی کی قسم","Room":"کمرہ","Compare Properties":"پراپرٹیز کا موازنہ کریں","Total Cost Estimator":"کل لاگت کا اندازہ","Document Explainer":"دستاویز کی وضاحت","Location Intelligence":"مقام کی معلومات","Trust Signals":"اعتماد کے اشارے","AI Listing Builder":"AI لسٹنگ بلڈر","Global Language AI":"گلوبل لینگویج AI","Have a property to sell or rent?":"کیا آپ کے پاس فروخت یا کرایے کے لیے پراپرٹی ہے؟","List Property →":"پراپرٹی لسٹ کریں →","GBK AI Customer Support":"GBK AI کسٹمر سپورٹ","Chat with GBK AI →":"GBK AI سے چیٹ کریں →","Professional plans":"پروفیشنل پلانز","Home":"ہوم","Pro":"پرو","Choose country":"ملک منتخب کریں","Choose language":"زبان منتخب کریں","Use this language":"یہ زبان استعمال کریں","Local currency":"مقامی کرنسی","Done":"مکمل"},
+"العربية":{"Find":"بحث","Rent":"إيجار","Sell":"بيع","AI Tools":"أدوات الذكاء الاصطناعي","Professionals":"المحترفون","Country":"الدولة","Language":"اللغة","Install":"تثبيت","List Property":"أدرج العقار","Login / Register":"تسجيل الدخول / التسجيل","PROPERTY, REIMAGINED WITH AI":"عقارات بتجربة جديدة مع الذكاء الاصطناعي","Tell us what you need. GBK AI helps you decide.":"أخبرنا بما تحتاجه. يساعدك GBK AI على اتخاذ القرار.","Buy":"شراء","Any property":"أي عقار","House":"منزل","Apartment":"شقة","Villa":"فيلا","Land / Plot":"أرض / قطعة","Commercial":"تجاري","Farmland":"أرض زراعية","Ask GBK AI":"اسأل GBK AI","Start with what you need":"ابدأ بما تحتاجه","Buy a Home":"شراء منزل","Find a Rental":"ابحث عن إيجار","Find Land":"ابحث عن أرض","New Projects":"مشاريع جديدة","Rental Finder":"البحث عن إيجار","Monthly budget":"الميزانية الشهرية","Under $500":"أقل من 500 دولار","Property type":"نوع العقار","Room":"غرفة","Compare Properties":"قارن العقارات","Total Cost Estimator":"تقدير التكلفة الإجمالية","Document Explainer":"شرح المستندات","Location Intelligence":"ذكاء الموقع","Trust Signals":"إشارات الثقة","AI Listing Builder":"منشئ القوائم بالذكاء الاصطناعي","Global Language AI":"ذكاء اصطناعي متعدد اللغات","Have a property to sell or rent?":"هل لديك عقار للبيع أو الإيجار؟","List Property →":"أدرج العقار →","GBK AI Customer Support":"دعم عملاء GBK AI","Chat with GBK AI →":"تحدث مع GBK AI →","Professional plans":"الخطط الاحترافية","Home":"الرئيسية","Pro":"احترافي","Choose country":"اختر الدولة","Choose language":"اختر اللغة","Use this language":"استخدم هذه اللغة","Local currency":"العملة المحلية","Done":"تم"},
+"中文":{"Find":"查找","Rent":"租赁","Sell":"出售","AI Tools":"AI 工具","Professionals":"专业服务","Country":"国家","Language":"语言","Install":"安装","List Property":"发布房产","Login / Register":"登录 / 注册","PROPERTY, REIMAGINED WITH AI":"AI 重新定义房产体验","Tell us what you need. GBK AI helps you decide.":"告诉我们您的需求。GBK AI 帮助您做决定。","Buy":"购买","Any property":"任何房产","House":"住宅","Apartment":"公寓","Villa":"别墅","Land / Plot":"土地 / 地块","Commercial":"商业房产","Farmland":"农地","Ask GBK AI":"询问 GBK AI","Start with what you need":"从您的需求开始","Buy a Home":"购买住宅","Find a Rental":"寻找租房","Find Land":"寻找土地","New Projects":"新项目","Rental Finder":"租房搜索","Monthly budget":"月预算","Under $500":"低于 500 美元","Property type":"房产类型","Room":"房间","Compare Properties":"比较房产","Total Cost Estimator":"总成本估算","Document Explainer":"文档解释","Location Intelligence":"位置智能","Trust Signals":"信任信息","AI Listing Builder":"AI 房源创建器","Global Language AI":"全球语言 AI","Have a property to sell or rent?":"有房产要出售或出租吗？","List Property →":"发布房产 →","GBK AI Customer Support":"GBK AI 客户支持","Chat with GBK AI →":"与 GBK AI 聊天 →","Professional plans":"专业方案","Home":"首页","Pro":"专业版","Choose country":"选择国家","Choose language":"选择语言","Use this language":"使用此语言","Local currency":"当地货币","Done":"完成"},
+"日本語":{"Find":"探す","Rent":"賃貸","Sell":"売る","AI Tools":"AIツール","Professionals":"プロ向け","Country":"国","Language":"言語","Install":"インストール","List Property":"物件を掲載","Login / Register":"ログイン / 登録","PROPERTY, REIMAGINED WITH AI":"AIで不動産体験を再構築","Tell us what you need. GBK AI helps you decide.":"必要なものを教えてください。GBK AIが判断をサポートします。","Buy":"購入","Any property":"すべての物件","House":"一戸建て","Apartment":"マンション","Villa":"ヴィラ","Land / Plot":"土地 / 区画","Commercial":"商業物件","Farmland":"農地","Ask GBK AI":"GBK AIに質問","Start with what you need":"必要なことから始める","Buy a Home":"家を買う","Find a Rental":"賃貸を探す","Find Land":"土地を探す","New Projects":"新規プロジェクト","Rental Finder":"賃貸検索","Monthly budget":"月額予算","Under $500":"500ドル未満","Property type":"物件タイプ","Room":"部屋","Compare Properties":"物件を比較","Total Cost Estimator":"総費用見積もり","Document Explainer":"書類説明","Location Intelligence":"位置情報","Trust Signals":"信頼情報","AI Listing Builder":"AI物件掲載作成","Global Language AI":"グローバル言語AI","Have a property to sell or rent?":"売却または賃貸する物件がありますか？","List Property →":"物件を掲載 →","GBK AI Customer Support":"GBK AIカスタマーサポート","Chat with GBK AI →":"GBK AIとチャット →","Professional plans":"プロ向けプラン","Home":"ホーム","Pro":"プロ","Choose country":"国を選択","Choose language":"言語を選択","Use this language":"この言語を使用","Local currency":"現地通貨","Done":"完了"},
+"한국어":{"Find":"찾기","Rent":"임대","Sell":"판매","AI Tools":"AI 도구","Professionals":"전문가","Country":"국가","Language":"언어","Install":"설치","List Property":"매물 등록","Login / Register":"로그인 / 회원가입","PROPERTY, REIMAGINED WITH AI":"AI로 새롭게 만드는 부동산 경험","Tell us what you need. GBK AI helps you decide.":"원하는 것을 알려주세요. GBK AI가 결정을 도와드립니다.","Buy":"구매","Any property":"모든 부동산","House":"주택","Apartment":"아파트","Villa":"빌라","Land / Plot":"토지 / 필지","Commercial":"상업용","Farmland":"농지","Ask GBK AI":"GBK AI에 질문","Start with what you need":"필요한 것부터 시작","Buy a Home":"집 구매","Find a Rental":"임대 찾기","Find Land":"토지 찾기","New Projects":"신규 프로젝트","Rental Finder":"임대 검색","Monthly budget":"월 예산","Under $500":"500달러 이하","Property type":"부동산 유형","Room":"방","Compare Properties":"부동산 비교","Total Cost Estimator":"총비용 계산","Document Explainer":"문서 설명","Location Intelligence":"위치 정보","Trust Signals":"신뢰 정보","AI Listing Builder":"AI 매물 작성","Global Language AI":"글로벌 언어 AI","Have a property to sell or rent?":"판매 또는 임대할 부동산이 있나요?","List Property →":"매물 등록 →","GBK AI Customer Support":"GBK AI 고객 지원","Chat with GBK AI →":"GBK AI와 채팅 →","Professional plans":"전문가 요금제","Home":"홈","Pro":"프로","Choose country":"국가 선택","Choose language":"언어 선택","Use this language":"이 언어 사용","Local currency":"현지 통화","Done":"완료"},
+"Español":{"Find":"Buscar","Rent":"Alquilar","Sell":"Vender","AI Tools":"Herramientas de IA","Professionals":"Profesionales","Country":"País","Language":"Idioma","Install":"Instalar","List Property":"Publicar propiedad","Login / Register":"Iniciar sesión / Registrarse","PROPERTY, REIMAGINED WITH AI":"Propiedad, reinventada con IA","Tell us what you need. GBK AI helps you decide.":"Dinos qué necesitas. GBK AI te ayuda a decidir.","Buy":"Comprar","Any property":"Cualquier propiedad","House":"Casa","Apartment":"Apartamento","Villa":"Villa","Land / Plot":"Terreno / Parcela","Commercial":"Comercial","Farmland":"Tierra agrícola","Ask GBK AI":"Preguntar a GBK AI","Start with what you need":"Empieza con lo que necesitas","Buy a Home":"Comprar una casa","Find a Rental":"Buscar un alquiler","Find Land":"Buscar terreno","New Projects":"Nuevos proyectos","Rental Finder":"Buscador de alquiler","Monthly budget":"Presupuesto mensual","Under $500":"Menos de $500","Property type":"Tipo de propiedad","Room":"Habitación","Compare Properties":"Comparar propiedades","Total Cost Estimator":"Estimador de coste total","Document Explainer":"Explicador de documentos","Location Intelligence":"Inteligencia de ubicación","Trust Signals":"Señales de confianza","AI Listing Builder":"Creador de anuncios con IA","Global Language AI":"IA de idiomas global","Have a property to sell or rent?":"¿Tienes una propiedad para vender o alquilar?","List Property →":"Publicar propiedad →","GBK AI Customer Support":"Atención al cliente de GBK AI","Chat with GBK AI →":"Chatear con GBK AI →","Professional plans":"Planes profesionales","Home":"Inicio","Pro":"Pro","Choose country":"Elegir país","Choose language":"Elegir idioma","Use this language":"Usar este idioma","Local currency":"Moneda local","Done":"Listo"},
+"Français":{"Find":"Rechercher","Rent":"Louer","Sell":"Vendre","AI Tools":"Outils IA","Professionals":"Professionnels","Country":"Pays","Language":"Langue","Install":"Installer","List Property":"Publier un bien","Login / Register":"Connexion / Inscription","PROPERTY, REIMAGINED WITH AI":"L'immobilier réinventé avec l'IA","Tell us what you need. GBK AI helps you decide.":"Dites-nous ce dont vous avez besoin. GBK AI vous aide à décider.","Buy":"Acheter","Any property":"Tout bien","House":"Maison","Apartment":"Appartement","Villa":"Villa","Land / Plot":"Terrain / Parcelle","Commercial":"Commercial","Farmland":"Terre agricole","Ask GBK AI":"Demander à GBK AI","Start with what you need":"Commencez par votre besoin","Buy a Home":"Acheter une maison","Find a Rental":"Trouver une location","Find Land":"Trouver un terrain","New Projects":"Nouveaux projets","Rental Finder":"Recherche de location","Monthly budget":"Budget mensuel","Under $500":"Moins de 500 $","Property type":"Type de bien","Room":"Chambre","Compare Properties":"Comparer les biens","Total Cost Estimator":"Estimateur du coût total","Document Explainer":"Explicateur de documents","Location Intelligence":"Intelligence de localisation","Trust Signals":"Signaux de confiance","AI Listing Builder":"Créateur d'annonces IA","Global Language AI":"IA multilingue","Have a property to sell or rent?":"Un bien à vendre ou à louer ?","List Property →":"Publier un bien →","GBK AI Customer Support":"Assistance client GBK AI","Chat with GBK AI →":"Discuter avec GBK AI →","Professional plans":"Offres professionnelles","Home":"Accueil","Pro":"Pro","Choose country":"Choisir le pays","Choose language":"Choisir la langue","Use this language":"Utiliser cette langue","Local currency":"Devise locale","Done":"Terminé"},
+"Deutsch":{"Find":"Suchen","Rent":"Mieten","Sell":"Verkaufen","AI Tools":"KI-Tools","Professionals":"Profis","Country":"Land","Language":"Sprache","Install":"Installieren","List Property":"Immobilie einstellen","Login / Register":"Anmelden / Registrieren","PROPERTY, REIMAGINED WITH AI":"Immobilien neu gedacht mit KI","Tell us what you need. GBK AI helps you decide.":"Sagen Sie uns, was Sie brauchen. GBK AI hilft bei der Entscheidung.","Buy":"Kaufen","Any property":"Jede Immobilie","House":"Haus","Apartment":"Wohnung","Villa":"Villa","Land / Plot":"Grundstück","Commercial":"Gewerbe","Farmland":"Ackerland","Ask GBK AI":"GBK AI fragen","Start with what you need":"Starten Sie mit Ihrem Bedarf","Buy a Home":"Haus kaufen","Find a Rental":"Mietwohnung finden","Find Land":"Grundstück finden","New Projects":"Neue Projekte","Rental Finder":"Mietsuche","Monthly budget":"Monatliches Budget","Under $500":"Unter 500 $","Property type":"Immobilientyp","Room":"Zimmer","Compare Properties":"Immobilien vergleichen","Total Cost Estimator":"Gesamtkostenrechner","Document Explainer":"Dokumentenerklärung","Location Intelligence":"Standortinformationen","Trust Signals":"Vertrauenssignale","AI Listing Builder":"KI-Anzeigen-Ersteller","Global Language AI":"Globale Sprach-KI","Have a property to sell or rent?":"Immobilie zu verkaufen oder zu vermieten?","List Property →":"Immobilie einstellen →","GBK AI Customer Support":"GBK AI Kundensupport","Chat with GBK AI →":"Mit GBK AI chatten →","Professional plans":"Profi-Tarife","Home":"Start","Pro":"Pro","Choose country":"Land wählen","Choose language":"Sprache wählen","Use this language":"Diese Sprache verwenden","Local currency":"Lokale Währung","Done":"Fertig"}
+};
+/* For languages not listed above, use a small universal vocabulary rather than silently failing. */
+const COMMON={"Find":"Find","Rent":"Rent","Sell":"Sell","Country":"Country","Language":"Language","Install":"Install","List Property":"List Property","Login / Register":"Login / Register","Buy":"Buy","Any property":"Any property","House":"House","Apartment":"Apartment","Villa":"Villa","Land / Plot":"Land / Plot","Commercial":"Commercial","Farmland":"Farmland","Ask GBK AI":"Ask GBK AI","Start with what you need":"Start with what you need","Buy a Home":"Buy a Home","Find a Rental":"Find a Rental","Find Land":"Find Land","New Projects":"New Projects","Rental Finder":"Rental Finder","Monthly budget":"Monthly budget","Under $500":"Under $500","Property type":"Property type","Room":"Room","Compare Properties":"Compare Properties","Total Cost Estimator":"Total Cost Estimator","Document Explainer":"Document Explainer","Location Intelligence":"Location Intelligence","Trust Signals":"Trust Signals","AI Listing Builder":"AI Listing Builder","Global Language AI":"Global Language AI","Have a property to sell or rent?":"Have a property to sell or rent?","List Property →":"List Property →","GBK AI Customer Support":"GBK AI Customer Support","Chat with GBK AI →":"Chat with GBK AI →","Professional plans":"Professional plans","Home":"Home","Pro":"Pro","Choose country":"Choose country","Choose language":"Choose language","Use this language":"Use this language","Local currency":"Local currency","Done":"Done"};
+const GBK_EXTRA={
+  "English":{"month":"month","USD protocol reference":"USD protocol reference","Pay with GBK":"Pay with GBK","Send the exact GBK amount for the selected plan from your BNB wallet, then submit the transaction hash.":"Send the exact GBK amount for the selected plan from your BNB wallet, then submit the transaction hash.","Enter a valid BNB wallet address.":"Enter a valid BNB wallet address.","Enter a valid transaction hash.":"Enter a valid transaction hash.","Sending payment confirmation to GBK backend…":"Sending payment confirmation to GBK backend…","Payment received by GBK backend. Status: pending verification.":"Payment received by GBK backend. Status: pending verification.","Checking GBK backend…":"Checking GBK backend…","No GBK subscription payment found for this wallet.":"No GBK subscription payment found for this wallet."},
+  "తెలుగు":{"month":"నెల","USD protocol reference":"USD ప్రోటోకాల్ సూచన","Professional plans":"ప్రొఫెషనల్ ప్లాన్లు","USD protocol reference: $19":"USD ప్రోటోకాల్ సూచన: $19","USD protocol reference: $49":"USD ప్రోటోకాల్ సూచన: $49","USD protocol reference: $99":"USD ప్రోటోకాల్ సూచన: $99","GBK / month":"GBK / నెల","Pay 5,000 GBK":"5,000 GBK చెల్లించండి","Pay 25,000 GBK":"25,000 GBK చెల్లించండి","Pay 50,000 GBK":"50,000 GBK చెల్లించండి","Payment status":"చెల్లింపు స్థితి","GBK token payment":"GBK టోకెన్ చెల్లింపు","Pay with GBK":"GBKతో చెల్లించండి","Send the exact GBK amount for the selected plan from your BNB wallet, then submit the transaction hash.":"ఎంచుకున్న ప్లాన్‌కు అవసరమైన ఖచ్చితమైన GBK మొత్తాన్ని మీ BNB వాలెట్ నుండి పంపి, తర్వాత ట్రాన్సాక్షన్ హ్యాష్‌ను నమోదు చేయండి.","Enter a valid BNB wallet address.":"చెల్లుబాటు అయ్యే BNB వాలెట్ చిరునామాను నమోదు చేయండి.","Enter a valid transaction hash.":"చెల్లుబాటు అయ్యే ట్రాన్సాక్షన్ హ్యాష్‌ను నమోదు చేయండి.","Sending payment confirmation to GBK backend…":"GBK బ్యాక్‌ఎండ్‌కు చెల్లింపు నిర్ధారణ పంపుతోంది…","Payment received by GBK backend. Status: pending verification.":"GBK బ్యాక్‌ఎండ్ చెల్లింపును స్వీకరించింది. స్థితి: ధృవీకరణ పెండింగ్‌లో ఉంది.","Checking GBK backend…":"GBK బ్యాక్‌ఎండ్‌ను తనిఖీ చేస్తోంది…","No GBK subscription payment found for this wallet.":"ఈ వాలెట్‌కు GBK సబ్‌స్క్రిప్షన్ చెల్లింపు కనుగొనబడలేదు."},
+  "हिन्दी":{"month":"माह","USD protocol reference":"USD प्रोटोकॉल संदर्भ","Professional plans":"प्रोफेशनल प्लान","USD protocol reference: $19":"USD प्रोटोकॉल संदर्भ: $19","USD protocol reference: $49":"USD प्रोटोकॉल संदर्भ: $49","USD protocol reference: $99":"USD प्रोटोकॉल संदर्भ: $99","GBK / month":"GBK / माह","Pay 5,000 GBK":"5,000 GBK का भुगतान करें","Pay 25,000 GBK":"25,000 GBK का भुगतान करें","Pay 50,000 GBK":"50,000 GBK का भुगतान करें","Payment status":"भुगतान स्थिति","GBK token payment":"GBK टोकन भुगतान","Pay with GBK":"GBK से भुगतान करें","Send the exact GBK amount for the selected plan from your BNB wallet, then submit the transaction hash.":"चुने गए प्लान की सही GBK राशि अपने BNB वॉलेट से भेजें और फिर ट्रांजैक्शन हैश दर्ज करें।","Enter a valid BNB wallet address.":"मान्य BNB वॉलेट पता दर्ज करें।","Enter a valid transaction hash.":"मान्य ट्रांजैक्शन हैश दर्ज करें।","Sending payment confirmation to GBK backend…":"GBK बैकएंड को भुगतान पुष्टि भेजी जा रही है…","Payment received by GBK backend. Status: pending verification.":"GBK बैकएंड ने भुगतान प्राप्त कर लिया है। स्थिति: सत्यापन लंबित है।","Checking GBK backend…":"GBK बैकएंड जांचा जा रहा है…","No GBK subscription payment found for this wallet.":"इस वॉलेट के लिए कोई GBK सब्सक्रिप्शन भुगतान नहीं मिला।"}
+};
+for(const [l,extra] of Object.entries(GBK_EXTRA)){T[l]=Object.assign(T[l]||{},extra)}
+for(const l of Object.keys(GBK_LANG_CODES)) if(!T[l]) T[l]={...COMMON};
+T.English={};
+const gbkOriginalText=new WeakMap(), gbkOriginalAttrs=new WeakMap();
+function gbkReplace(value,entries){let v=value;for(const [from,to] of entries){if(from&&v.includes(from))v=v.split(from).join(to)}return v}
+function gbkTranslate(lang){
+ const dict=T[lang]||T.English, entries=Object.entries(dict).filter(([a,b])=>a&&b&&a!==b).sort((a,b)=>b[0].length-a[0].length);
+ document.documentElement.lang=GBK_LANG_CODES[lang]||'en';
+ document.documentElement.dir=(lang==='اردو'||lang==='עברית'||lang==='العربية')?'rtl':'ltr';
+ document.body.dir=document.documentElement.dir;
+ const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||/^(SCRIPT|STYLE|NOSCRIPT)$/i.test(p.tagName))return NodeFilter.FILTER_REJECT;return NodeFilter.FILTER_ACCEPT}});
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ nodes.forEach(n=>{if(!gbkOriginalText.has(n))gbkOriginalText.set(n,n.nodeValue);const o=gbkOriginalText.get(n);n.nodeValue=gbkReplace(o,entries)});
+ document.querySelectorAll('input,textarea').forEach(el=>{if(!gbkOriginalAttrs.has(el))gbkOriginalAttrs.set(el,{placeholder:el.getAttribute('placeholder')||'',title:el.getAttribute('title')||'',aria:el.getAttribute('aria-label')||''});const o=gbkOriginalAttrs.get(el);if(o.placeholder)el.placeholder=gbkReplace(o.placeholder,entries);if(o.title)el.title=gbkReplace(o.title,entries);if(o.aria)el.setAttribute('aria-label',gbkReplace(o.aria,entries));});
+ document.querySelectorAll('button,a,[title],[aria-label]').forEach(el=>{if(!gbkOriginalAttrs.has(el))gbkOriginalAttrs.set(el,{placeholder:'',title:el.getAttribute('title')||'',aria:el.getAttribute('aria-label')||''});const o=gbkOriginalAttrs.get(el);if(o.title)el.title=gbkReplace(o.title,entries);if(o.aria)el.setAttribute('aria-label',gbkReplace(o.aria,entries));});
+ document.querySelectorAll('option').forEach(el=>{if(!el.dataset.gbkOriginal)el.dataset.gbkOriginal=el.textContent;el.textContent=gbkReplace(el.dataset.gbkOriginal,entries)});
+ const sel=document.getElementById('languageSelect');if(sel)sel.value=lang;
+ localStorage.setItem('gbk_language',lang);
+ const top=document.querySelector('.topbar');if(top){const gc={"हिन्दी":'वैश्विक प्रॉपर्टी खोज',"తెలుగు":'ప్రపంచ ఆస్తుల శోధన',"தமிழ்":'உலகளாவிய சொத்து தேடல்',"বাংলা":'গ্লোবাল প্রপার্টি অনুসন্ধান',"मराठी":'जागतिक मालमत्ता शोध',"ಕನ್ನಡ":'ಜಾಗತಿಕ ಆಸ್ತಿ ಹುಡುಕಾಟ',"മലയാളം":'ആഗോള പ്രോപ്പർട്ടി തിരയൽ',"ગુજરાતી":'વૈશ્વિક પ્રોપર્ટી શોધ',"ਪੰਜਾਬੀ":'ਗਲੋਬਲ ਪ੍ਰਾਪਰਟੀ ਖੋਜ',"اردو":'عالمی پراپرٹی تلاش',"العربية":'اكتشاف العقارات عالميًا',"中文":'全球房产搜索',"日本語":'世界の不動産検索',"한국어":'글로벌 부동산 검색',"Español":'búsqueda inmobiliaria global',"Français":'recherche immobilière mondiale',"Deutsch":'globale Immobiliensuche'};top.textContent='🌐 '+lang+' · GBK AI Real Estate · '+(gc[lang]||'Global property discovery')+' · 195+ countries';}
+}
+function openLanguage(){const el=document.getElementById('languageSelect');el.innerHTML=languages.map(x=>`<option value="${x.replace(/"/g,'&quot;')}">${languageLabel(x)}</option>`).join('');const saved=localStorage.getItem('gbk_language')||'English';el.value=saved;document.getElementById('language').classList.add('show')}
+function saveLanguage(){const x=document.getElementById('languageSelect').value;localStorage.setItem('gbk_language',x);gbkTranslate(x);updateTopSelectors();closeById('language')}
+window.addEventListener('load',()=>{const saved=localStorage.getItem('gbk_language');if(saved)gbkTranslate(saved);updateTopSelectors();initCountryCurrency();searchProperties();loadSourceComparison()})
+</script>
+
+</body></html>
