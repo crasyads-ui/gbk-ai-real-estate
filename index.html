@@ -262,6 +262,7 @@ html[lang="te"] .hero h1,html[lang="hi"] .hero h1{line-height:1.16;letter-spacin
 </div></section>
 
 <section class="section" id="mediaTours"><div class="container"><div class="section-head"><div><h2>See it before you visit</h2><p>Real property photos and video tours appear here when the live listing source provides them.</p></div></div><div id="propertyMedia" class="media"><div class="tour"><div class="body" style="padding:24px;text-align:center"><b>Live property media</b><div class="stats" style="margin-top:6px">Search for a property to load real photos and available video tours.</div></div></div></div></div></section>
+<section class="section" id="sourceCompare"><div class="container"><div class="section-head"><div><h2>Latest listings & source comparison</h2><p>Compare the newest connected property feeds, source counts and freshness before choosing a listing.</p></div><button class="btn btn-outline" onclick="loadSourceComparison()">Compare sources →</button></div><div id="sourceComparison" class="grid"><article class="card"><div class="body" style="padding:20px"><b>Source comparison</b><div class="stats" style="margin-top:6px">Connect live provider feeds to compare current listings across approved sources.</div></div></article></div></div></section>
 
 <section class="section" id="ai"><div class="container"><div class="section-head"><div><h2>GBK AI decision tools</h2><p>More useful than a listing directory: help people understand the choice.</p></div></div><div class="tools">
  <div class="tool"><div class="icon">🤖</div><b>AI Property Advisor</b><p>Describe your needs and build a shortlist from available property facts.</p></div>
@@ -348,7 +349,7 @@ function closeById(id){document.getElementById(id).classList.remove('show')}
 async function submitModal(){const done=document.getElementById('modalDone');const inputs=document.querySelectorAll('#modal input,#modal textarea');const name=inputs[0]?.value.trim()||'';const email=inputs[1]?.value.trim()||'';const phone=inputs[2]?.value.trim()||'';const message=inputs[3]?.value.trim()||'';done.textContent='Sending to the secure GBK Real Estate API…';try{const propertyId=String(gbkModalContext).startsWith('enquiry:')?String(gbkModalContext).slice(9):'';const r=await fetch(`${REAL_ESTATE_API}?action=enquiry`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,message,property_id:propertyId||null,country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Enquiry submission failed');done.textContent=`✅ Enquiry received. Reference: ${d.enquiry?.id||'submitted'}.`;inputs.forEach(x=>{if(x.tagName==='TEXTAREA'||x.tagName==='INPUT')x.value=''})}catch(e){done.textContent=e.message||'Unable to reach the Real Estate API.'}}
 
 const REAL_ESTATE_API='https://yjwgnapymqetxvksqacd.supabase.co/functions/v1/real-estate-api';
-const GBK_REAL_ESTATE_VERSION='V18';
+const GBK_REAL_ESTATE_VERSION='V19';
 let gbkModalContext='';
 const apiEscape=(v)=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
 function formatListingPrice(p){const n=Number(p.price||0);const amount=Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:0}):String(p.price||'');return `${apiEscape(p.currency_symbol||'')}${amount}${p.price_period==='month'?' / month':p.price_period==='year'?' / year':''}`}
@@ -382,14 +383,14 @@ function renderPropertyMedia(results=[]){
  const root=document.getElementById('propertyMedia');if(!root)return;
  const items=[];
  (results||[]).forEach((p,i)=>{const m=mediaUrls(p);if(m.imgs.length||m.vids.length)items.push({p,m,i});});
- if(!items.length){root.innerHTML='<div class="tour"><div class="body" style="padding:24px;text-align:center"><b>Real media not available for these listings yet.</b><div class="stats" style="margin-top:6px">No verified photo or video URL was supplied by the current listing source.</div></div></div>';return;}
+ if(!items.length){root.innerHTML='<div class="tour"><div class="body" style="padding:24px;text-align:center"><b>Real property media will appear here</b><div class="stats" style="margin-top:6px">No photo or video URL was supplied by a connected listing source for the current results. We never create fake property media.</div></div></div>';return;}
  root.innerHTML=items.slice(0,6).map(({p,m,i})=>{
    const poster=m.imgs[0]||''; const title=apiEscape(p.title||'Property tour'); const place=apiEscape([p.city,p.country_name].filter(Boolean).join(' · '));
    if(m.vids[0]) return `<div class="tour" style="overflow:hidden;position:relative"><video controls playsinline preload="metadata" ${poster?`poster="${apiEscape(poster)}"`:''} style="width:100%;height:100%;object-fit:cover;display:block"><source src="${apiEscape(m.vids[0])}"></video><label>🎥 ${title}${place?' · '+place:''}</label></div>`;
    return `<div class="tour" style="overflow:hidden;position:relative;background-image:url('${apiEscape(poster)}');background-size:cover;background-position:center"><button class="play" onclick="openMediaImage('${apiEscape(poster)}','${title}')" aria-label="View property photo">▶</button><label>🏠 ${title}${place?' · '+place:''}</label></div>`;
  }).join('');
 }
-function openMediaImage(url,title){if(!url)return;const w=window.open(url,'_blank','noopener,noreferrer');if(w)w.document.title=title||'Property photo';}
+function openMediaImage(url,title){if(!url)return;window.open(url,'_blank','noopener,noreferrer');}
 function renderPropertyResults(results,meta={}){
  const root=document.getElementById('propertyResults');if(!root)return;
  if(!results.length){root.innerHTML='<article class="card"><div class="body" style="padding:24px"><b>No properties available in this freshness range.</b><div class="stats" style="margin-top:6px">Try <b>Relevant · 30 days</b>, <b>All available</b>, another city, country, property type or budget.</div></div></article>';renderPropertyMedia([]);return}
@@ -402,6 +403,17 @@ function renderPropertyResults(results,meta={}){
  root.innerHTML=note+results.map((p,i)=>{const beds=p.bedrooms?`${p.bedrooms} beds · `:'';const baths=p.bathrooms?`${p.bathrooms} baths · `:'';const area=p.area_value?`${Number(p.area_value).toLocaleString()} ${apiEscape(p.area_unit||'')} · `:'';const furnished=p.furnished?'Furnished · ':'';const status=p.intent==='rent'?'FOR RENT':p.intent==='buy'?'FOR SALE':'LISTING';const verify=p.verification_status==='verified'?'VERIFIED':'SOURCE SHOWN';const image=Array.isArray(p.image_urls)?p.image_urls.find(x=>/^https?:\/\//i.test(String(x))):'';const vids=Array.isArray(p.video_urls)?p.video_urls.filter(x=>/^https?:\/\//i.test(String(x))):[];const visualStyle=image?` style="background-image:url('${apiEscape(image)}');background-size:cover;background-position:center"`:'';const fresh=freshnessLabel(p);const mediaBtn=vids[0]?`<button class="btn btn-gold" style="margin-top:10px;width:100%" onclick="window.open('${apiEscape(vids[0])}','_blank','noopener,noreferrer')">▶ Video tour</button>`:'';return `<article class="card" data-property-id="${apiEscape(p.id)}"><div class="visual ${listingVisual(i)}"${visualStyle}><span class="badge">${status} · ${verify}</span><span style="position:absolute;bottom:12px;left:12px;background:#07152fee;color:#fff;padding:6px 9px;border-radius:18px;font-size:10px;font-weight:900">${fresh}</span><button class="fav" onclick="event.stopPropagation();favoriteProperty('${apiEscape(p.id)}')" aria-label="Favorite property">♡</button></div><div class="body"><h3>${apiEscape(p.title)}</h3><div class="stats">${apiEscape(p.city||'')} · ${apiEscape(p.country_name||'')}</div><div class="price">${formatListingPrice(p)}</div><div class="stats">${beds}${baths}${furnished}${area}${apiEscape(p.source_name||'GBK AI')}</div>${mediaBtn}<button class="btn btn-outline" style="margin-top:10px;width:100%" onclick="openPropertyEnquiry('${apiEscape(p.id)}','${apiEscape(p.title)}')">Enquire</button></div></article>`}).join('');
  renderPropertyMedia(results);
 }
+async function loadSourceComparison(){
+ const root=document.getElementById('sourceComparison');if(!root)return;
+ root.innerHTML='<article class="card"><div class="body" style="padding:20px"><b>Loading latest source comparison…</b></div></article>';
+ try{
+  const p=new URLSearchParams({action:'sources',country:selectedCountry});
+  const r=await fetch(`${REAL_ESTATE_API}?${p.toString()}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Source comparison failed');
+  const rows=Array.isArray(d.sources)?d.sources:[];
+  if(!rows.length){root.innerHTML='<article class="card"><div class="body" style="padding:20px"><b>No live provider source is connected yet.</b><div class="stats" style="margin-top:6px">The GBK database remains available. Add the approved provider API key to enable live global comparison.</div></div></article>';return;}
+  root.innerHTML=rows.map(x=>`<article class="card"><div class="body" style="padding:20px"><h3>${apiEscape(x.name||x.source||'Source')}</h3><div class="stats">${apiEscape(x.country||selectedCountry||'Global')} · ${Number(x.listings||0).toLocaleString()} listings</div><div class="stats" style="margin-top:8px">${apiEscape(x.freshness||'Live feed')}</div></div></article>`).join('');
+ }catch(e){root.innerHTML=`<article class="card"><div class="body" style="padding:20px"><b>Source comparison unavailable</b><div class="stats" style="margin-top:6px">${apiEscape(e.message||'Live source unavailable')}</div></div></article>`;}
+}
 async function fetchPropertySearch(params){
  const r=await fetch(`${REAL_ESTATE_API}?action=search&${params.toString()}`);const d=await r.json();if(!r.ok)throw new Error(d.error||'Property search failed');return d;
 }
@@ -409,7 +421,7 @@ async function searchProperties(extra={}){
  const q=document.getElementById('need')?.value.trim()||'';const location=document.getElementById('location')?.value.trim()||'';
  const freshness=document.getElementById('freshnessFilter')?.value||'30';
  const merged={q,...extra};const explicitCity=String(extra.city||location||'').trim();
- const params=new URLSearchParams({...merged,country:selectedCountry,currency:selectedCurrency,language:localStorage.getItem('gbk_language')||'English',limit:'50'});
+ const params=new URLSearchParams({...merged,country:selectedCountry,currency:selectedCurrency,language:localStorage.getItem('gbk_language')||'English',limit:'50',sort:'latest'});
  if(location&&!extra.city)params.set('city',location);
  const msg=document.getElementById('searchMsg');if(msg)msg.textContent='Connecting to live GBK property data…';
  try{
@@ -682,7 +694,7 @@ function gbkTranslate(lang){
 }
 function openLanguage(){const el=document.getElementById('languageSelect');el.innerHTML=languages.map(x=>`<option value="${x.replace(/"/g,'&quot;')}">${languageLabel(x)}</option>`).join('');const saved=localStorage.getItem('gbk_language')||'English';el.value=saved;document.getElementById('language').classList.add('show')}
 function saveLanguage(){const x=document.getElementById('languageSelect').value;localStorage.setItem('gbk_language',x);gbkTranslate(x);updateTopSelectors();closeById('language')}
-window.addEventListener('load',()=>{const saved=localStorage.getItem('gbk_language');if(saved)gbkTranslate(saved);updateTopSelectors();initCountryCurrency();searchProperties()})
+window.addEventListener('load',()=>{const saved=localStorage.getItem('gbk_language');if(saved)gbkTranslate(saved);updateTopSelectors();initCountryCurrency();searchProperties();loadSourceComparison()})
 </script>
 
 </body></html>
