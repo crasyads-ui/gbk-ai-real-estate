@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#07152f">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./assets/icon-192.png">
-<title>GBK AI Real Estate — V11 API Integrated PWA</title>
+<title>GBK AI Real Estate — V13 Voice Property Advisor</title>
 <style>
 *{box-sizing:border-box}
 :root{--navy:#07152f;--navy2:#0b2145;--gold:#f7c843;--violet:#7656ff;--ink:#101b2d;--muted:#6d7a90;--bg:#f5f7fb;--line:#e1e6ef;--white:#fff;--green:#178b5b}
@@ -382,7 +382,7 @@ function stopGbkVoice(){
  gbkRecognition=null;
  if('speechSynthesis' in window) window.speechSynthesis.cancel();
  gbkSpeaking=false;
- const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none';
+ const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='inline-flex';
  const ask=document.getElementById('voiceAskBtn');if(ask){ask.style.display='inline-flex';ask.classList.remove('voice-listening')}
  document.querySelectorAll('.voice-explain').forEach(x=>{if(x.id==='voiceExplainControls')x.style.display=lastPropertyResults.length?'flex':'none'});
  setVoiceStatus('Voice stopped. You can ask again anytime.');
@@ -398,12 +398,13 @@ function speakGbk(text,onEnd){
 function propertySpeechText(p,i){
  const title=p.title||'Property'; const place=[p.city,p.country_name].filter(Boolean).join(', '); const price=formatListingPrice(p).replace(/&amp;/g,'&');
  const facts=[];if(p.bedrooms)facts.push(`${p.bedrooms} bedrooms`);if(p.bathrooms)facts.push(`${p.bathrooms} bathrooms`);if(p.area_value)facts.push(`${Number(p.area_value).toLocaleString()} ${p.area_unit||''}`);if(p.furnished)facts.push('furnished');
- return `${i+1}. ${title}. ${place||'Location available on the listing'}. ${p.intent==='rent'?'For rent':'For sale'}. Price ${price}. ${facts.length?facts.join(', ')+'. ':''}Source ${p.source_name||'GBK AI'}. ${p.verification_status==='verified'?'This listing is verified.':'Source is shown; verify important details before making a decision.'}`;
+ const verified=p.verification_status==='verified'; const complete=facts.length>=2; const assessment=verified&&complete?'This looks like a strong listing match based on the available details.':complete?'This looks like a good match based on the available details, but verify the listing before deciding.':'The listing has limited details, so verify price, condition, ownership and other important information before deciding.';
+ return `${i+1}. ${title}. ${place||'Location available on the listing'}. ${p.intent==='rent'?'For rent':'For sale'}. Price ${price}. ${facts.length?facts.join(', ')+'. ':''}${assessment} ${verified?'The listing is verified.':'The listing source is shown but is not marked verified.'}`;
 }
 function speakPropertyResults(){
  if(!lastPropertyResults.length){setVoiceStatus('Ask GBK AI first to load properties.');return}
  const lang=localStorage.getItem('gbk_language')||'English';
- const intro=lang==='English'?'GBK AI property explanation. Here are the best matching properties.':`GBK AI property explanation in ${lang}. Here are the best matching properties.`;
+ const intro=lang==='English'?'GBK AI property explanation. Here are the best matching properties and my assessment of whether each looks good based on the available listing details.':`GBK AI property explanation in ${lang}. Here are the best matching properties and an assessment based on the available listing details.`;
  const text=[intro,...lastPropertyResults.slice(0,8).map(propertySpeechText)].join(' ');
  setVoiceStatus(`🔊 Explaining ${Math.min(lastPropertyResults.length,8)} properties in ${lang}…`);
  speakGbk(text,()=>setVoiceStatus('Explanation complete. Press Stop or Ask again anytime.'));
@@ -419,7 +420,7 @@ function startGbkVoiceAsk(){
  setVoiceStatus(`🎙️ Listening in ${localStorage.getItem('gbk_language')||'English'}… Speak your property request.`);
  gbkRecognition.onresult=async e=>{const text=e.results?.[0]?.[0]?.transcript?.trim()||'';if(text){const need=document.getElementById('need');if(need)need.value=text;setVoiceStatus(`Heard: “${text}” · Finding matching properties…`);const results=await askAI();if(results?.length){speakPropertyResults()}else setVoiceStatus('No matching properties found. Try another request.')}};
  gbkRecognition.onerror=e=>{setVoiceStatus(e.error==='not-allowed'?'Microphone permission is blocked. Allow microphone access and try again.':`Listening stopped: ${e.error||'unknown error'}.`);const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none';ask.classList.remove('voice-listening')};
- gbkRecognition.onend=()=>{gbkRecognition=null;ask.classList.remove('voice-listening');if(!gbkSpeaking){const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='none'}};
+ gbkRecognition.onend=()=>{gbkRecognition=null;ask.classList.remove('voice-listening');if(!gbkSpeaking){const stop=document.getElementById('voiceStopBtn');if(stop)stop.style.display='inline-flex'}};
  try{gbkRecognition.start()}catch(e){setVoiceStatus('Could not start the microphone. Please try again.');}
 }
 async function askAI(){const n=document.getElementById('need').value.trim(),l=document.getElementById('location').value.trim();const results=await searchProperties({q:n,city:l});lastPropertyResults=results||[];const controls=document.getElementById('voiceExplainControls');if(controls)controls.style.display=lastPropertyResults.length?'flex':'none';try{await fetch(`${REAL_ESTATE_API}?action=ai-request`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request_type:'advisor',prompt:n||'Help me find suitable properties.',property_ids:results.slice(0,10).map(x=>x.id),country_name:selectedCountry,language:localStorage.getItem('gbk_language')||'English',wallet_address:localStorage.getItem('gbk_registered_wallet')||''})})}catch(e){} return results;}
