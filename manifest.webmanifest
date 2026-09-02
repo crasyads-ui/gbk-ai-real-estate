@@ -1,0 +1,16 @@
+{
+  "id":"./",
+  "name":"GBK AI Real Estate",
+  "short_name":"GBK Real Estate",
+  "description":"GBK AI global property discovery, comparison and multilingual real estate tools.",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "orientation":"portrait-primary",
+  "theme_color":"#07152f",
+  "background_color":"#07152f",
+  "icons":[
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
